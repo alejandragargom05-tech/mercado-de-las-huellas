@@ -324,8 +324,8 @@ def cantidad_unidad(nombre, categoria, variante=""):
     return 1.0, "unidad"
 
 
-RE_TALLA = re.compile(r"talla\s*(xxs|xs|s|m|l|xl|xxl|xxxl)\b", re.I)
-RE_TALLA_MAYUS = re.compile(r"(?<!\d)(?<!\d )\b(XXS|XS|S|M|L|XL|XXL|XXXL)\b")
+RE_TALLA = re.compile(r"talla\s*(xs|s|m|l|xl|xxl)\b", re.I)
+RE_TALLA_MAYUS = re.compile(r"(?<!\d)(?<!\d )\b(XS|S|M|L|XL|XXL)\b")
 RE_ALTURA = re.compile(r"(\d+(?:[.,]\d+)?)\s*cm\b", re.I)
 # Orden importa: la primera que coincide decide el tipo.
 TIPOS_ARENA = [
@@ -337,22 +337,20 @@ TIPOS_ARENA = [
 
 
 def caracteristica(nombre, categoria, cantidad, unidad):
-    partes = []
     n = norm(nombre)
     if categoria == "arena":
-        partes = [next((t for t, rx in TIPOS_ARENA if re.search(rx, n)), "sin especificar")]
-    else:
-        m = RE_TALLA.search(nombre) or RE_TALLA_MAYUS.search(nombre)
-        if m:
-            partes.append("talla " + m.group(1).upper())
-        if categoria in ("rascadores", "camas", "juguetes", "transportadores"):
-            h = RE_ALTURA.search(nombre)
-            if h:
-                partes.append(h.group(1) + " cm")
-        if categoria == "fuentes-comederos":
-            m = RE_VOLUMEN.search(n)
-            if m and m.group(3) not in ("ml", "cc"):
-                partes.append("%s L" % (m.group(2)))
+        return next((t for t, rx in TIPOS_ARENA if re.search(rx, n)), "sin especificar")
+    partes = []
+    m = RE_TALLA.search(nombre) or RE_TALLA_MAYUS.search(nombre)
+    if m:
+        partes.append("talla " + m.group(1).upper())
+    m = RE_VOLUMEN.search(n)
+    if m:
+        cap = numero(m.group(2))
+        partes.append("%s ml" % fmt(cap) if m.group(3) in ("ml", "cc") else "%s L" % fmt(cap))
+    h = RE_ALTURA.search(nombre)
+    if h:
+        partes.append(fmt(numero(h.group(1))) + " cm")
     return "; ".join(partes)
 
 
@@ -371,8 +369,8 @@ def sin_ciudad(titulo, variante):
 
 
 def agregar(filas, fila):
-    """Una fila por tienda, producto y tamaño; si solo cambia el precio (por ciudad), gana el menor."""
-    clave = (fila["tienda"], fila["url"], fila["producto"])
+    """Una fila por tienda, url, producto y cantidad; si solo cambia el precio (por ciudad), gana el menor."""
+    clave = (fila["tienda"], fila["url"], fila["producto"], fila["cantidad"])
     previa = filas.get(clave)
     if previa is None or float(fila["precio"]) < float(previa["precio"]):
         filas[clave] = fila
