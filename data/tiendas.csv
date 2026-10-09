@@ -1,0 +1,27 @@
+tienda,url,plataforma,estado,motivo,fecha_revision
+Mercado Libre Colombia,https://www.mercadolibre.com.co,,bloqueada por robots.txt,robots.txt prohíbe /products.json,2026-10-09
+Laika,https://www.laika.com.co,,sin catálogo público,ni la API de VTEX ni /products.json responden JSON,2026-10-09
+Puppis,https://www.puppis.com.co,vtex,aprobada,VTEX responde JSON y robots.txt lo permite,2026-10-09
+Agrocampo,https://www.agrocampo.com.co,,bloqueada por robots.txt,robots.txt prohíbe /api/catalog_system/,2026-10-09
+Ceba,https://www.ceba.com.co,shopify,aprobada,Shopify responde JSON y robots.txt lo permite,2026-10-09
+Animals Veterinaria,https://www.animalsveterinaria.com,vtex,aprobada,VTEX responde JSON y robots.txt lo permite,2026-10-09
+Tierragro,https://www.tierragro.com,,bloqueada por robots.txt,robots.txt prohíbe el recorrido paginado de /products.json,2026-10-09
+Éxito,https://www.exito.com,,sin catálogo público,ni la API de VTEX ni /products.json responden JSON,2026-10-09
+Falabella Colombia,https://www.falabella.com.co,,sin catálogo público,ni la API de VTEX ni /products.json responden JSON,2026-10-09
+Homecenter Colombia,https://www.homecenter.com.co,,bloqueada por robots.txt,robots.txt prohíbe /api/catalog_system/,2026-10-09
+Provipets,https://www.provipets.co,,bloqueada por robots.txt,robots.txt prohíbe /api/catalog_system/,2026-10-09
+Petcol,https://petcol.co,shopify,aprobada,Shopify responde JSON y robots.txt lo permite,2026-10-09
+Miscota Colombia,https://co.miscota.com,,sin catálogo público,ni la API de VTEX ni /products.json responden JSON,2026-10-09
+Doctor Pet,https://doctorpet.com.co,,sin catálogo público,ni la API de VTEX ni /products.json responden JSON,2026-10-09
+AM Mascotas,https://ammascotas.com,shopify,aprobada,Shopify responde JSON y robots.txt lo permite,2026-10-09
+Xipa,https://www.xipamascotas.com,,sin catálogo público,no se pudo leer robots.txt (sin conexión),2026-10-09
+Jarapets,,,sin catálogo público,TIENDAS.md no trae sitio web verificado,2026-10-09
+Omega Importaciones,https://www.omegaimportaciones.com,,sin catálogo público,ni la API de VTEX ni /products.json responden JSON,2026-10-09
+Animal Home,https://animalhome.co,,sin catálogo público,ni la API de VTEX ni /products.json responden JSON,2026-10-09
+Muplast,https://muplast.com,,sin catálogo público,ni la API de VTEX ni /products.json responden JSON,2026-10-09
+Gioatope,https://gioatope.com,,sin catálogo público,ni la API de VTEX ni /products.json responden JSON,2026-10-09
+Mascolandia,https://www.mascolandia.com.co,,sin catálogo público,ni la API de VTEX ni /products.json responden JSON,2026-10-09
+Abyapet,https://abyapet.com,,sin catálogo público,ni la API de VTEX ni /products.json responden JSON,2026-10-09
+KeikoPets,https://www.keikopets.com,,bloqueada por robots.txt,robots.txt prohíbe /api/catalog_system/,2026-10-09
+La Casa del Granjero,https://lacasadelgranjero.com,shopify,aprobada,Shopify responde JSON y robots.txt lo permite,2026-10-09
+La Res,https://lares.com.co,shopify,aprobada,Shopify responde JSON y robots.txt lo permite,2026-10-09
