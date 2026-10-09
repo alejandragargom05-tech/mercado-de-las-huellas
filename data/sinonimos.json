@@ -1,0 +1,41 @@
+{
+  "_ayuda": "Fácil de editar. Cada categoría tiene 'sinonimos' (palabras que significan la categoría completa: si alguien escribe 'sofá', se muestran las camas) y 'variantes' (palabras que aparecen en los nombres de las tiendas; sirven para corregir errores de escritura y no amplían la búsqueda). La primera palabra de 'sinonimos' es el nombre que se muestra en el aviso. Con o sin tildes y en singular o plural da igual.",
+  "categorias": {
+    "arena": {
+      "sinonimos": ["arena", "arena sanitaria", "piedras sanitarias", "litter", "arenero"],
+      "variantes": ["aglomerante", "bentonita", "silica", "sílice", "tofu", "scoopable", "absorbente", "cristales", "carbón activado"]
+    },
+    "rascadores": {
+      "sinonimos": ["rascador", "gimnasio", "rascadora", "scratcher", "torre", "árbol para gato", "gym"],
+      "variantes": ["poste", "sisal", "tower", "scratch", "plataforma", "hamaca", "escalera"]
+    },
+    "fuentes-comederos": {
+      "sinonimos": ["fuente", "bebedero", "comedero", "dispensador", "alimentador", "fountain", "tomadero"],
+      "variantes": ["automático", "automatica", "filtro", "colapsable", "antideslizante", "acero inoxidable"]
+    },
+    "arneses-correas": {
+      "sinonimos": ["arnés", "pechera", "traílla", "correa", "paseador"],
+      "variantes": ["retráctil", "nylon", "acolchado", "antishock", "mesh", "cinturón", "guía", "bloqueo"]
+    },
+    "juguetes": {
+      "sinonimos": ["juguete", "juguetes interactivos", "toy"],
+      "variantes": ["peluche", "pelota", "bola", "lanzador", "frisbee", "mordedor", "ratón", "cascabel", "catnip", "hierba gatera", "resorte", "jalador", "caucho", "ball"]
+    },
+    "camas": {
+      "sinonimos": ["cama", "sofá", "colchoneta", "cojín", "nido", "casita", "cucha", "colchón", "cuna"],
+      "variantes": ["almohada", "puff", "dona", "donut", "hamaca", "cueva", "acolchada", "nube"]
+    },
+    "shampoo-panos": {
+      "sinonimos": ["shampoo", "champú", "jabón", "pañitos", "toallitas", "paños", "pañuelos húmedos", "wipes"],
+      "variantes": ["acondicionador", "hidratante", "antipulgas", "avena", "clorhexidina", "hipoalergénico", "húmedos", "antibacterial", "repuesto"]
+    },
+    "transportadores": {
+      "sinonimos": ["bolso transportador", "guacal", "kennel", "maletín", "transportador", "cargador", "morral", "tula", "mochila"],
+      "variantes": ["carrier", "ruedas", "panorámico", "viajes", "acolchado", "canguro"]
+    }
+  },
+  "especies": {
+    "gato": ["gato", "gata", "gatito", "michi", "minino", "felino", "cat"],
+    "perro": ["perro", "perra", "perrito", "cachorro", "canino", "lomito", "dog"]
+  }
+}

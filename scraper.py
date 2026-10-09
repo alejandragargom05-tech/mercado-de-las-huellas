@@ -380,7 +380,7 @@ def fmt(x):
     return "" if x is None else (str(int(x)) if float(x).is_integer() else str(round(x, 2)))
 
 
-def armar_fila(tienda, nombre, marca, extra, url, precio, precio_lista, variante=""):
+def armar_fila(tienda, nombre, marca, extra, url, precio, precio_lista, variante="", imagen=""):
     categoria, especie = clasificar(nombre, extra)
     if not categoria:
         return None
@@ -393,10 +393,27 @@ def armar_fila(tienda, nombre, marca, extra, url, precio, precio_lista, variante
         "cantidad": fmt(round(cant, 3)) if cant else "", "unidad": unidad if cant else "",
         "precio": fmt(precio), "precio_lista": fmt(precio_lista) if precio_lista and precio_lista >= precio else "",
         "precio_unidad": fmt(p_unidad) if p_unidad is not None else "", "url": url,
+        "imagen": imagen if re.match(r"https?://", imagen or "") else "",
     }
 
 
 # ---------------------------------------------------------------- consultas
+
+def imagen_vtex(item):
+    """URL de la primera foto tal como la publica la tienda (no se descarga ni se copia)."""
+    imgs = item.get("images") or []
+    return (imgs[0].get("imageUrl") or "") if imgs else ""
+
+
+def imagen_shopify(p, variante):
+    """Imagen de la variante o, si no tiene, la primera del producto."""
+    imgs = p.get("images") or []
+    destacada = variante.get("featured_image") or {}
+    if destacada.get("src"):
+        return destacada["src"]
+    por_id = next((i.get("src") for i in imgs if i.get("id") == variante.get("image_id")), "")
+    return por_id or (imgs[0].get("src") if imgs else "") or ""
+
 
 def consultar_vtex(fila_tienda, robots, filas):
     base = fila_tienda["url"]
@@ -419,7 +436,8 @@ def consultar_vtex(fila_tienda, robots, filas):
                 nombre = item.get("nameComplete") or p.get("productName") or ""
                 fila = armar_fila(fila_tienda["tienda"], nombre, p.get("brand"), cats,
                                   urljoin(base + "/", p.get("link") or ""),
-                                  float(oferta["Price"]), float(oferta.get("ListPrice") or 0))
+                                  float(oferta["Price"]), float(oferta.get("ListPrice") or 0),
+                                  imagen=imagen_vtex(item))
                 if fila:
                     agregar(filas, fila)
 
@@ -453,7 +471,8 @@ def consultar_shopify(fila_tienda, robots, filas):
                     nombre += " - " + titulo_v
                 fila = armar_fila(fila_tienda["tienda"], nombre, p.get("vendor"), extra,
                                   "%s/products/%s" % (base, p.get("handle")),
-                                  precio, float(v.get("compare_at_price") or 0), titulo_v)
+                                  precio, float(v.get("compare_at_price") or 0), titulo_v,
+                                  imagen=imagen_shopify(p, v))
                 if fila:
                     agregar(filas, fila)
         if len(productos) < 250:
@@ -482,7 +501,7 @@ def imprimir_tabla(columnas, filas, anchos=None):
 
 COL_TIENDAS = ["tienda", "url", "plataforma", "estado", "motivo", "fecha_revision"]
 COL_PRODUCTOS = ["fecha", "tienda", "categoria", "especie", "producto", "marca", "caracteristica",
-                 "cantidad", "unidad", "precio", "precio_lista", "precio_unidad", "url"]
+                 "cantidad", "unidad", "precio", "precio_lista", "precio_unidad", "url", "imagen"]
 
 
 def main():

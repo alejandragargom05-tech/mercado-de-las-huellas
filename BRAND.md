@@ -19,10 +19,23 @@ Toda pantalla debe seguir este documento. Si algo no está aquí, decide con el 
 | Gris cálido | `#6F6B76` | Solo texto de apoyo | Precios, botones, instrucciones |
 | Lavanda | `#C8CBE8` | Solo patrones e ilustraciones de fondo, con poca opacidad | Texto, bordes de controles |
 
+### Colores semánticos
+Se usan con moderación, siempre acompañados de texto (nunca solo el color) y con contraste AA. Cada uno trae su fondo suave.
+
+| Significado | Modo claro (texto / fondo) | Modo oscuro (texto / fondo) | Uso |
+|---|---|---|---|
+| Verde oliva: "La más barata" y el ahorro | `#4F5B17` / `#EEF2DC` | `#BCCE6C` / `#2A3114` | Insignia, borde de la tarjeta más barata, chip activo |
+| Ámbar: precio de más de 7 días | `#7A4700` / `#FFF1D1` | `#F2B84B` / `#3A2A0A` | Insignia "Precio de hace X días", fecha y avisos de precios viejos |
+| Terracota: errores | `#A23D24` / `#FBE9E4` | `#F4A08A` / `#3E1D17` | Error de carga y fallos |
+
+Contrastes: oliva 7,4:1, ámbar 7,7:1 y terracota 6,5:1 sobre blanco; en oscuro, todos por encima de 7:1 sobre las tarjetas.
+El azul se reserva para el precio por unidad, los enlaces, los titulares y el botón principal; el resto de la interfaz va en texto principal sobre blanco o crema.
+
 Reglas:
-- La interfaz es siempre clara, también con el celular en modo oscuro (`color-scheme: light`). Nunca fondos oscuros, salvo los bloques azules.
-- Contraste mínimo de 4,5:1 para texto. Blanco sobre azul: 9,3:1. Azul sobre crema: 8,2:1. Gris sobre crema: 4,6:1.
-- Titulares en azul sobre crema o blanco. Bloques destacados: tarjetas azules con texto blanco rotulado.
+- **Dos modos: claro y oscuro** (`color-scheme: light dark`). Por defecto sigue la preferencia del sistema; un interruptor accesible en la barra superior permite cambiarlo y recuerda la elección (`localStorage`, protegido con `try/catch`). El modo claro es el de la paleta de arriba.
+- **Modo oscuro:** fondo azul noche `#0F1330`, tarjetas un poco más claras `#1A2052`, texto `#ECEBF2`, gris de apoyo `#B4B1C2` y azul aclarado `#A9B6FF` (precio por unidad, enlaces, titulares y botón principal, con texto azul noche encima). Pie `#1F2766`. Las ilustraciones van siempre sobre una base blanca para conservar su trazo. Las fotos de producto también van sobre blanco.
+- Contraste mínimo de 4,5:1 para texto en ambos modos. Claro: blanco sobre azul 9,3:1, azul sobre crema 8,2:1, gris sobre crema 4,6:1. Oscuro: azul aclarado sobre tarjeta 7,9:1, texto 12,9:1, gris 7,3:1.
+- Titulares en azul sobre crema o blanco. Fondo crema y tarjetas blancas; los bloques azules grandes ya no se usan: el resumen "Las más baratas" son tarjetas blancas con borde verde oliva e insignia.
 
 ## Forma y estructura
 - Secciones separadas por ondas suaves; bajo cada titular, un trazo ondulado dibujado a mano.
@@ -44,7 +57,7 @@ Cálida, serena y segura. Español de Colombia, tuteando. Frases cortas. Sin exc
 |---|---|
 | Buscador | Busca arena, arnés, cama… |
 | Botón principal | VER LA MÁS BARATA |
-| Botón a la tienda | IR A LA TIENDA |
+| Botón a la tienda | IR A [TIENDA] ↗ |
 | Botón limpiar | QUITAR FILTROS |
 | Filtro de especie | Gatos · Perros · Ambos |
 | Filtro de categoría | Todas las categorías |
@@ -56,6 +69,14 @@ Cálida, serena y segura. Español de Colombia, tuteando. Frases cortas. Sin exc
 | Error | No pudimos traer los precios. Revisa tu conexión e inténtalo otra vez. |
 | Botón de error | REINTENTAR |
 | Última actualización | Precios actualizados el [fecha] a las [hora] |
+| Error (con por qué y qué hacer) | No pudimos traer los precios. Se cortó la conexión o el archivo de precios no está disponible por ahora. Revisa tu conexión e inténtalo otra vez; si sigue igual, vuelve en unos minutos. |
+| Precio de más de 7 días | Este precio se tomó hace X días y puede haber cambiado. Confírmalo en la tienda antes de comprar. |
+| Sin con qué compararse | Estos productos no tienen con qué compararse: ninguna otra tienda vende uno igual o equivalente, por eso no marcamos la más barata. |
+| Búsqueda ampliada | No hay «arena» en Juguetes. Te mostramos 199 resultados en Arena. [VOLVER AL FILTRO] |
+| Sinónimo | Mostrando camas, también buscamos sofá y colchoneta. |
+| Corrección | ¿Quisiste decir arnés? |
+
+Regla de los mensajes: todo estado vacío, error o advertencia dice qué pasó, por qué y qué hacer.
 
 ## Ilustración
 Es el corazón de la marca. Muy ilustrativa, creativa y 100 % original: no se calcan mascotas, personajes ni ilustraciones de otras marcas o cuentas. Cuatro técnicas en una sola familia:
@@ -74,7 +95,10 @@ Cada categoría del catálogo tiene su ilustración en `assets/ilustraciones/`, 
 ## Experiencia móvil
 - Buscador fijo arriba. Chips de especie y de categoría (con su ilustración), desplazables, de al menos 44 px.
 - Arriba de los resultados, un resumen con la opción más barata de cada grupo.
-- Tarjeta con orden de lectura fijo: precio por unidad (grande), precio total, tienda, cantidad y característica, hace cuánto se tomó. Números alineados a la derecha.
+- Barra superior fija y delgada: a la izquierda el logo (ilustración de 56 px y el nombre en la letra rotulada); a la derecha el interruptor de modo claro u oscuro y el enlace a Instagram (ícono, texto accesible, pestaña nueva). El enlace vive en una sola constante (`URL_INSTAGRAM` en `assets/js/app.js`).
+- Tarjeta con orden de lectura fijo: insignia "La más barata" (solo si aplica), tienda en negrita, precio por unidad grande con su unidad, nombre del producto, foto cuadrada de 88 px al lado (fondo blanco, `object-fit: contain`, carga diferida; si falta o falla, la ilustración de su categoría), lista corta de datos (marca, cantidad, precio total, fecha; cifras a la derecha) y botón "IR A [TIENDA] ↗" en pestaña nueva. Queda espacio para el botón "Mismo producto, más barato".
+- La tarjeta más barata lleva borde verde oliva.
+- Búsqueda: entiende sinónimos colombianos (`data/sinonimos.json`), singular y plural, tildes y errores de una o dos letras, y lo dice arriba de los resultados. Si el filtro activo no da resultados, muestra los de otras categorías con un aviso y un botón para volver al filtro; el filtro activo siempre se ve marcado (borde, relleno suave y ✓).
 - Insignias "La más barata" y "Precio de hace X días".
-- Foco visible, textos alternativos en toda ilustración, aviso del veterinario siempre visible en el pie.
+- Teclado completo, foco visible, botones y chips de al menos 44 px, aviso `aria-live` con el número de resultados, `prefers-reduced-motion`, textos alternativos en toda ilustración y foto, aviso del veterinario siempre visible en el pie.
 - Muestras y maquetas usan marcadores (`$ 00.000`), nunca precios inventados.

@@ -3,9 +3,13 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="color-scheme" content="light">
+<meta name="color-scheme" content="light dark">
 <title>Mercado de las Huellas — Mismo producto. Menos pesos.</title>
 <meta name="description" content="Compara precios de productos y accesorios para gatos y perros entre tiendas de Colombia.">
+<script>
+/* Aplica la elección guardada antes de pintar, para que no parpadee. Sin elección, manda el sistema. */
+try { var t = localStorage.getItem('tema'); if (t === 'claro' || t === 'oscuro') document.documentElement.dataset.tema = t; } catch (e) {}
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jost:wght@400;600&family=Patrick+Hand&display=swap">
@@ -14,16 +18,29 @@
 </head>
 <body>
 
-<header class="cabecera">
-  <div class="contenedor">
-    <a class="marca" href="./"><img src="assets/ilustraciones/camas.svg" alt="Gato durmiendo en su cama" width="44" height="37"><b>Mercado de las Huellas</b></a>
-    <div class="portada">
-      <h1>Mismo producto. Menos pesos.</h1>
-      <p class="apoyo">Compara precios para gatos y perros en tiendas de Colombia.</p>
-      <p class="apoyo" id="actualizacion" aria-live="polite"></p>
+<header class="nav">
+  <div class="contenedor nav__fila">
+    <a class="marca" href="./"><img src="assets/ilustraciones/camas.svg" alt="" width="56" height="56"><b>Mercado de las Huellas</b></a>
+    <div class="nav__acciones">
+      <button class="icono-boton" id="tema" type="button" role="switch" aria-checked="false" aria-label="Modo oscuro">
+        <svg class="icono-luna" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4 8.5 8.5 0 1 0 20 14.5Z"/></svg>
+        <svg class="icono-sol" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.5"/><path d="M12 2.5v2.5M12 19v2.5M2.5 12H5M19 12h2.5M5.3 5.3l1.8 1.8M16.9 16.9l1.8 1.8M5.3 18.7l1.8-1.8M16.9 7.1l1.8-1.8"/></svg>
+      </button>
+      <a class="icono-boton" id="instagram" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r=".6"/></svg>
+        <span class="solo-lectores">Instagram de Mercado de las Huellas (se abre en una pestaña nueva)</span>
+      </a>
     </div>
   </div>
 </header>
+
+<section class="portada">
+  <div class="contenedor">
+    <h1>Mismo producto. Menos pesos.</h1>
+    <p class="apoyo">Compara precios para gatos y perros en tiendas de Colombia.</p>
+    <div id="actualizacion"></div>
+  </div>
+</section>
 
 <div class="buscador">
   <div class="contenedor">
@@ -34,6 +51,8 @@
     </form>
   </div>
 </div>
+
+<p class="solo-lectores" id="anuncio" role="status" aria-live="polite"></p>
 
 <main>
   <section class="seccion seccion--rama" aria-label="Filtros">
@@ -52,7 +71,8 @@
     <div class="contenedor">
       <div id="estado"></div>
       <div id="resultados" hidden>
-        <p class="apoyo" id="conteo" aria-live="polite"></p>
+        <div id="avisos"></div>
+        <p class="apoyo" id="conteo"></p>
         <div id="bloque-resumen" hidden>
           <h2>Las más baratas</h2>
           <div class="resumen" id="resumen"></div>
@@ -66,7 +86,7 @@
 
 <footer class="pie">
   <div class="contenedor">
-    <p class="etiqueta" style="color:#fff">Mercado de las Huellas</p>
+    <p class="etiqueta pie__nombre">Mercado de las Huellas</p>
     <p id="pie-fecha"></p>
     <p>Mercado de las Huellas compara precios; no reemplaza la recomendación de tu veterinario.</p>
   </div>
