@@ -331,8 +331,7 @@ RE_ALTURA = re.compile(r"(\d+(?:[.,]\d+)?)\s*cm\b", re.I)
 TIPOS_ARENA = [
     ("sílice", r"silice|silica|cristales"),
     ("vegetal", r"calabaza|maiz|tofu|madera|pellet|vegetal|yuca|cassava|soya|cascara|pino|pine"),
-    ("bentonita", r"bentonita"),
-    ("aglomerante", r"aglomera|agromera|aglutinante|scoopable|scopable|\bscoop"),
+    ("aglomerante", r"bentonita|aglomera|agromera|aglutinante|scoopable|scopable|\bscoop"),
     ("absorbente", r"absorbente|sepiolita|no aglomerante"),
 ]
 
@@ -341,7 +340,7 @@ def caracteristica(nombre, categoria, cantidad, unidad):
     partes = []
     n = norm(nombre)
     if categoria == "arena":
-        partes = [next((t for t, rx in TIPOS_ARENA if re.search(rx, n)), "otra")]
+        partes = [next((t for t, rx in TIPOS_ARENA if re.search(rx, n)), "sin especificar")]
     else:
         m = RE_TALLA.search(nombre) or RE_TALLA_MAYUS.search(nombre)
         if m:

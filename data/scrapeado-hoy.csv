@@ -4,12 +4,12 @@ fecha,tienda,categoria,especie,producto,marca,caracteristica,cantidad,unidad,pre
 2026-10-09,Animals Veterinaria,arena,gato,Blutive Arena Aglomerante Para Gato Marsella 6L,AN CONCENTRADOS,aglomerante,6,l,48700,48700,8116.67,https://www.animalsveterinaria.com/arena-aglomerante-blutive-marsella-6l-anmare032/p
 2026-10-09,Ceba,arena,gato,ARENA FELINE PINE - 10 KG,GABRICA SAS,vegetal,10,kg,51200,,5120,https://www.ceba.com.co/products/arena-feline-pine
 2026-10-09,Ceba,arena,gato,ARENA FELINE PINE - 5 KG,GABRICA SAS,vegetal,5,kg,29000,,5800,https://www.ceba.com.co/products/arena-feline-pine
-2026-10-09,Ceba,arena,gato,ARENA FOFI CAT MANZANA - 10 Kg,GESTO AGRO SAS,otra,10,kg,43700,,4370,https://www.ceba.com.co/products/arena-fofi-cat
-2026-10-09,Ceba,arena,gato,ARENA FOFI CAT MANZANA - 25 Kg,GESTO AGRO SAS,otra,25,kg,101400,,4056,https://www.ceba.com.co/products/arena-fofi-cat
-2026-10-09,Ceba,arena,gato,ARENA FOFI CAT MANZANA - 5 Kg,GESTO AGRO SAS,otra,5,kg,21700,,4340,https://www.ceba.com.co/products/arena-fofi-cat
-2026-10-09,Ceba,arena,gato,ARENA MIRRINGO - 10 Kg,COMERCIAL +BIOS S.A.S.,otra,10,kg,51400,,5140,https://www.ceba.com.co/products/arena-mirringo-1
-2026-10-09,Ceba,arena,gato,ARENA MIRRINGO - 5 Kg,COMERCIAL +BIOS S.A.S.,otra,5,kg,28300,,5660,https://www.ceba.com.co/products/arena-mirringo-1
-2026-10-09,Ceba,arena,gato,Arena Baby Cat X 4 Kg,GESTO AGRO SAS,otra,4,kg,19600,,4900,https://www.ceba.com.co/products/arena-baby-cat-x-4-kg
+2026-10-09,Ceba,arena,gato,ARENA FOFI CAT MANZANA - 10 Kg,GESTO AGRO SAS,sin especificar,10,kg,43700,,4370,https://www.ceba.com.co/products/arena-fofi-cat
+2026-10-09,Ceba,arena,gato,ARENA FOFI CAT MANZANA - 25 Kg,GESTO AGRO SAS,sin especificar,25,kg,101400,,4056,https://www.ceba.com.co/products/arena-fofi-cat
+2026-10-09,Ceba,arena,gato,ARENA FOFI CAT MANZANA - 5 Kg,GESTO AGRO SAS,sin especificar,5,kg,21700,,4340,https://www.ceba.com.co/products/arena-fofi-cat
+2026-10-09,Ceba,arena,gato,ARENA MIRRINGO - 10 Kg,COMERCIAL +BIOS S.A.S.,sin especificar,10,kg,51400,,5140,https://www.ceba.com.co/products/arena-mirringo-1
+2026-10-09,Ceba,arena,gato,ARENA MIRRINGO - 5 Kg,COMERCIAL +BIOS S.A.S.,sin especificar,5,kg,28300,,5660,https://www.ceba.com.co/products/arena-mirringo-1
+2026-10-09,Ceba,arena,gato,Arena Baby Cat X 4 Kg,GESTO AGRO SAS,sin especificar,4,kg,19600,,4900,https://www.ceba.com.co/products/arena-baby-cat-x-4-kg
 2026-10-09,Ceba,arena,gato,Arena Calabaza Café - 25 Kg,CALABAZA CC SAS,vegetal,25,kg,73200,,2928,https://www.ceba.com.co/products/arena-calabaza-pets-aroma-a-cafe
 2026-10-09,Ceba,arena,gato,Arena Calabaza Café - 4.5 kg,CALABAZA CC SAS,vegetal,4.5,kg,14400,,3200,https://www.ceba.com.co/products/arena-calabaza-pets-aroma-a-cafe
 2026-10-09,Ceba,arena,gato,Arena Calabaza Jazmín - 10 Kg,CALABAZA CC SAS,vegetal,10,kg,30600,,3060,https://www.ceba.com.co/products/areana-calabaza-yazmin-x-4-5-kg
@@ -25,27 +25,27 @@ fecha,tienda,categoria,especie,producto,marca,caracteristica,cantidad,unidad,pre
 2026-10-09,Ceba,arena,gato,Arena Calabaza Pets Carbón Activado de Coco - 25 Kg,CALABAZA CC SAS,vegetal,25,kg,81500,,3260,https://www.ceba.com.co/products/arena-calabaza-carbon
 2026-10-09,Ceba,arena,gato,Arena Calabaza Pets Rosa - 10 Kg,CALABAZA CC SAS,vegetal,10,kg,30600,,3060,https://www.ceba.com.co/products/arena-calabaza-rosa-x-25kg
 2026-10-09,Ceba,arena,gato,Arena Calabaza Pets Rosa - 25 Kg,CALABAZA CC SAS,vegetal,25,kg,73200,,2928,https://www.ceba.com.co/products/arena-calabaza-rosa-x-25kg
-2026-10-09,Ceba,arena,gato,Arena Canada Litter Sin Aroma - 4.5 Kg,GESTO AGRO SAS,otra,4.5,kg,27900,,6200,https://www.ceba.com.co/products/arena-canada-litter-sin-aroma
-2026-10-09,Ceba,arena,gato,Arena Catit Lavanda 5.6 kg,VEROSA GROUP S.A.S,otra,5.6,kg,88900,,15875,https://www.ceba.com.co/products/arena-catit-lavanda-5-6-kg
-2026-10-09,Ceba,arena,gato,Arena Catit Vainilla 5.6 kg,VEROSA GROUP S.A.S,otra,5.6,kg,88900,,15875,https://www.ceba.com.co/products/arena-catit-vainilla-5-6-kg
-2026-10-09,Ceba,arena,gato,Arena Comfort Kat - 4 Kg,GABRICA SAS,otra,4,kg,20200,,5050,https://www.ceba.com.co/products/arena-comfort-kat
-2026-10-09,Ceba,arena,gato,Arena Comfort Kat - 9.1 Kg,GABRICA SAS,otra,9.1,kg,45500,,5000,https://www.ceba.com.co/products/arena-comfort-kat
-2026-10-09,Ceba,arena,gato,Arena Fofi Cat Aroma Café 5Kg,GESTO AGRO SAS,otra,5,kg,21700,,4340,https://www.ceba.com.co/products/arena-fofi-cat-aroma-cafe
+2026-10-09,Ceba,arena,gato,Arena Canada Litter Sin Aroma - 4.5 Kg,GESTO AGRO SAS,sin especificar,4.5,kg,27900,,6200,https://www.ceba.com.co/products/arena-canada-litter-sin-aroma
+2026-10-09,Ceba,arena,gato,Arena Catit Lavanda 5.6 kg,VEROSA GROUP S.A.S,sin especificar,5.6,kg,88900,,15875,https://www.ceba.com.co/products/arena-catit-lavanda-5-6-kg
+2026-10-09,Ceba,arena,gato,Arena Catit Vainilla 5.6 kg,VEROSA GROUP S.A.S,sin especificar,5.6,kg,88900,,15875,https://www.ceba.com.co/products/arena-catit-vainilla-5-6-kg
+2026-10-09,Ceba,arena,gato,Arena Comfort Kat - 4 Kg,GABRICA SAS,sin especificar,4,kg,20200,,5050,https://www.ceba.com.co/products/arena-comfort-kat
+2026-10-09,Ceba,arena,gato,Arena Comfort Kat - 9.1 Kg,GABRICA SAS,sin especificar,9.1,kg,45500,,5000,https://www.ceba.com.co/products/arena-comfort-kat
+2026-10-09,Ceba,arena,gato,Arena Fofi Cat Aroma Café 5Kg,GESTO AGRO SAS,sin especificar,5,kg,21700,,4340,https://www.ceba.com.co/products/arena-fofi-cat-aroma-cafe
 2026-10-09,Ceba,arena,gato,Arena Fofi Cat Eco A Base De Maiz 2.27 Kg,GESTO AGRO SAS,vegetal,2.27,kg,22300,,9823.79,https://www.ceba.com.co/products/copia-de-arena-fofi-cat-eco-x-5-kg
-2026-10-09,Ceba,arena,gato,Arena Fofi Cat Rose 5Kg,GESTO AGRO SAS,otra,5,kg,21700,,4340,https://www.ceba.com.co/products/arena-fofi-cat-rose-x-5-kg
-2026-10-09,Ceba,arena,gato,Arena Foficat Carbón Activado 5 Kg,GESTO AGRO SAS,otra,5,kg,23600,,4720,https://www.ceba.com.co/products/arena-foficat-carbon-activado-x-5-kg
-2026-10-09,Ceba,arena,gato,Arena Foficat Jazmín 5 Kg,GESTO AGRO SAS,otra,5,kg,21700,,4340,https://www.ceba.com.co/products/arena-foficat-jazmine-x-5-kg
-2026-10-09,Ceba,arena,gato,Arena Foficat Lavanda - 25 Kg,GESTO AGRO SAS,otra,25,kg,94700,,3788,https://www.ceba.com.co/products/arena-foficat-lavanda
-2026-10-09,Ceba,arena,gato,Arena Foficat Lavanda - 5 Kg,GESTO AGRO SAS,otra,5,kg,21700,,4340,https://www.ceba.com.co/products/arena-foficat-lavanda
-2026-10-09,Ceba,arena,gato,Arena Foficat Limón 5 Kg,GESTO AGRO SAS,otra,5,kg,21700,,4340,https://www.ceba.com.co/products/arena-foficat-lemon-5-kg
-2026-10-09,Ceba,arena,gato,Arena King Cat Lavanda - 25 Kg,GESTO AGRO SAS,otra,25,kg,70400,,2816,https://www.ceba.com.co/products/arena-king-cat-lavanda
-2026-10-09,Ceba,arena,gato,Arena King Cat Lavanda - 4.5 Kg,GESTO AGRO SAS,otra,4.5,kg,15100,,3355.56,https://www.ceba.com.co/products/arena-king-cat-lavanda
-2026-10-09,Ceba,arena,gato,Arena King Cat Manzana - 25 Kg,GESTO AGRO SAS,otra,25,kg,75500,,3020,https://www.ceba.com.co/products/arena-king-cat-manzana
-2026-10-09,Ceba,arena,gato,Arena King Cat Manzana - 4.5 Kg,GESTO AGRO SAS,otra,4.5,kg,14100,,3133.33,https://www.ceba.com.co/products/arena-king-cat-manzana
-2026-10-09,Ceba,arena,gato,Arena Michiko Carbón Activado - 5 Kg,GESTO AGRO SAS,otra,5,kg,27200,,5440,https://www.ceba.com.co/products/arena-michiko-carbon-activado
-2026-10-09,Ceba,arena,gato,Arena Michiko Fresh X 5 Kg,GESTO AGRO SAS,otra,5,kg,27200,,5440,https://www.ceba.com.co/products/arena-michiko-fresh-x-5-kg
-2026-10-09,Ceba,arena,gato,Arena Michiko Lavanda X 5 Kg,GESTO AGRO SAS,otra,5,kg,27200,,5440,https://www.ceba.com.co/products/arena-michiko-lavanda
-2026-10-09,Ceba,arena,gato,Arena Michiko Limón 5 Kg,GESTO AGRO SAS,otra,5,kg,27200,,5440,https://www.ceba.com.co/products/arena-michiko-limon-x-5-kg
+2026-10-09,Ceba,arena,gato,Arena Fofi Cat Rose 5Kg,GESTO AGRO SAS,sin especificar,5,kg,21700,,4340,https://www.ceba.com.co/products/arena-fofi-cat-rose-x-5-kg
+2026-10-09,Ceba,arena,gato,Arena Foficat Carbón Activado 5 Kg,GESTO AGRO SAS,sin especificar,5,kg,23600,,4720,https://www.ceba.com.co/products/arena-foficat-carbon-activado-x-5-kg
+2026-10-09,Ceba,arena,gato,Arena Foficat Jazmín 5 Kg,GESTO AGRO SAS,sin especificar,5,kg,21700,,4340,https://www.ceba.com.co/products/arena-foficat-jazmine-x-5-kg
+2026-10-09,Ceba,arena,gato,Arena Foficat Lavanda - 25 Kg,GESTO AGRO SAS,sin especificar,25,kg,94700,,3788,https://www.ceba.com.co/products/arena-foficat-lavanda
+2026-10-09,Ceba,arena,gato,Arena Foficat Lavanda - 5 Kg,GESTO AGRO SAS,sin especificar,5,kg,21700,,4340,https://www.ceba.com.co/products/arena-foficat-lavanda
+2026-10-09,Ceba,arena,gato,Arena Foficat Limón 5 Kg,GESTO AGRO SAS,sin especificar,5,kg,21700,,4340,https://www.ceba.com.co/products/arena-foficat-lemon-5-kg
+2026-10-09,Ceba,arena,gato,Arena King Cat Lavanda - 25 Kg,GESTO AGRO SAS,sin especificar,25,kg,70400,,2816,https://www.ceba.com.co/products/arena-king-cat-lavanda
+2026-10-09,Ceba,arena,gato,Arena King Cat Lavanda - 4.5 Kg,GESTO AGRO SAS,sin especificar,4.5,kg,15100,,3355.56,https://www.ceba.com.co/products/arena-king-cat-lavanda
+2026-10-09,Ceba,arena,gato,Arena King Cat Manzana - 25 Kg,GESTO AGRO SAS,sin especificar,25,kg,75500,,3020,https://www.ceba.com.co/products/arena-king-cat-manzana
+2026-10-09,Ceba,arena,gato,Arena King Cat Manzana - 4.5 Kg,GESTO AGRO SAS,sin especificar,4.5,kg,14100,,3133.33,https://www.ceba.com.co/products/arena-king-cat-manzana
+2026-10-09,Ceba,arena,gato,Arena Michiko Carbón Activado - 5 Kg,GESTO AGRO SAS,sin especificar,5,kg,27200,,5440,https://www.ceba.com.co/products/arena-michiko-carbon-activado
+2026-10-09,Ceba,arena,gato,Arena Michiko Fresh X 5 Kg,GESTO AGRO SAS,sin especificar,5,kg,27200,,5440,https://www.ceba.com.co/products/arena-michiko-fresh-x-5-kg
+2026-10-09,Ceba,arena,gato,Arena Michiko Lavanda X 5 Kg,GESTO AGRO SAS,sin especificar,5,kg,27200,,5440,https://www.ceba.com.co/products/arena-michiko-lavanda
+2026-10-09,Ceba,arena,gato,Arena Michiko Limón 5 Kg,GESTO AGRO SAS,sin especificar,5,kg,27200,,5440,https://www.ceba.com.co/products/arena-michiko-limon-x-5-kg
 2026-10-09,Ceba,arena,gato,Arena Michiko Tofu Limón - 2.5 Kg,GESTO AGRO SAS,vegetal,2.5,kg,23000,,9200,https://www.ceba.com.co/products/arena-michiko-tofu-limon
 2026-10-09,Ceba,arena,gato,Arena Michiko Tofu Limón - 4.5 Kg,GESTO AGRO SAS,vegetal,4.5,kg,40500,,9000,https://www.ceba.com.co/products/arena-michiko-tofu-limon
 2026-10-09,Ceba,arena,gato,Arena Michiko Tofu Premium Café - 2.5 Kg,GESTO AGRO SAS,vegetal,2.5,kg,23000,,9200,https://www.ceba.com.co/products/arena-michiko-tofu-premium-cafe
@@ -53,138 +53,138 @@ fecha,tienda,categoria,especie,producto,marca,caracteristica,cantidad,unidad,pre
 2026-10-09,Ceba,arena,gato,Arena Michiko Tofu Premium Lavanda - 2.5 Kg,GESTO AGRO SAS,vegetal,2.5,kg,23000,,9200,https://www.ceba.com.co/products/arena-michiko-tofu-premium-lavanda
 2026-10-09,Ceba,arena,gato,Arena Michiko Tofu Premium Manzana - 2.5 Kg,GESTO AGRO SAS,vegetal,2.5,kg,23000,,9200,https://www.ceba.com.co/products/arena-michiko-tofu-premium-manzana
 2026-10-09,Ceba,arena,gato,Arena Michiko Tofu Premium Melocotón X 2.5 Kg,GESTO AGRO SAS,vegetal,2.5,kg,23000,,9200,https://www.ceba.com.co/products/arena-michiko-tofu-prem-melocoton-x2-5kg
-2026-10-09,Ceba,arena,gato,Arena Mimi Litter Balde X 12 Lb,JARAMILLO PETS Y CIA SCA,otra,5.44,kg,116500,,21403.21,https://www.ceba.com.co/products/arena-mimi-litter-balde-x-12-lb
-2026-10-09,Ceba,arena,gato,Arena Mimi Litter Bolsa X 4 Libras 4 Lb,JARAMILLO PETS Y CIA SCA,otra,1.81,kg,32700,,18022.79,https://www.ceba.com.co/products/arena-mimi-litter-bolsa-x-4-libras
-2026-10-09,Ceba,arena,gato,Arena Neo Clean Olor Limón - 4.15 Kg,JARAMILLO PETS Y CIA SCA,otra,4.15,kg,19600,,4722.89,https://www.ceba.com.co/products/arena-neo-clean-olor-limon
-2026-10-09,Ceba,arena,gato,Arena Neo Clean Olor Limón - 8.3 Kg,JARAMILLO PETS Y CIA SCA,otra,8.3,kg,38000,,4578.31,https://www.ceba.com.co/products/arena-neo-clean-olor-limon
-2026-10-09,Ceba,arena,gato,Arena Neo Clean Sin Aroma - 4.15 Kg,JARAMILLO PETS Y CIA SCA,otra,4.15,kg,21500,,5180.72,https://www.ceba.com.co/products/arena-neo-clean-sin-aroma
-2026-10-09,Ceba,arena,gato,Arena Neo Clean Sin Aroma - 8.3 Kg,JARAMILLO PETS Y CIA SCA,otra,8.3,kg,38000,,4578.31,https://www.ceba.com.co/products/arena-neo-clean-sin-aroma
-2026-10-09,Ceba,arena,gato,Arena Para Gato Freshcat 4.5 Kg,A M PLASTICOS LTDA,otra,4.5,kg,17800,,3955.56,https://www.ceba.com.co/products/arena-para-gato-freshcat-4-5-kg
-2026-10-09,Ceba,arena,gato,Arena Royal Cat Amarilla - 10 Kg,JARAMILLO PETS Y CIA SCA,otra,10,kg,62500,,6250,https://www.ceba.com.co/products/arena-royal-cat-amarilla-x-10-kg-bolsa
-2026-10-09,Ceba,arena,gato,Arena Royal Cat Azul - 10 Kg,JARAMILLO PETS Y CIA SCA,otra,10,kg,62500,,6250,https://www.ceba.com.co/products/arena-royal-cat-azul-x-5-kg-bolsa
-2026-10-09,Ceba,arena,gato,Arena Royal Cat Azul - 5 Kg,JARAMILLO PETS Y CIA SCA,otra,5,kg,33200,,6640,https://www.ceba.com.co/products/arena-royal-cat-azul-x-5-kg-bolsa
-2026-10-09,Ceba,arena,gato,Arena Royal Cat Rosada X 5 Kg (Bolsa),JARAMILLO PETS Y CIA SCA,otra,5,kg,33200,,6640,https://www.ceba.com.co/products/arena-royal-cat-rosada-x-5kg-bolsa
-2026-10-09,Ceba,arena,gato,Arena Royal Cat Rosada X 5 Kg (Bolsa) - 10 kg,JARAMILLO PETS Y CIA SCA,otra,10,kg,62500,,6250,https://www.ceba.com.co/products/arena-royal-cat-rosada-x-5kg-bolsa
-2026-10-09,Ceba,arena,gato,Arena Sanitaria Tommy Cats Baby Powder X 5Kg,GESTO AGRO SAS,otra,5,kg,25700,,5140,https://www.ceba.com.co/products/arena-sanitaria-tommy-cats-baby-powder-x-5kg
-2026-10-09,Ceba,arena,gato,Arena Sanitaria Tommy Cats Lavanda X 5Kg,GESTO AGRO SAS,otra,5,kg,25700,,5140,https://www.ceba.com.co/products/arena-tommy-cats-lavanda-caja-x-5kg
-2026-10-09,Ceba,arena,gato,Arena Tommy Carbón Activado X 5 Kg,GESTO AGRO SAS,otra,5,kg,25700,,5140,https://www.ceba.com.co/products/arena-tommy-carbon-activado-caja-x-5kg
-2026-10-09,Ceba,arena,gato,Arena Tommy Cats Blue Signal X 5 Kg,GESTO AGRO SAS,otra,5,kg,28400,,5680,https://www.ceba.com.co/products/arena-tommy-cats-blue-signal-x-5-kg
-2026-10-09,Ceba,arena,gato,Arena Tommy Cats Fresh X 5 Kg,GESTO AGRO SAS,otra,5,kg,25700,,5140,https://www.ceba.com.co/products/arena-tommy-cats-fresh-caja-x-5kg
+2026-10-09,Ceba,arena,gato,Arena Mimi Litter Balde X 12 Lb,JARAMILLO PETS Y CIA SCA,sin especificar,5.44,kg,116500,,21403.21,https://www.ceba.com.co/products/arena-mimi-litter-balde-x-12-lb
+2026-10-09,Ceba,arena,gato,Arena Mimi Litter Bolsa X 4 Libras 4 Lb,JARAMILLO PETS Y CIA SCA,sin especificar,1.81,kg,32700,,18022.79,https://www.ceba.com.co/products/arena-mimi-litter-bolsa-x-4-libras
+2026-10-09,Ceba,arena,gato,Arena Neo Clean Olor Limón - 4.15 Kg,JARAMILLO PETS Y CIA SCA,sin especificar,4.15,kg,19600,,4722.89,https://www.ceba.com.co/products/arena-neo-clean-olor-limon
+2026-10-09,Ceba,arena,gato,Arena Neo Clean Olor Limón - 8.3 Kg,JARAMILLO PETS Y CIA SCA,sin especificar,8.3,kg,38000,,4578.31,https://www.ceba.com.co/products/arena-neo-clean-olor-limon
+2026-10-09,Ceba,arena,gato,Arena Neo Clean Sin Aroma - 4.15 Kg,JARAMILLO PETS Y CIA SCA,sin especificar,4.15,kg,21500,,5180.72,https://www.ceba.com.co/products/arena-neo-clean-sin-aroma
+2026-10-09,Ceba,arena,gato,Arena Neo Clean Sin Aroma - 8.3 Kg,JARAMILLO PETS Y CIA SCA,sin especificar,8.3,kg,38000,,4578.31,https://www.ceba.com.co/products/arena-neo-clean-sin-aroma
+2026-10-09,Ceba,arena,gato,Arena Para Gato Freshcat 4.5 Kg,A M PLASTICOS LTDA,sin especificar,4.5,kg,17800,,3955.56,https://www.ceba.com.co/products/arena-para-gato-freshcat-4-5-kg
+2026-10-09,Ceba,arena,gato,Arena Royal Cat Amarilla - 10 Kg,JARAMILLO PETS Y CIA SCA,sin especificar,10,kg,62500,,6250,https://www.ceba.com.co/products/arena-royal-cat-amarilla-x-10-kg-bolsa
+2026-10-09,Ceba,arena,gato,Arena Royal Cat Azul - 10 Kg,JARAMILLO PETS Y CIA SCA,sin especificar,10,kg,62500,,6250,https://www.ceba.com.co/products/arena-royal-cat-azul-x-5-kg-bolsa
+2026-10-09,Ceba,arena,gato,Arena Royal Cat Azul - 5 Kg,JARAMILLO PETS Y CIA SCA,sin especificar,5,kg,33200,,6640,https://www.ceba.com.co/products/arena-royal-cat-azul-x-5-kg-bolsa
+2026-10-09,Ceba,arena,gato,Arena Royal Cat Rosada X 5 Kg (Bolsa),JARAMILLO PETS Y CIA SCA,sin especificar,5,kg,33200,,6640,https://www.ceba.com.co/products/arena-royal-cat-rosada-x-5kg-bolsa
+2026-10-09,Ceba,arena,gato,Arena Royal Cat Rosada X 5 Kg (Bolsa) - 10 kg,JARAMILLO PETS Y CIA SCA,sin especificar,10,kg,62500,,6250,https://www.ceba.com.co/products/arena-royal-cat-rosada-x-5kg-bolsa
+2026-10-09,Ceba,arena,gato,Arena Sanitaria Tommy Cats Baby Powder X 5Kg,GESTO AGRO SAS,sin especificar,5,kg,25700,,5140,https://www.ceba.com.co/products/arena-sanitaria-tommy-cats-baby-powder-x-5kg
+2026-10-09,Ceba,arena,gato,Arena Sanitaria Tommy Cats Lavanda X 5Kg,GESTO AGRO SAS,sin especificar,5,kg,25700,,5140,https://www.ceba.com.co/products/arena-tommy-cats-lavanda-caja-x-5kg
+2026-10-09,Ceba,arena,gato,Arena Tommy Carbón Activado X 5 Kg,GESTO AGRO SAS,sin especificar,5,kg,25700,,5140,https://www.ceba.com.co/products/arena-tommy-carbon-activado-caja-x-5kg
+2026-10-09,Ceba,arena,gato,Arena Tommy Cats Blue Signal X 5 Kg,GESTO AGRO SAS,sin especificar,5,kg,28400,,5680,https://www.ceba.com.co/products/arena-tommy-cats-blue-signal-x-5-kg
+2026-10-09,Ceba,arena,gato,Arena Tommy Cats Fresh X 5 Kg,GESTO AGRO SAS,sin especificar,5,kg,25700,,5140,https://www.ceba.com.co/products/arena-tommy-cats-fresh-caja-x-5kg
 2026-10-09,Ceba,arena,gato,Arena para Gato Foficat Tofu Café 2.5 kg,GESTO AGRO SAS,vegetal,2.5,kg,25500,,10200,https://www.ceba.com.co/products/arena-foficat-tofu-caffe-x-2-5kg
 2026-10-09,Ceba,arena,gato,Arena para Gato Foficat Tofu Lavanda 2.5 kg,GESTO AGRO SAS,vegetal,2.5,kg,25500,,10200,https://www.ceba.com.co/products/arena-foficat-tofu-lavanda-x-2-5kg
 2026-10-09,Ceba,arena,gato,Arena para Gato Foficat Tofu Manzana 2.5 kg,GESTO AGRO SAS,vegetal,2.5,kg,25500,,10200,https://www.ceba.com.co/products/arena-foficat-tofu-manzana-x-2-5kg
-2026-10-09,Ceba,arena,gato,Arena para Gato King Cat Café 4.5 kg,GESTO AGRO SAS,otra,4.5,kg,15100,,3355.56,https://www.ceba.com.co/products/arena-king-cat-cafe
-2026-10-09,Ceba,arena,gato,Arena para Gato King Cat Café 4.5 kg - 25 Kg,GESTO AGRO SAS,otra,25,kg,70400,,2816,https://www.ceba.com.co/products/arena-king-cat-cafe
-2026-10-09,Ceba,arena,gato,Arena para Gato King Cat Café 4.5 kg - 8 Kg,GESTO AGRO SAS,otra,8,kg,24500,,3062.5,https://www.ceba.com.co/products/arena-king-cat-cafe
-2026-10-09,Ceba,arena,gato,Arena para Gato King Cat Carbón Activado - 25 Kg,GESTO AGRO SAS,otra,25,kg,78400,,3136,https://www.ceba.com.co/products/arena-king-cat-carbon-activado-x-4-5kg
-2026-10-09,Ceba,arena,gato,Arena para Gato King Cat Carbón Activado - 4.5 Kg,GESTO AGRO SAS,otra,4.5,kg,15700,,3488.89,https://www.ceba.com.co/products/arena-king-cat-carbon-activado-x-4-5kg
+2026-10-09,Ceba,arena,gato,Arena para Gato King Cat Café 4.5 kg,GESTO AGRO SAS,sin especificar,4.5,kg,15100,,3355.56,https://www.ceba.com.co/products/arena-king-cat-cafe
+2026-10-09,Ceba,arena,gato,Arena para Gato King Cat Café 4.5 kg - 25 Kg,GESTO AGRO SAS,sin especificar,25,kg,70400,,2816,https://www.ceba.com.co/products/arena-king-cat-cafe
+2026-10-09,Ceba,arena,gato,Arena para Gato King Cat Café 4.5 kg - 8 Kg,GESTO AGRO SAS,sin especificar,8,kg,24500,,3062.5,https://www.ceba.com.co/products/arena-king-cat-cafe
+2026-10-09,Ceba,arena,gato,Arena para Gato King Cat Carbón Activado - 25 Kg,GESTO AGRO SAS,sin especificar,25,kg,78400,,3136,https://www.ceba.com.co/products/arena-king-cat-carbon-activado-x-4-5kg
+2026-10-09,Ceba,arena,gato,Arena para Gato King Cat Carbón Activado - 4.5 Kg,GESTO AGRO SAS,sin especificar,4.5,kg,15700,,3488.89,https://www.ceba.com.co/products/arena-king-cat-carbon-activado-x-4-5kg
 2026-10-09,Ceba,arena,gato,Arena para gato Fresh Step Cat Aglomerante con Febreze - 14 Lbs,GABRICA SAS,aglomerante,6.35,kg,76700,,12078.18,https://www.ceba.com.co/products/arena-fresh-step-multi-cat-aglom
 2026-10-09,Ceba,arena,gato,Arena para gato Fresh Step Cat Aglomerante con Febreze - 25 Lbs,GABRICA SAS,aglomerante,11.34,kg,124000,,10934.93,https://www.ceba.com.co/products/arena-fresh-step-multi-cat-aglom
-2026-10-09,Ceba,arena,gato,Arena para gato Petys con Fragancia Lavanda - 10 Kg,SELECT PETS DE COLOMBIA SAS,otra,10,kg,53300,,5330,https://www.ceba.com.co/products/arena-para-gato-petys-con-fragancia-lavanda
-2026-10-09,Ceba,arena,gato,Arena para gato Petys con Fragancia Lavanda - 4.5 Kg,SELECT PETS DE COLOMBIA SAS,otra,4.5,kg,23200,,5155.56,https://www.ceba.com.co/products/arena-para-gato-petys-con-fragancia-lavanda
-2026-10-09,La Casa del Granjero,arena,gato,"ARENA  LOPETS X 25 KG (AROMAS : LAVANDA, BEBE, NATURAL)",Lopets,otra,25,kg,111120,,4444.8,https://lacasadelgranjero.com/products/arena-lopets-x-25-kg-aromas-lavanda-bebe-natural
-2026-10-09,La Casa del Granjero,arena,gato,ARENA AHGATA AROMA FRESCURA OCEANICA - 25 KLS,Ah! gata,otra,25,kg,108371,,4334.84,https://lacasadelgranjero.com/products/arena-ahgata-aroma-frescura-oceanica
-2026-10-09,La Casa del Granjero,arena,gato,ARENA AHGATA AROMA FRESCURA OCEANICA - 5 KLS,Ah! gata,otra,5,kg,25970,,5194,https://lacasadelgranjero.com/products/arena-ahgata-aroma-frescura-oceanica
-2026-10-09,La Casa del Granjero,arena,gato,ARENA AHGATA AROMA FRESCURA OCEANICA - 9 KLS,Ah! gata,otra,9,kg,46570,,5174.44,https://lacasadelgranjero.com/products/arena-ahgata-aroma-frescura-oceanica
+2026-10-09,Ceba,arena,gato,Arena para gato Petys con Fragancia Lavanda - 10 Kg,SELECT PETS DE COLOMBIA SAS,sin especificar,10,kg,53300,,5330,https://www.ceba.com.co/products/arena-para-gato-petys-con-fragancia-lavanda
+2026-10-09,Ceba,arena,gato,Arena para gato Petys con Fragancia Lavanda - 4.5 Kg,SELECT PETS DE COLOMBIA SAS,sin especificar,4.5,kg,23200,,5155.56,https://www.ceba.com.co/products/arena-para-gato-petys-con-fragancia-lavanda
+2026-10-09,La Casa del Granjero,arena,gato,"ARENA  LOPETS X 25 KG (AROMAS : LAVANDA, BEBE, NATURAL)",Lopets,sin especificar,25,kg,111120,,4444.8,https://lacasadelgranjero.com/products/arena-lopets-x-25-kg-aromas-lavanda-bebe-natural
+2026-10-09,La Casa del Granjero,arena,gato,ARENA AHGATA AROMA FRESCURA OCEANICA - 25 KLS,Ah! gata,sin especificar,25,kg,108371,,4334.84,https://lacasadelgranjero.com/products/arena-ahgata-aroma-frescura-oceanica
+2026-10-09,La Casa del Granjero,arena,gato,ARENA AHGATA AROMA FRESCURA OCEANICA - 5 KLS,Ah! gata,sin especificar,5,kg,25970,,5194,https://lacasadelgranjero.com/products/arena-ahgata-aroma-frescura-oceanica
+2026-10-09,La Casa del Granjero,arena,gato,ARENA AHGATA AROMA FRESCURA OCEANICA - 9 KLS,Ah! gata,sin especificar,9,kg,46570,,5174.44,https://lacasadelgranjero.com/products/arena-ahgata-aroma-frescura-oceanica
 2026-10-09,La Casa del Granjero,arena,gato,ARENA DE MAIZ LOPETS -LIMÓN - 10kg,Lopets,vegetal,10,kg,64597,,6459.7,https://lacasadelgranjero.com/products/arena-de-maiz-lopets-limon
 2026-10-09,La Casa del Granjero,arena,gato,ARENA DE MAIZ LOPETS -LIMÓN - 4kg,Lopets,vegetal,4,kg,28831,,7207.75,https://lacasadelgranjero.com/products/arena-de-maiz-lopets-limon
 2026-10-09,La Casa del Granjero,arena,gato,Arena Gatos Michiko Tofu Premium Aroma a Café 2.5 Kg,La Casa del Granjero,vegetal,2.5,kg,26428,,10571.2,https://lacasadelgranjero.com/products/arena-gatos-michiko-tofu-premium-aroma-a-limon-2-5-kg-copia
-2026-10-09,La Casa del Granjero,arena,gato,Arena Para Gato Fresh Step Multi Cat Con Febreze - 14 LBS,Fresh Step,otra,6.35,kg,77002,,12125.74,https://lacasadelgranjero.com/products/arena-para-gato-fresh-step-multi-cat-con-febreze
-2026-10-09,La Casa del Granjero,arena,gato,Arena Para Gato Fresh Step Multi Cat Con Febreze - 22 LBS,Fresh Step,otra,9.98,kg,90000,,9018.91,https://lacasadelgranjero.com/products/arena-para-gato-fresh-step-multi-cat-con-febreze
+2026-10-09,La Casa del Granjero,arena,gato,Arena Para Gato Fresh Step Multi Cat Con Febreze - 14 LBS,Fresh Step,sin especificar,6.35,kg,77002,,12125.74,https://lacasadelgranjero.com/products/arena-para-gato-fresh-step-multi-cat-con-febreze
+2026-10-09,La Casa del Granjero,arena,gato,Arena Para Gato Fresh Step Multi Cat Con Febreze - 22 LBS,Fresh Step,sin especificar,9.98,kg,90000,,9018.91,https://lacasadelgranjero.com/products/arena-para-gato-fresh-step-multi-cat-con-febreze
 2026-10-09,La Casa del Granjero,arena,gato,Arena Para Gato Royal Cat Scopable Baby - 5 KL,Royal Cat,aglomerante,5,kg,33201,,6640.2,https://lacasadelgranjero.com/products/copia-de-arena-para-gato-royal-cat-scopable-sin-olor
-2026-10-09,La Casa del Granjero,arena,gato,Arena Para Gatos AuraPro - 10 KG,AuraPro,otra,10,kg,82047,,8204.7,https://lacasadelgranjero.com/products/arena-para-gato-fresh-step-multi-cat-con-febreze-copia
-2026-10-09,La Casa del Granjero,arena,gato,Arena Para Gatos AuraPro - 20 KG,AuraPro,otra,20,kg,148593,,7429.65,https://lacasadelgranjero.com/products/arena-para-gato-fresh-step-multi-cat-con-febreze-copia
-2026-10-09,La Casa del Granjero,arena,gato,Arena Para Gatos AuraPro - 4.5 KG,AuraPro,otra,4.5,kg,45956,,10212.44,https://lacasadelgranjero.com/products/arena-para-gato-fresh-step-multi-cat-con-febreze-copia
-2026-10-09,La Casa del Granjero,arena,gato,Arena Para Gatos Neoclean Sin Aroma - 4.1 KLS,JARAMILLO PETS Y CIA SCA,otra,4.1,kg,30001,,7317.32,https://lacasadelgranjero.com/products/copia-de-arena-ahgata-aroma-frescura-oceanica-1
-2026-10-09,La Casa del Granjero,arena,gato,Arena Para Gatos Neoclean Sin Aroma - 8.3 KLS,JARAMILLO PETS Y CIA SCA,otra,8.3,kg,46154,,5560.72,https://lacasadelgranjero.com/products/copia-de-arena-ahgata-aroma-frescura-oceanica-1
-2026-10-09,La Casa del Granjero,arena,gato,Arena Para Gatos Petys - 4.5 KLS,Petys,otra,4.5,kg,23720,,5271.11,https://lacasadelgranjero.com/products/copia-de-arena-ahgata-aroma-frescura-oceanica
-2026-10-09,La Casa del Granjero,arena,gato,Comfort Kat Arena para Gatos Gabrica - 4 KLS,Comfort Kat,otra,4,kg,23715,,5928.75,https://lacasadelgranjero.com/products/comfort-kat-arena-para-gatos-gabrica
-2026-10-09,La Casa del Granjero,arena,gato,Comfort Kat Arena para Gatos Gabrica - 9.1 KLS,Comfort Kat,otra,9.1,kg,53287,,5855.71,https://lacasadelgranjero.com/products/comfort-kat-arena-para-gatos-gabrica
-2026-10-09,La Casa del Granjero,arena,gato,Freemiau - Arena Para Gato Aroma Lavanda - 10 kg,Freemiau,otra,10,kg,77787,,7778.7,https://lacasadelgranjero.com/products/freemiau-arena-para-gato-aroma-lavanda
-2026-10-09,La Casa del Granjero,arena,gato,Freemiau - Arena Para Gato Aroma Lavanda - 4.5,Freemiau,otra,,,36026,,,https://lacasadelgranjero.com/products/freemiau-arena-para-gato-aroma-lavanda
-2026-10-09,La Casa del Granjero,arena,gato,Freemiau Arena para Gatos Cipa - 10 KLS,Freemiau,otra,10,kg,51585,,5158.5,https://lacasadelgranjero.com/products/freemiau-arena-para-gatos-cipa
-2026-10-09,La Casa del Granjero,arena,gato,Freemiau Arena para Gatos Cipa - 4.5 KLS,Freemiau,otra,4.5,kg,27236,,6052.44,https://lacasadelgranjero.com/products/freemiau-arena-para-gatos-cipa
-2026-10-09,La Casa del Granjero,arena,gato,Freemiau Arena para Gatos Explosion Ci­trica Cipa - 4 KLS,Freemiau,otra,4,kg,21880,,5470,https://lacasadelgranjero.com/products/freemiau-arena-para-gatos-explosion-citrica-cipa
-2026-10-09,La Casa del Granjero,arena,gato,Freemiau Arena para Gatos Explosion Ci­trica Cipa - 7 KLS,Freemiau,otra,7,kg,35999,,5142.71,https://lacasadelgranjero.com/products/freemiau-arena-para-gatos-explosion-citrica-cipa
-2026-10-09,La Casa del Granjero,arena,gato,Mirringo arena para gatos - 10 KLS,Mirringo,otra,10,kg,56850,,5685,https://lacasadelgranjero.com/products/mirringo-arena-para-gatos
-2026-10-09,La Casa del Granjero,arena,gato,Mirringo arena para gatos - 5 KLS,Mirringo,otra,5,kg,29313,,5862.6,https://lacasadelgranjero.com/products/mirringo-arena-para-gatos
-2026-10-09,La Casa del Granjero,arena,gato,Sepi cat Arena 4.8 Kg,Sepicat,otra,4.8,kg,56569,,11785.21,https://lacasadelgranjero.com/products/sepi-cat-arena-4-8-kg
-2026-10-09,La Res,arena,gato,Arena Freemiau - 10 Kilos,Freemiau,otra,10,kg,47120,49600,4712,https://lares.com.co/products/arena-freemiau
-2026-10-09,La Res,arena,gato,Arena Freemiau - 25 Kilos,Freemiau,otra,25,kg,104879,110400,4195.16,https://lares.com.co/products/arena-freemiau
-2026-10-09,La Res,arena,gato,Arena Freemiau - 4.5 kilos,Freemiau,otra,4.5,kg,21850,23000,4855.56,https://lares.com.co/products/arena-freemiau
-2026-10-09,La Res,arena,gato,Arena Freemiau - Citrica x 4 kilos,Freemiau,otra,4,kg,23939,25199,5984.75,https://lares.com.co/products/arena-freemiau
-2026-10-09,La Res,arena,gato,Arena Freemiau - Citrica x 7 kilos,Freemiau,otra,7,kg,38094,40099,5442,https://lares.com.co/products/arena-freemiau
-2026-10-09,La Res,arena,gato,Arena Mimi Litter x 12 Libras,Mimi Litter,otra,5.44,kg,105164,110700,19320.58,https://lares.com.co/products/arena-mimi-litter-x12-libras
-2026-10-09,La Res,arena,gato,Arena Mimi Litter x 4 Libras,Mimi Litter,otra,1.81,kg,30685,32300,16912.21,https://lares.com.co/products/arena-mimi-litter-x4-libras
-2026-10-09,La Res,arena,gato,Arena Neo Clean Limon 4.15 Kilos,Neo Clean,otra,4.15,kg,21755,22900,5242.17,https://lares.com.co/products/arena-neo-clean-limon-4-15-kilos
+2026-10-09,La Casa del Granjero,arena,gato,Arena Para Gatos AuraPro - 10 KG,AuraPro,sin especificar,10,kg,82047,,8204.7,https://lacasadelgranjero.com/products/arena-para-gato-fresh-step-multi-cat-con-febreze-copia
+2026-10-09,La Casa del Granjero,arena,gato,Arena Para Gatos AuraPro - 20 KG,AuraPro,sin especificar,20,kg,148593,,7429.65,https://lacasadelgranjero.com/products/arena-para-gato-fresh-step-multi-cat-con-febreze-copia
+2026-10-09,La Casa del Granjero,arena,gato,Arena Para Gatos AuraPro - 4.5 KG,AuraPro,sin especificar,4.5,kg,45956,,10212.44,https://lacasadelgranjero.com/products/arena-para-gato-fresh-step-multi-cat-con-febreze-copia
+2026-10-09,La Casa del Granjero,arena,gato,Arena Para Gatos Neoclean Sin Aroma - 4.1 KLS,JARAMILLO PETS Y CIA SCA,sin especificar,4.1,kg,30001,,7317.32,https://lacasadelgranjero.com/products/copia-de-arena-ahgata-aroma-frescura-oceanica-1
+2026-10-09,La Casa del Granjero,arena,gato,Arena Para Gatos Neoclean Sin Aroma - 8.3 KLS,JARAMILLO PETS Y CIA SCA,sin especificar,8.3,kg,46154,,5560.72,https://lacasadelgranjero.com/products/copia-de-arena-ahgata-aroma-frescura-oceanica-1
+2026-10-09,La Casa del Granjero,arena,gato,Arena Para Gatos Petys - 4.5 KLS,Petys,sin especificar,4.5,kg,23720,,5271.11,https://lacasadelgranjero.com/products/copia-de-arena-ahgata-aroma-frescura-oceanica
+2026-10-09,La Casa del Granjero,arena,gato,Comfort Kat Arena para Gatos Gabrica - 4 KLS,Comfort Kat,sin especificar,4,kg,23715,,5928.75,https://lacasadelgranjero.com/products/comfort-kat-arena-para-gatos-gabrica
+2026-10-09,La Casa del Granjero,arena,gato,Comfort Kat Arena para Gatos Gabrica - 9.1 KLS,Comfort Kat,sin especificar,9.1,kg,53287,,5855.71,https://lacasadelgranjero.com/products/comfort-kat-arena-para-gatos-gabrica
+2026-10-09,La Casa del Granjero,arena,gato,Freemiau - Arena Para Gato Aroma Lavanda - 10 kg,Freemiau,sin especificar,10,kg,77787,,7778.7,https://lacasadelgranjero.com/products/freemiau-arena-para-gato-aroma-lavanda
+2026-10-09,La Casa del Granjero,arena,gato,Freemiau - Arena Para Gato Aroma Lavanda - 4.5,Freemiau,sin especificar,,,36026,,,https://lacasadelgranjero.com/products/freemiau-arena-para-gato-aroma-lavanda
+2026-10-09,La Casa del Granjero,arena,gato,Freemiau Arena para Gatos Cipa - 10 KLS,Freemiau,sin especificar,10,kg,51585,,5158.5,https://lacasadelgranjero.com/products/freemiau-arena-para-gatos-cipa
+2026-10-09,La Casa del Granjero,arena,gato,Freemiau Arena para Gatos Cipa - 4.5 KLS,Freemiau,sin especificar,4.5,kg,27236,,6052.44,https://lacasadelgranjero.com/products/freemiau-arena-para-gatos-cipa
+2026-10-09,La Casa del Granjero,arena,gato,Freemiau Arena para Gatos Explosion Ci­trica Cipa - 4 KLS,Freemiau,sin especificar,4,kg,21880,,5470,https://lacasadelgranjero.com/products/freemiau-arena-para-gatos-explosion-citrica-cipa
+2026-10-09,La Casa del Granjero,arena,gato,Freemiau Arena para Gatos Explosion Ci­trica Cipa - 7 KLS,Freemiau,sin especificar,7,kg,35999,,5142.71,https://lacasadelgranjero.com/products/freemiau-arena-para-gatos-explosion-citrica-cipa
+2026-10-09,La Casa del Granjero,arena,gato,Mirringo arena para gatos - 10 KLS,Mirringo,sin especificar,10,kg,56850,,5685,https://lacasadelgranjero.com/products/mirringo-arena-para-gatos
+2026-10-09,La Casa del Granjero,arena,gato,Mirringo arena para gatos - 5 KLS,Mirringo,sin especificar,5,kg,29313,,5862.6,https://lacasadelgranjero.com/products/mirringo-arena-para-gatos
+2026-10-09,La Casa del Granjero,arena,gato,Sepi cat Arena 4.8 Kg,Sepicat,sin especificar,4.8,kg,56569,,11785.21,https://lacasadelgranjero.com/products/sepi-cat-arena-4-8-kg
+2026-10-09,La Res,arena,gato,Arena Freemiau - 10 Kilos,Freemiau,sin especificar,10,kg,47120,49600,4712,https://lares.com.co/products/arena-freemiau
+2026-10-09,La Res,arena,gato,Arena Freemiau - 25 Kilos,Freemiau,sin especificar,25,kg,104879,110400,4195.16,https://lares.com.co/products/arena-freemiau
+2026-10-09,La Res,arena,gato,Arena Freemiau - 4.5 kilos,Freemiau,sin especificar,4.5,kg,21850,23000,4855.56,https://lares.com.co/products/arena-freemiau
+2026-10-09,La Res,arena,gato,Arena Freemiau - Citrica x 4 kilos,Freemiau,sin especificar,4,kg,23939,25199,5984.75,https://lares.com.co/products/arena-freemiau
+2026-10-09,La Res,arena,gato,Arena Freemiau - Citrica x 7 kilos,Freemiau,sin especificar,7,kg,38094,40099,5442,https://lares.com.co/products/arena-freemiau
+2026-10-09,La Res,arena,gato,Arena Mimi Litter x 12 Libras,Mimi Litter,sin especificar,5.44,kg,105164,110700,19320.58,https://lares.com.co/products/arena-mimi-litter-x12-libras
+2026-10-09,La Res,arena,gato,Arena Mimi Litter x 4 Libras,Mimi Litter,sin especificar,1.81,kg,30685,32300,16912.21,https://lares.com.co/products/arena-mimi-litter-x4-libras
+2026-10-09,La Res,arena,gato,Arena Neo Clean Limon 4.15 Kilos,Neo Clean,sin especificar,4.15,kg,21755,22900,5242.17,https://lares.com.co/products/arena-neo-clean-limon-4-15-kilos
 2026-10-09,La Res,arena,gato,Arena Para Gato Feline Pine - 10 Kilos,Feline Pine,vegetal,10,kg,49878,52504,4987.8,https://lares.com.co/products/arena-para-gato-feline-pine
 2026-10-09,La Res,arena,gato,Arena Para Gato Fresh Step Multi Cat Aglomerante Con Febreze - 25 Lbs,Fresh Step,aglomerante,11.34,kg,110755,116584,9766.92,https://lares.com.co/products/arena-para-gato-fresh-step-multi-cat-aglomerante-con-febreze
-2026-10-09,La Res,arena,gato,"Arena misty cat manzana - ""10 kilos""",Misty,otra,10,kg,28499,30000,2849.9,https://lares.com.co/products/arena-misty-cat-manzana-x-4-15kg
-2026-10-09,La Res,arena,gato,"Arena misty cat manzana - ""4.5 Kilos""",Misty,otra,4.5,kg,16340,17200,3631.11,https://lares.com.co/products/arena-misty-cat-manzana-x-4-15kg
-2026-10-09,La Res,arena,gato,"Arena para Gatos Canada Litter - ""4.5 Kilos""",LA RES COLOMBIA,otra,4.5,kg,27076,28501,6016.89,https://lares.com.co/products/canada-litter
-2026-10-09,La Res,arena,gato,Arena para Gatos Foficat - ARENA FOFI CAT 25 KG,GestoAgro,otra,25,kg,97850,103000,3914,https://lares.com.co/products/arena-para-gatos-foficat
-2026-10-09,La Res,arena,gato,Arena para Gatos Foficat - ARENA FOFI CAT X 10 KG,GestoAgro,otra,10,kg,42085,44300,4208.5,https://lares.com.co/products/arena-para-gatos-foficat
-2026-10-09,La Res,arena,gato,Arena para Gatos Foficat - ARENA FOFI CAT X 5 KILOS,GestoAgro,otra,5,kg,20899,22000,4179.8,https://lares.com.co/products/arena-para-gatos-foficat
-2026-10-09,Petcol,arena,gato,ARENA ECOLOGICA SUPER PREMIUM VIVA VERDE LIMPIEZA PLENA 4 KG,Petcol,otra,4,kg,62800,,15700,https://petcol.co/products/arena-ecologica-super-premium-viva-verde-limpieza-plena-4-kg-1
-2026-10-09,Petcol,arena,gato,ARENA GATOS SANITARIA SUSTAINABLY YOURS GRANO FINO,Petcol,otra,,,185100,,,https://petcol.co/products/arena-sanitaria-sustainably-yours-multi-cat-plus-26-lb
-2026-10-09,Petcol,arena,gato,ARENA GATOS SANITARIA SUSTAINABLY YOURS GRANO FINO X 13 LB.,Petcol,otra,5.9,kg,92600,,15703.7,https://petcol.co/products/arena-sanitaria-sustainably-yours-multi-cat-plus-13-lb
-2026-10-09,Petcol,arena,gato,ARENA PARA GATITOS FOFICAT BABYCAT,FOFI CAT,otra,,,19700,,,https://petcol.co/products/arena-gatitos-foficat
-2026-10-09,Petcol,arena,gato,ARENA PARA GATOS CANADA LITTER BOLSA - 4.5 Kg,CANADA LITTER,otra,4.5,kg,26100,,5800,https://petcol.co/products/arena-gatos-canada-litter-bolsa
-2026-10-09,Petcol,arena,gato,ARENA PARA GATOS COMFORT KAT - 4 Kg,COMFORT CAT,otra,4,kg,20900,,5225,https://petcol.co/products/arena-gatos-comfort-kat
-2026-10-09,Petcol,arena,gato,ARENA PARA GATOS COMFORT KAT - 9.1 Kg,COMFORT CAT,otra,9.1,kg,46700,,5131.87,https://petcol.co/products/arena-gatos-comfort-kat
+2026-10-09,La Res,arena,gato,"Arena misty cat manzana - ""10 kilos""",Misty,sin especificar,10,kg,28499,30000,2849.9,https://lares.com.co/products/arena-misty-cat-manzana-x-4-15kg
+2026-10-09,La Res,arena,gato,"Arena misty cat manzana - ""4.5 Kilos""",Misty,sin especificar,4.5,kg,16340,17200,3631.11,https://lares.com.co/products/arena-misty-cat-manzana-x-4-15kg
+2026-10-09,La Res,arena,gato,"Arena para Gatos Canada Litter - ""4.5 Kilos""",LA RES COLOMBIA,sin especificar,4.5,kg,27076,28501,6016.89,https://lares.com.co/products/canada-litter
+2026-10-09,La Res,arena,gato,Arena para Gatos Foficat - ARENA FOFI CAT 25 KG,GestoAgro,sin especificar,25,kg,97850,103000,3914,https://lares.com.co/products/arena-para-gatos-foficat
+2026-10-09,La Res,arena,gato,Arena para Gatos Foficat - ARENA FOFI CAT X 10 KG,GestoAgro,sin especificar,10,kg,42085,44300,4208.5,https://lares.com.co/products/arena-para-gatos-foficat
+2026-10-09,La Res,arena,gato,Arena para Gatos Foficat - ARENA FOFI CAT X 5 KILOS,GestoAgro,sin especificar,5,kg,20899,22000,4179.8,https://lares.com.co/products/arena-para-gatos-foficat
+2026-10-09,Petcol,arena,gato,ARENA ECOLOGICA SUPER PREMIUM VIVA VERDE LIMPIEZA PLENA 4 KG,Petcol,sin especificar,4,kg,62800,,15700,https://petcol.co/products/arena-ecologica-super-premium-viva-verde-limpieza-plena-4-kg-1
+2026-10-09,Petcol,arena,gato,ARENA GATOS SANITARIA SUSTAINABLY YOURS GRANO FINO,Petcol,sin especificar,,,185100,,,https://petcol.co/products/arena-sanitaria-sustainably-yours-multi-cat-plus-26-lb
+2026-10-09,Petcol,arena,gato,ARENA GATOS SANITARIA SUSTAINABLY YOURS GRANO FINO X 13 LB.,Petcol,sin especificar,5.9,kg,92600,,15703.7,https://petcol.co/products/arena-sanitaria-sustainably-yours-multi-cat-plus-13-lb
+2026-10-09,Petcol,arena,gato,ARENA PARA GATITOS FOFICAT BABYCAT,FOFI CAT,sin especificar,,,19700,,,https://petcol.co/products/arena-gatitos-foficat
+2026-10-09,Petcol,arena,gato,ARENA PARA GATOS CANADA LITTER BOLSA - 4.5 Kg,CANADA LITTER,sin especificar,4.5,kg,26100,,5800,https://petcol.co/products/arena-gatos-canada-litter-bolsa
+2026-10-09,Petcol,arena,gato,ARENA PARA GATOS COMFORT KAT - 4 Kg,COMFORT CAT,sin especificar,4,kg,20900,,5225,https://petcol.co/products/arena-gatos-comfort-kat
+2026-10-09,Petcol,arena,gato,ARENA PARA GATOS COMFORT KAT - 9.1 Kg,COMFORT CAT,sin especificar,9.1,kg,46700,,5131.87,https://petcol.co/products/arena-gatos-comfort-kat
 2026-10-09,Petcol,arena,gato,ARENA PARA GATOS FELINE PINE - 10 Kg,FELINE PINE,vegetal,10,kg,53500,,5350,https://petcol.co/products/arena-para-gatos-feline-pine
 2026-10-09,Petcol,arena,gato,ARENA PARA GATOS FELINE PINE - 5 Kg,FELINE PINE,vegetal,5,kg,30300,,6060,https://petcol.co/products/arena-para-gatos-feline-pine
-2026-10-09,Petcol,arena,gato,ARENA PARA GATOS FOFICAT - 10 Kg,FOFI CAT,otra,10,kg,40800,,4080,https://petcol.co/products/arena-gatos-fofi-cat
-2026-10-09,Petcol,arena,gato,ARENA PARA GATOS FOFICAT - 5 Kg,FOFI CAT,otra,5,kg,20300,,4060,https://petcol.co/products/arena-gatos-fofi-cat
-2026-10-09,Petcol,arena,gato,ARENA PARA GATOS FOFICAT JASMINE - 5 Kg,FOFI CAT,otra,5,kg,20300,,4060,https://petcol.co/products/arena-gatos-foficat-jasmine
-2026-10-09,Petcol,arena,gato,ARENA PARA GATOS FOFICAT LAVANDER - 5 Kg,FOFI CAT,otra,5,kg,20300,,4060,https://petcol.co/products/arena-gatos-foficat-lavender
-2026-10-09,Petcol,arena,gato,ARENA PARA GATOS FOFICAT LIMÓN - 5 kg,FOFI CAT,otra,5,kg,20300,,4060,https://petcol.co/products/arena-gatos-foficat-lemon
-2026-10-09,Petcol,arena,gato,ARENA PARA GATOS FREEMIAU - 10 Kg,FREEMIAU,otra,10,kg,61000,,6100,https://petcol.co/products/arena-gatos-freemiau
-2026-10-09,Petcol,arena,gato,ARENA PARA GATOS FREEMIAU - 4.5 Kg,FREEMIAU,otra,4.5,kg,24800,,5511.11,https://petcol.co/products/arena-gatos-freemiau
-2026-10-09,Petcol,arena,gato,ARENA PARA GATOS FREEMIAU CÍTRICA - 4 Kg,FREEMIAU,otra,4,kg,21900,,5475,https://petcol.co/products/arena-gatos-freemiau-citrica
-2026-10-09,Petcol,arena,gato,ARENA PARA GATOS FREEMIAU CÍTRICA - 7 Kg,FREEMIAU,otra,7,kg,39600,,5657.14,https://petcol.co/products/arena-gatos-freemiau-citrica
-2026-10-09,Petcol,arena,gato,ARENA PARA GATOS FRESH STEP MULTI CAT CON FEBREZE - 14 LB,FRESH STEP,otra,6.35,kg,72000,,11338.06,https://petcol.co/products/arena-gatos-fresh-step-multi-cat-con-febreze
-2026-10-09,Petcol,arena,gato,ARENA PARA GATOS MIMI LITTER BOLSA 4 LIBRAS - 4 LB,MIMI LITTER,otra,1.81,kg,34400,,18959.75,https://petcol.co/products/arena-gatos-mimi-litter-bolsa
-2026-10-09,Petcol,arena,gato,ARENA PARA GATOS MIMI LITTER TARRO - 12 LB,MIMI LITTER,otra,5.44,kg,130400,130400,23956.9,https://petcol.co/products/arena-gatos-mimi-litter-botella
-2026-10-09,Petcol,arena,gato,ARENA PARA GATOS MISTY CAT AROMA MANZANA - 4.5KG,MISTY CAT,otra,4.5,kg,17500,,3888.89,https://petcol.co/products/arena-para-gatos-misty-cat-aroma-manzana
-2026-10-09,Petcol,arena,gato,ARENA PARA GATOS MISTY CAT MAX CARBON ACTIVADO - 4.5KG,MISTY CAT,otra,4.5,kg,29000,,6444.44,https://petcol.co/products/arena-para-gatos-misty-cat-max
+2026-10-09,Petcol,arena,gato,ARENA PARA GATOS FOFICAT - 10 Kg,FOFI CAT,sin especificar,10,kg,40800,,4080,https://petcol.co/products/arena-gatos-fofi-cat
+2026-10-09,Petcol,arena,gato,ARENA PARA GATOS FOFICAT - 5 Kg,FOFI CAT,sin especificar,5,kg,20300,,4060,https://petcol.co/products/arena-gatos-fofi-cat
+2026-10-09,Petcol,arena,gato,ARENA PARA GATOS FOFICAT JASMINE - 5 Kg,FOFI CAT,sin especificar,5,kg,20300,,4060,https://petcol.co/products/arena-gatos-foficat-jasmine
+2026-10-09,Petcol,arena,gato,ARENA PARA GATOS FOFICAT LAVANDER - 5 Kg,FOFI CAT,sin especificar,5,kg,20300,,4060,https://petcol.co/products/arena-gatos-foficat-lavender
+2026-10-09,Petcol,arena,gato,ARENA PARA GATOS FOFICAT LIMÓN - 5 kg,FOFI CAT,sin especificar,5,kg,20300,,4060,https://petcol.co/products/arena-gatos-foficat-lemon
+2026-10-09,Petcol,arena,gato,ARENA PARA GATOS FREEMIAU - 10 Kg,FREEMIAU,sin especificar,10,kg,61000,,6100,https://petcol.co/products/arena-gatos-freemiau
+2026-10-09,Petcol,arena,gato,ARENA PARA GATOS FREEMIAU - 4.5 Kg,FREEMIAU,sin especificar,4.5,kg,24800,,5511.11,https://petcol.co/products/arena-gatos-freemiau
+2026-10-09,Petcol,arena,gato,ARENA PARA GATOS FREEMIAU CÍTRICA - 4 Kg,FREEMIAU,sin especificar,4,kg,21900,,5475,https://petcol.co/products/arena-gatos-freemiau-citrica
+2026-10-09,Petcol,arena,gato,ARENA PARA GATOS FREEMIAU CÍTRICA - 7 Kg,FREEMIAU,sin especificar,7,kg,39600,,5657.14,https://petcol.co/products/arena-gatos-freemiau-citrica
+2026-10-09,Petcol,arena,gato,ARENA PARA GATOS FRESH STEP MULTI CAT CON FEBREZE - 14 LB,FRESH STEP,sin especificar,6.35,kg,72000,,11338.06,https://petcol.co/products/arena-gatos-fresh-step-multi-cat-con-febreze
+2026-10-09,Petcol,arena,gato,ARENA PARA GATOS MIMI LITTER BOLSA 4 LIBRAS - 4 LB,MIMI LITTER,sin especificar,1.81,kg,34400,,18959.75,https://petcol.co/products/arena-gatos-mimi-litter-bolsa
+2026-10-09,Petcol,arena,gato,ARENA PARA GATOS MIMI LITTER TARRO - 12 LB,MIMI LITTER,sin especificar,5.44,kg,130400,130400,23956.9,https://petcol.co/products/arena-gatos-mimi-litter-botella
+2026-10-09,Petcol,arena,gato,ARENA PARA GATOS MISTY CAT AROMA MANZANA - 4.5KG,MISTY CAT,sin especificar,4.5,kg,17500,,3888.89,https://petcol.co/products/arena-para-gatos-misty-cat-aroma-manzana
+2026-10-09,Petcol,arena,gato,ARENA PARA GATOS MISTY CAT MAX CARBON ACTIVADO - 4.5KG,MISTY CAT,sin especificar,4.5,kg,29000,,6444.44,https://petcol.co/products/arena-para-gatos-misty-cat-max
 2026-10-09,Petcol,arena,gato,ARENA PARA GATOS NEO CLEAN SCOOPABLE AROMA MANZANA - 4.15 Kg,NEO CLEAN,aglomerante,4.15,kg,20700,,4987.95,https://petcol.co/products/arena-gatos-neo-clean-scoopable-manzana
 2026-10-09,Petcol,arena,gato,ARENA PARA GATOS NEO CLEAN SCOOPABLE AROMA MANZANA - 8.30 Kg,NEO CLEAN,aglomerante,8.3,kg,40000,,4819.28,https://petcol.co/products/arena-gatos-neo-clean-scoopable-manzana
 2026-10-09,Petcol,arena,gato,"ARENA PARA GATOS NEO CLEAN SCOOPABLE SIN FRAGANCIA - 4,5 Kg",NEO CLEAN,aglomerante,4.5,kg,20700,,4600,https://petcol.co/products/arena-gatos-neo-clean-scoopable-sin-fragancia
 2026-10-09,Petcol,arena,gato,ARENA PARA GATOS ROYAL CAT SCOOPABLE AROMA LAVANDA - 5 Kg,ROYAL CAT,aglomerante,5,kg,35600,,7120,https://petcol.co/products/arena-gatos-royal-cat-rosada-bolsa
 2026-10-09,Petcol,arena,gato,ARENA PARA GATOS ROYAL CAT SCOOPABLE SIN AROMA - 5 Kg,ROYAL CAT,aglomerante,5,kg,35600,,7120,https://petcol.co/products/royal-cat-arena-sin-olor-5-kg-bolsa
-2026-10-09,Puppis,arena,gato,Arena Bentonita Para Gato Puppis Súper Premium 10 kg,Puppis,bentonita,10,kg,69900,69900,6990,https://www.puppis.com.co/arena-bentonita-para-gato-puppis-super-premium/p
-2026-10-09,Puppis,arena,gato,Arena Foficat Lavanda 5 kg,Fofi Cat,otra,5,kg,23900,23900,4780,https://www.puppis.com.co/arena-foficat-lavanda/p
-2026-10-09,Puppis,arena,gato,Arena Freemiau 10 kg,Freemiau,otra,10,kg,58900,58900,5890,https://www.puppis.com.co/arena-freemiau/p
-2026-10-09,Puppis,arena,gato,"Arena Freemiau 4,5 kg",Freemiau,otra,4.5,kg,26900,26900,5977.78,https://www.puppis.com.co/arena-freemiau/p
-2026-10-09,Puppis,arena,gato,Arena Freemiau Cítrica 7 kg,Freemiau,otra,7,kg,34900,34900,4985.71,https://www.puppis.com.co/arena-freemiau-citrica/p
-2026-10-09,Puppis,arena,gato,Arena Para Gato Ecocat 10 lb,Ecocat,otra,4.54,kg,75900,75900,16733.09,https://www.puppis.com.co/arena-para-gato-ecocat/p
-2026-10-09,Puppis,arena,gato,Arena Para Gato Ecocat 17 lb,Ecocat,otra,7.71,kg,109900,109900,14252.24,https://www.puppis.com.co/arena-para-gato-ecocat/p
-2026-10-09,Puppis,arena,gato,Arena Para Gato Ecocat 5 lb,Ecocat,otra,2.27,kg,40900,40900,18033.81,https://www.puppis.com.co/arena-para-gato-ecocat/p
+2026-10-09,Puppis,arena,gato,Arena Bentonita Para Gato Puppis Súper Premium 10 kg,Puppis,aglomerante,10,kg,69900,69900,6990,https://www.puppis.com.co/arena-bentonita-para-gato-puppis-super-premium/p
+2026-10-09,Puppis,arena,gato,Arena Foficat Lavanda 5 kg,Fofi Cat,sin especificar,5,kg,23900,23900,4780,https://www.puppis.com.co/arena-foficat-lavanda/p
+2026-10-09,Puppis,arena,gato,Arena Freemiau 10 kg,Freemiau,sin especificar,10,kg,58900,58900,5890,https://www.puppis.com.co/arena-freemiau/p
+2026-10-09,Puppis,arena,gato,"Arena Freemiau 4,5 kg",Freemiau,sin especificar,4.5,kg,26900,26900,5977.78,https://www.puppis.com.co/arena-freemiau/p
+2026-10-09,Puppis,arena,gato,Arena Freemiau Cítrica 7 kg,Freemiau,sin especificar,7,kg,34900,34900,4985.71,https://www.puppis.com.co/arena-freemiau-citrica/p
+2026-10-09,Puppis,arena,gato,Arena Para Gato Ecocat 10 lb,Ecocat,sin especificar,4.54,kg,75900,75900,16733.09,https://www.puppis.com.co/arena-para-gato-ecocat/p
+2026-10-09,Puppis,arena,gato,Arena Para Gato Ecocat 17 lb,Ecocat,sin especificar,7.71,kg,109900,109900,14252.24,https://www.puppis.com.co/arena-para-gato-ecocat/p
+2026-10-09,Puppis,arena,gato,Arena Para Gato Ecocat 5 lb,Ecocat,sin especificar,2.27,kg,40900,40900,18033.81,https://www.puppis.com.co/arena-para-gato-ecocat/p
 2026-10-09,Puppis,arena,gato,Arena Para Gato Felineco Maiz Lavanda 3 kg,Felineco,vegetal,3,kg,20900,20900,6966.67,https://www.puppis.com.co/arena-para-gato-felineco-maiz-lavanda/p
 2026-10-09,Puppis,arena,gato,"Arena Para Gato Felineco Maiz Lavanda 6,5 kg",Felineco,vegetal,6.5,kg,41900,41900,6446.15,https://www.puppis.com.co/arena-para-gato-felineco-maiz-lavanda/p
 2026-10-09,Puppis,arena,gato,Arena Para Gato Felineco Maiz Sin Aroma 3 kg,Felineco,vegetal,3,kg,20900,20900,6966.67,https://www.puppis.com.co/arena-para-gato-felineco-maiz-sin-aroma/p
 2026-10-09,Puppis,arena,gato,"Arena Para Gato Felineco Maiz Sin Aroma 6,5 kg",Felineco,vegetal,6.5,kg,41900,41900,6446.15,https://www.puppis.com.co/arena-para-gato-felineco-maiz-sin-aroma/p
 2026-10-09,Puppis,arena,gato,Arena Para Gato Felineco Maiz Vainilla 3 kg,Felineco,vegetal,3,kg,20900,20900,6966.67,https://www.puppis.com.co/arena-para-gato-felineco-maiz-vainilla/p
 2026-10-09,Puppis,arena,gato,"Arena Para Gato Felineco Maiz Vainilla 6,5 kg",Felineco,vegetal,6.5,kg,41900,41900,6446.15,https://www.puppis.com.co/arena-para-gato-felineco-maiz-vainilla/p
-2026-10-09,Puppis,arena,gato,"Arena Para Gato Freemiau Lavanda 4,5 kg",Freemiau,otra,4.5,kg,26900,26900,5977.78,https://www.puppis.com.co/arena-para-gato-freemiau-lavanda/p
-2026-10-09,Puppis,arena,gato,Arena Para Gato Fresh Step Multi Cat Con Febreze 14 lb,Fresh Step,otra,6.35,kg,70900,70900,11164.84,https://www.puppis.com.co/arena-para-gato-fresh-step-multi-cat-con-febreze/p
-2026-10-09,Puppis,arena,gato,Arena Para Gato Fresh Step Multi Cat Con Febreze 22 lb,Fresh Step,otra,9.98,kg,95900,95900,9610.15,https://www.puppis.com.co/arena-para-gato-fresh-step-multi-cat-con-febreze/p
-2026-10-09,Puppis,arena,gato,Arena Para Gato Mistycat Max 10 kg,MISTY CAT,otra,10,kg,62900,62900,6290,https://www.puppis.com.co/mistycat-max/p
-2026-10-09,Puppis,arena,gato,"Arena Para Gato Mistycat Max 4,5 kg",MISTY CAT,otra,4.5,kg,29900,29900,6644.44,https://www.puppis.com.co/mistycat-max/p
-2026-10-09,Puppis,arena,gato,Arena Para Gato Multi- Cat Odour Buster 12 kg,Odour Buster,otra,12,kg,119900,119900,9991.67,https://www.puppis.com.co/arena-para-gato-multi-cat-odour-buster/p
-2026-10-09,Puppis,arena,gato,"Arena Para Gato Neo Clean con olor a limón 4,15 kg",Neo Clean,otra,4.15,kg,24900,24900,6000,https://www.puppis.com.co/arena-para-gato-neo-clean-sin-olor/p
-2026-10-09,Puppis,arena,gato,"Arena Para Gato Neo Clean con olor a limón 8,30 kg",Neo Clean,otra,8.3,kg,40900,40900,4927.71,https://www.puppis.com.co/arena-para-gato-neo-clean-sin-olor/p
-2026-10-09,Puppis,arena,gato,Arena Para Gato Original Odour Buster 14 kg,Odour Buster,otra,14,kg,119900,119900,8564.29,https://www.puppis.com.co/arena-para-gato-original-odour-buster/p
-2026-10-09,Puppis,arena,gato,Arena Para Gato Puppis Bentonita Económica 20 kg,Puppis,bentonita,20,kg,65900,65900,3295,https://www.puppis.com.co/puppis-arena-para-gato-bentonita-economica/p
-2026-10-09,Puppis,arena,gato,"Arena Para Gato Puppis Bentonita Económica 4,5 kg",Puppis,bentonita,4.5,kg,14900,14900,3311.11,https://www.puppis.com.co/puppis-arena-para-gato-bentonita-economica/p
-2026-10-09,Puppis,arena,gato,"Arena Para Gato Puppis Natural 4,5 kg",Puppis,otra,4.5,kg,24900,24900,5533.33,https://www.puppis.com.co/arena-para-gato-puppis-natural/p
-2026-10-09,Puppis,arena,gato,Arena Para Gato Royal Cat Lavanda 10 kg,Royal Cat,otra,10,kg,67900,67900,6790,https://www.puppis.com.co/arena-para-gato-royal-cat-lavanda/p
-2026-10-09,Puppis,arena,gato,Arena Para Gato Royal Cat Lavanda 5 kg,Royal Cat,otra,5,kg,36900,36900,7380,https://www.puppis.com.co/arena-para-gato-royal-cat-lavanda/p
-2026-10-09,Puppis,arena,gato,Arena Para Gato Royal Cat Neutral Scent 10 kg,Royal Cat,otra,10,kg,67900,67900,6790,https://www.puppis.com.co/arena-para-gato-royal-cat-neutral-scent/p
-2026-10-09,Puppis,arena,gato,Arena Para Gato Royal Cat Neutral Scent 5 kg,Royal Cat,otra,5,kg,36900,36900,7380,https://www.puppis.com.co/arena-para-gato-royal-cat-neutral-scent/p
+2026-10-09,Puppis,arena,gato,"Arena Para Gato Freemiau Lavanda 4,5 kg",Freemiau,sin especificar,4.5,kg,26900,26900,5977.78,https://www.puppis.com.co/arena-para-gato-freemiau-lavanda/p
+2026-10-09,Puppis,arena,gato,Arena Para Gato Fresh Step Multi Cat Con Febreze 14 lb,Fresh Step,sin especificar,6.35,kg,70900,70900,11164.84,https://www.puppis.com.co/arena-para-gato-fresh-step-multi-cat-con-febreze/p
+2026-10-09,Puppis,arena,gato,Arena Para Gato Fresh Step Multi Cat Con Febreze 22 lb,Fresh Step,sin especificar,9.98,kg,95900,95900,9610.15,https://www.puppis.com.co/arena-para-gato-fresh-step-multi-cat-con-febreze/p
+2026-10-09,Puppis,arena,gato,Arena Para Gato Mistycat Max 10 kg,MISTY CAT,sin especificar,10,kg,62900,62900,6290,https://www.puppis.com.co/mistycat-max/p
+2026-10-09,Puppis,arena,gato,"Arena Para Gato Mistycat Max 4,5 kg",MISTY CAT,sin especificar,4.5,kg,29900,29900,6644.44,https://www.puppis.com.co/mistycat-max/p
+2026-10-09,Puppis,arena,gato,Arena Para Gato Multi- Cat Odour Buster 12 kg,Odour Buster,sin especificar,12,kg,119900,119900,9991.67,https://www.puppis.com.co/arena-para-gato-multi-cat-odour-buster/p
+2026-10-09,Puppis,arena,gato,"Arena Para Gato Neo Clean con olor a limón 4,15 kg",Neo Clean,sin especificar,4.15,kg,24900,24900,6000,https://www.puppis.com.co/arena-para-gato-neo-clean-sin-olor/p
+2026-10-09,Puppis,arena,gato,"Arena Para Gato Neo Clean con olor a limón 8,30 kg",Neo Clean,sin especificar,8.3,kg,40900,40900,4927.71,https://www.puppis.com.co/arena-para-gato-neo-clean-sin-olor/p
+2026-10-09,Puppis,arena,gato,Arena Para Gato Original Odour Buster 14 kg,Odour Buster,sin especificar,14,kg,119900,119900,8564.29,https://www.puppis.com.co/arena-para-gato-original-odour-buster/p
+2026-10-09,Puppis,arena,gato,Arena Para Gato Puppis Bentonita Económica 20 kg,Puppis,aglomerante,20,kg,65900,65900,3295,https://www.puppis.com.co/puppis-arena-para-gato-bentonita-economica/p
+2026-10-09,Puppis,arena,gato,"Arena Para Gato Puppis Bentonita Económica 4,5 kg",Puppis,aglomerante,4.5,kg,14900,14900,3311.11,https://www.puppis.com.co/puppis-arena-para-gato-bentonita-economica/p
+2026-10-09,Puppis,arena,gato,"Arena Para Gato Puppis Natural 4,5 kg",Puppis,sin especificar,4.5,kg,24900,24900,5533.33,https://www.puppis.com.co/arena-para-gato-puppis-natural/p
+2026-10-09,Puppis,arena,gato,Arena Para Gato Royal Cat Lavanda 10 kg,Royal Cat,sin especificar,10,kg,67900,67900,6790,https://www.puppis.com.co/arena-para-gato-royal-cat-lavanda/p
+2026-10-09,Puppis,arena,gato,Arena Para Gato Royal Cat Lavanda 5 kg,Royal Cat,sin especificar,5,kg,36900,36900,7380,https://www.puppis.com.co/arena-para-gato-royal-cat-lavanda/p
+2026-10-09,Puppis,arena,gato,Arena Para Gato Royal Cat Neutral Scent 10 kg,Royal Cat,sin especificar,10,kg,67900,67900,6790,https://www.puppis.com.co/arena-para-gato-royal-cat-neutral-scent/p
+2026-10-09,Puppis,arena,gato,Arena Para Gato Royal Cat Neutral Scent 5 kg,Royal Cat,sin especificar,5,kg,36900,36900,7380,https://www.puppis.com.co/arena-para-gato-royal-cat-neutral-scent/p
 2026-10-09,Puppis,arena,gato,"Arena Para Gato Sepicat Agromerante 4,8 kg",Sepicat,aglomerante,4.8,kg,58900,58900,12270.83,https://www.puppis.com.co/arena-para-gato-sepicat-agromerante/p
-2026-10-09,Puppis,arena,gato,Arena Para Gatos Angora 12 kg,Angora,otra,12,kg,99900,99900,8325,https://www.puppis.com.co/arena-para-gatos-angora-1/p
+2026-10-09,Puppis,arena,gato,Arena Para Gatos Angora 12 kg,Angora,sin especificar,12,kg,99900,99900,8325,https://www.puppis.com.co/arena-para-gatos-angora-1/p
 2026-10-09,Puppis,arena,gato,Arena Sanitaria Aglomerante para Gato Sepi Cat 9 kg,Sepicat,aglomerante,9,kg,79900,79900,8877.78,https://www.puppis.com.co/arena-sanitaria-aglomerante-para-gato-sepi-cat/p
 2026-10-09,Puppis,arena,gato,Arena Sanitaria Para Gato Petys Aglomerante 10 kg,Petys,aglomerante,10,kg,47900,47900,4790,https://www.puppis.com.co/arena-sanitaria-para-gato-petys-aglomerante/p
 2026-10-09,Puppis,arena,gato,"Arena Sanitaria Para Gato Petys Aglomerante 4,5 kg",Petys,aglomerante,4.5,kg,21900,21900,4866.67,https://www.puppis.com.co/arena-sanitaria-para-gato-petys-aglomerante/p
@@ -195,9 +195,9 @@ fecha,tienda,categoria,especie,producto,marca,caracteristica,cantidad,unidad,pre
 2026-10-09,Puppis,arena,gato,Arena de maiz para gato Bio Cat 4 kg,Bio Cat,vegetal,4,kg,27900,27900,6975,https://www.puppis.com.co/arena-de-maiz-para-gato-bio-cat/p
 2026-10-09,Puppis,arena,gato,"Arena de soya natural para gato M-pets 2,5 kg",M-Pets,vegetal,2.5,kg,26900,26900,10760,https://www.puppis.com.co/arena-de-soya-natural-para-gato-m-pets/p
 2026-10-09,Puppis,arena,gato,"Arena de soya y cassava para gato M-pets 2,5 kg",M-Pets,vegetal,2.5,kg,29900,29900,11960,https://www.puppis.com.co/arena-de-soya-y-cassava-para-gato-m-pets/p
-2026-10-09,Puppis,arena,gato,Foficat Arena Para Gato 10 kg,Fofi Cat,otra,10,kg,47900,47900,4790,https://www.puppis.com.co/foficat-arena-para-gato/p
-2026-10-09,Puppis,arena,gato,Foficat Arena Para Gato 25 kg,Fofi Cat,otra,25,kg,109900,109900,4396,https://www.puppis.com.co/foficat-arena-para-gato/p
-2026-10-09,Puppis,arena,gato,Foficat Arena Para Gato 5 kg,Fofi Cat,otra,5,kg,23900,23900,4780,https://www.puppis.com.co/foficat-arena-para-gato/p
+2026-10-09,Puppis,arena,gato,Foficat Arena Para Gato 10 kg,Fofi Cat,sin especificar,10,kg,47900,47900,4790,https://www.puppis.com.co/foficat-arena-para-gato/p
+2026-10-09,Puppis,arena,gato,Foficat Arena Para Gato 25 kg,Fofi Cat,sin especificar,25,kg,109900,109900,4396,https://www.puppis.com.co/foficat-arena-para-gato/p
+2026-10-09,Puppis,arena,gato,Foficat Arena Para Gato 5 kg,Fofi Cat,sin especificar,5,kg,23900,23900,4780,https://www.puppis.com.co/foficat-arena-para-gato/p
 2026-10-09,La Casa del Granjero,arneses-correas,ambos,Correa Para Carro,Pets&Toys,,1,unidad,41592,,41592,https://lacasadelgranjero.com/products/correa-para-carro
 2026-10-09,La Casa del Granjero,arneses-correas,ambos,Correa Reflectiva Ahogo,Pets&Toys,,1,unidad,26152,,26152,https://lacasadelgranjero.com/products/correa-reflectiva-ahogo
 2026-10-09,La Casa del Granjero,arneses-correas,ambos,Correa Retractil Grande,Pets&Toys,,1,unidad,88620,,88620,https://lacasadelgranjero.com/products/correa-retractil-grande
@@ -221,19 +221,21 @@ fecha,tienda,categoria,especie,producto,marca,caracteristica,cantidad,unidad,pre
 2026-10-09,Petcol,arneses-correas,perro,Correa para Perro Tejida - Azul / 120 cm,KONNO,,1,unidad,47000,,47000,https://petcol.co/products/correa-para-perro-tejida-2
 2026-10-09,Petcol,arneses-correas,perro,PECHERA PERRO ERGOCOMFORT P XL ROJO,FERPLAST,talla XL,1,unidad,266100,,266100,https://petcol.co/products/pechera-ergo-comfort-ferplast-xl
 2026-10-09,Puppis,arneses-correas,perro,Arnés Afp New Travel Dog para Perro XL,Afp,talla XL,1,unidad,70900,70900,70900,https://www.puppis.com.co/arnes-new-travel-dog-para-perro/p
-2026-10-09,Puppis,arneses-correas,perro,Arnés D-Mountain Barny/Menta Felcan para perro M,Felcan,talla M,1,unidad,178900,178900,178900,https://www.puppis.com.co/arnes-dmountain-barnymenta-felcan-para-perro/p
-2026-10-09,Puppis,arneses-correas,perro,Arnés D-Mountain Barny/Menta Felcan para perro S,Felcan,talla S,1,unidad,161900,161900,161900,https://www.puppis.com.co/arnes-dmountain-barnymenta-felcan-para-perro/p
-2026-10-09,Puppis,arneses-correas,perro,Arnés D-Mountain Menta/Jade Felcan para perro L,Felcan,talla L,1,unidad,189900,189900,189900,https://www.puppis.com.co/arnes-dmountain-mentajade-felcan-para-perro/p
-2026-10-09,Puppis,arneses-correas,perro,Arnés D-Mountain Menta/Jade Felcan para perro M,Felcan,talla M,1,unidad,178900,178900,178900,https://www.puppis.com.co/arnes-dmountain-mentajade-felcan-para-perro/p
-2026-10-09,Puppis,arneses-correas,perro,Arnés D-Mountain Menta/Jade Felcan para perro S,Felcan,talla S,1,unidad,161900,161900,161900,https://www.puppis.com.co/arnes-dmountain-mentajade-felcan-para-perro/p
-2026-10-09,Puppis,arneses-correas,perro,Arnés D-Mountain Menta/Jade Felcan para perro XL,Felcan,talla XL,1,unidad,200900,200900,200900,https://www.puppis.com.co/arnes-dmountain-mentajade-felcan-para-perro/p
-2026-10-09,Puppis,arneses-correas,perro,Arnés D-Mountain Rojo/Rojo Felcan para perro M,Felcan,talla M,1,unidad,178900,178900,178900,https://www.puppis.com.co/arnes-dmountain-rojorojo-felcan-para-perro/p
-2026-10-09,Puppis,arneses-correas,perro,Arnés D-Urban Barny/Fucsia Felcan para perro M,Felcan,talla M,1,unidad,126900,126900,126900,https://www.puppis.com.co/arnes-durban-barnyfucsia-felcan-para-perro/p
-2026-10-09,Puppis,arneses-correas,perro,Arnés D-Urban Barny/Fucsia Felcan para perro S,Felcan,talla S,1,unidad,120900,120900,120900,https://www.puppis.com.co/arnes-durban-barnyfucsia-felcan-para-perro/p
-2026-10-09,Puppis,arneses-correas,perro,Arnés D-Urban Menta/Morado Felcan para perro M,Felcan,talla M,1,unidad,126900,126900,126900,https://www.puppis.com.co/arnes-durban-mentamorado-felcan-para-perro/p
-2026-10-09,Puppis,arneses-correas,perro,Arnés D-Urban Menta/Morado Felcan para perro S,Felcan,talla S,1,unidad,120900,120900,120900,https://www.puppis.com.co/arnes-durban-mentamorado-felcan-para-perro/p
-2026-10-09,Puppis,arneses-correas,perro,Arnés D-Urban Rojo/Menta Felcan para perro M,Felcan,talla M,1,unidad,126900,126900,126900,https://www.puppis.com.co/arnes-durban-rojomenta-felcan-para-perro/p
-2026-10-09,Puppis,arneses-correas,perro,Arnés D-Urban Rojo/Menta Felcan para perro S,Felcan,talla S,1,unidad,120900,120900,120900,https://www.puppis.com.co/arnes-durban-rojomenta-felcan-para-perro/p
+2026-10-09,Puppis,arneses-correas,perro,Arnés D-Mountain Verde / Chocolate Felcan para perro L,Felcan,talla L,1,unidad,189900,189900,189900,https://www.puppis.com.co/arnes-dmountain-verde-chocolate-felcan-para-perro/p
+2026-10-09,Puppis,arneses-correas,perro,Arnés D-Mountain Verde / Chocolate Felcan para perro M,Felcan,talla M,1,unidad,178900,178900,178900,https://www.puppis.com.co/arnes-dmountain-verde-chocolate-felcan-para-perro/p
+2026-10-09,Puppis,arneses-correas,perro,Arnés D-Mountain Verde / Chocolate Felcan para perro XL,Felcan,talla XL,1,unidad,200900,200900,200900,https://www.puppis.com.co/arnes-dmountain-verde-chocolate-felcan-para-perro/p
+2026-10-09,Puppis,arneses-correas,perro,Arnés D-Mountain Vinotinto/Vinotinto Felcan para perro L,Felcan,talla L,1,unidad,189900,189900,189900,https://www.puppis.com.co/arnes-dmountain-vinotintovinotinto-felcan-para-perro/p
+2026-10-09,Puppis,arneses-correas,perro,Arnés D-Mountain Vinotinto/Vinotinto Felcan para perro M,Felcan,talla M,1,unidad,178900,178900,178900,https://www.puppis.com.co/arnes-dmountain-vinotintovinotinto-felcan-para-perro/p
+2026-10-09,Puppis,arneses-correas,perro,Arnés D-Mountain Vinotinto/Vinotinto Felcan para perro S,Felcan,talla S,1,unidad,161900,161900,161900,https://www.puppis.com.co/arnes-dmountain-vinotintovinotinto-felcan-para-perro/p
+2026-10-09,Puppis,arneses-correas,perro,Arnés D-Mountain Vinotinto/Vinotinto Felcan para perro XL,Felcan,talla XL,1,unidad,200900,200900,200900,https://www.puppis.com.co/arnes-dmountain-vinotintovinotinto-felcan-para-perro/p
+2026-10-09,Puppis,arneses-correas,perro,Arnés D-Urban Beige/Vinotinto Felcan para perro M,Felcan,talla M,1,unidad,126900,126900,126900,https://www.puppis.com.co/arnes-durban-beigevinotinto-felcan-para-perro/p
+2026-10-09,Puppis,arneses-correas,perro,Arnés D-Urban Beige/Vinotinto Felcan para perro S,Felcan,talla S,1,unidad,120900,120900,120900,https://www.puppis.com.co/arnes-durban-beigevinotinto-felcan-para-perro/p
+2026-10-09,Puppis,arneses-correas,perro,Arnés M-Pets Origami Aqua Twist para Perro L,M-Pets,talla M,1,unidad,113900,113900,113900,https://www.puppis.com.co/arnes-origami-aqua-twist-para-perro/p
+2026-10-09,Puppis,arneses-correas,perro,Arnés M-Pets Origami Aqua Twist para Perro M,M-Pets,talla M,1,unidad,91900,91900,91900,https://www.puppis.com.co/arnes-origami-aqua-twist-para-perro/p
+2026-10-09,Puppis,arneses-correas,perro,Arnés M-Pets Origami Aqua Twist para Perro S,M-Pets,talla M,1,unidad,84900,84900,84900,https://www.puppis.com.co/arnes-origami-aqua-twist-para-perro/p
+2026-10-09,Puppis,arneses-correas,perro,Arnés M-Pets Origami Cherry Fold para Perro L,M-Pets,talla M,1,unidad,113900,113900,113900,https://www.puppis.com.co/arnes-origami-cherry-fold-para-perro/p
+2026-10-09,Puppis,arneses-correas,perro,Arnés M-Pets Origami Cherry Fold para Perro M,M-Pets,talla M,1,unidad,91900,91900,91900,https://www.puppis.com.co/arnes-origami-cherry-fold-para-perro/p
+2026-10-09,Puppis,arneses-correas,perro,Arnés M-Pets Origami Cherry Fold para Perro S,M-Pets,talla M,1,unidad,84900,84900,84900,https://www.puppis.com.co/arnes-origami-cherry-fold-para-perro/p
 2026-10-09,Puppis,arneses-correas,perro,Arnés Para Perro Ezydog Convert Azul S,Ezydog,talla S,1,unidad,36380,181900,36380,https://www.puppis.com.co/arnes-para-perro-ezydog-convert-azul/p
 2026-10-09,Puppis,arneses-correas,perro,Arnés Para Perro Kong Comfort Negro M,Kong,talla M,1,unidad,193900,193900,193900,https://www.puppis.com.co/arnes-para-perro-kong-comfort-negro/p
 2026-10-09,Puppis,arneses-correas,perro,Arnés Para Perro Kong Norwegian Negro L,Kong,talla L,1,unidad,136900,136900,136900,https://www.puppis.com.co/arnes-para-perro-kong-norwegian-negro/p
@@ -283,7 +285,12 @@ fecha,tienda,categoria,especie,producto,marca,caracteristica,cantidad,unidad,pre
 2026-10-09,Puppis,arneses-correas,perro,Arnés Velvet rosa para perro M-pets S,M-Pets,talla M,1,unidad,54900,54900,54900,https://www.puppis.com.co/arnes-velvet-rosa-para-perro-m-pets/p
 2026-10-09,Puppis,arneses-correas,perro,Arnés Velvet rosa para perro M-pets XS,M-Pets,talla M,1,unidad,47900,47900,47900,https://www.puppis.com.co/arnes-velvet-rosa-para-perro-m-pets/p
 2026-10-09,Puppis,arneses-correas,perro,Arnés Velvet rosa para perro M-pets XXS,M-Pets,talla M,1,unidad,45900,45900,45900,https://www.puppis.com.co/arnes-velvet-rosa-para-perro-m-pets/p
-2026-10-09,Puppis,arneses-correas,perro,Arnés de Hiking M-Pets Azul Eléctrico Para Perro L,M-Pets,talla M,1,unidad,38370,127900,38370,https://www.puppis.com.co/m-pets-arnes-de-hiking-azul-electrico-para-perro/p
+2026-10-09,Puppis,arneses-correas,perro,Arnés de Hiking M-Pets Morado Real Para Perro L,M-Pets,talla M,1,unidad,136900,136900,136900,https://www.puppis.com.co/m-pets-arnes-de-hiking-morado-real-para-perro/p
+2026-10-09,Puppis,arneses-correas,perro,Arnés de Hiking M-Pets Morado Real Para Perro M,M-Pets,talla M,1,unidad,127900,127900,127900,https://www.puppis.com.co/m-pets-arnes-de-hiking-morado-real-para-perro/p
+2026-10-09,Puppis,arneses-correas,perro,Arnés de Hiking M-Pets Morado Real Para Perro S,M-Pets,talla M,1,unidad,110900,110900,110900,https://www.puppis.com.co/m-pets-arnes-de-hiking-morado-real-para-perro/p
+2026-10-09,Puppis,arneses-correas,perro,Arnés de Hiking M-Pets Negro Ónix Para Perro L,M-Pets,talla M,1,unidad,136900,136900,136900,https://www.puppis.com.co/m-pets-arnes-de-hiking-negro-onix-para-perro/p
+2026-10-09,Puppis,arneses-correas,perro,Arnés de Hiking M-Pets Negro Ónix Para Perro M,M-Pets,talla M,1,unidad,127900,127900,127900,https://www.puppis.com.co/m-pets-arnes-de-hiking-negro-onix-para-perro/p
+2026-10-09,Puppis,arneses-correas,perro,Arnés de Hiking M-Pets Negro Ónix Para Perro S,M-Pets,talla M,1,unidad,110900,110900,110900,https://www.puppis.com.co/m-pets-arnes-de-hiking-negro-onix-para-perro/p
 2026-10-09,Puppis,arneses-correas,perro,"Arnés para Perro Puppis Anti-tirón Magenta Muse 2,5 cm",Puppis,,1,unidad,53900,53900,53900,https://www.puppis.com.co/arnes-para-perro-puppis-anti-tiron-magenta-muse/p
 2026-10-09,Puppis,arneses-correas,perro,Arnés para Perro Puppis Anti-tirón Magenta Muse 3 cm,Puppis,,1,unidad,67900,67900,67900,https://www.puppis.com.co/arnes-para-perro-puppis-anti-tiron-magenta-muse/p
 2026-10-09,Puppis,arneses-correas,perro,"Arnés para Perro Puppis Anti-tirón Teal Dominion 2,5 cm",Puppis,,1,unidad,53900,53900,53900,https://www.puppis.com.co/arnes-para-perro-puppis-anti-tiron-teal-dominion/p
@@ -631,7 +638,6 @@ fecha,tienda,categoria,especie,producto,marca,caracteristica,cantidad,unidad,pre
 2026-10-09,Petcol,juguetes,gato,KONG JUGUETE PARA GATO TÚNEL ROJO,KONG,,1,unidad,89000,89000,89000,https://petcol.co/products/kong-gato-tunel-rojo
 2026-10-09,Petcol,juguetes,gato,KONG JUGUETE PARA GATO WOBBLER CON PLUMAS,KONG,,1,unidad,117100,,117100,https://petcol.co/products/kong-gato-wobbler-con-plumas
 2026-10-09,Petcol,juguetes,gato,REPUESTO PLUMAS TWIRL & WHIRL X 2 UND,OURPETS,,1,unidad,28200,,28200,https://petcol.co/products/vara-de-plumas
-2026-10-09,Puppis,juguetes,gato,Cantnip Para Gato Kong Naturals 1 oz,Kong,,1,unidad,30900,30900,30900,https://www.puppis.com.co/cantnip-para-gato-kong-naturals/p
 2026-10-09,Puppis,juguetes,gato,Hierba Para Gato Catnip Pixie 1 oz,Pixie,,1,unidad,22000,22000,22000,https://www.puppis.com.co/hierba-para-gato-catnip-pixie/p
 2026-10-09,Puppis,juguetes,gato,Juguete Interactivo Para Gato M-PETS Rolling Único,M-Pets,talla M,1,unidad,40900,40900,40900,https://www.puppis.com.co/juguete-interactivo-para-gato-m-pets-rolling/p
 2026-10-09,Puppis,juguetes,gato,"Juguete Para Gato Petstages Mini Torres 25,4×25,4×12,7 cm",Petstages,"12,7 cm",1,unidad,101900,101900,101900,https://www.puppis.com.co/juguete-para-gato-petstages-mini-torres/p
@@ -915,8 +921,8 @@ fecha,tienda,categoria,especie,producto,marca,caracteristica,cantidad,unidad,pre
 2026-10-09,Puppis,rascadores,gato,Caja Rascador Para Gato 2 En 1 Pawise Único,Pawise,,1,unidad,39900,39900,39900,https://www.puppis.com.co/caja-rascador-para-gato-2-en-1-pawise/p
 2026-10-09,Puppis,rascadores,gato,Gimnasio Para Gato Dos Niveles (Colores Surtidos) Único,Generico,,1,unidad,176900,176900,176900,https://www.puppis.com.co/gimnasio-para-gato-dos-niveles-colores-surtidos/p
 2026-10-09,Puppis,rascadores,gato,Gimnasio Para Gato Grande (Colores Surtidos) Único,Carlos Martinez,,1,unidad,593900,593900,593900,https://www.puppis.com.co/gimnasio-para-gato-grande-colores-surtidos/p
-2026-10-09,Puppis,rascadores,gato,Gimnasio Para Gato Pet Comfort Circulos Con Cama Gris 50x50x110 cm,Pet Comfort,110 cm,1,unidad,333115,391900,333115,https://www.puppis.com.co/gimnasio-para-gato-pet-comfort-circulos-con-cama-gris/p
-2026-10-09,Puppis,rascadores,gato,Gimnasio Para Gato Pet Comfort Eco Mediano Café 40x35x115 cm,Pet Comfort,115 cm,1,unidad,234515,275900,234515,https://www.puppis.com.co/gimnasio-para-gato-pet-comfort-eco-mediano-cafe/p
+2026-10-09,Puppis,rascadores,gato,Gimnasio Para Gato Pet Comfort Circulos Con Cama Gris 50x50x110 cm,Pet Comfort,110 cm,1,unidad,391900,391900,391900,https://www.puppis.com.co/gimnasio-para-gato-pet-comfort-circulos-con-cama-gris/p
+2026-10-09,Puppis,rascadores,gato,Gimnasio Para Gato Pet Comfort Eco Mediano Café 40x35x115 cm,Pet Comfort,115 cm,1,unidad,275900,275900,275900,https://www.puppis.com.co/gimnasio-para-gato-pet-comfort-eco-mediano-cafe/p
 2026-10-09,Puppis,rascadores,gato,Gimnasio Para Gato Pet Comfort Redondo Azul 45x45x110 cm,Pet Comfort,110 cm,1,unidad,321900,321900,321900,https://www.puppis.com.co/gimnasio-para-gato-pet-comfort-redondo-azul/p
 2026-10-09,Puppis,rascadores,gato,Gimnasio Para Gato Sedano (Colores Surtidos) Único,Carlos Martinez,,1,unidad,288900,288900,288900,https://www.puppis.com.co/gimnasio-para-gato-sedano-colores-surtidos/p
 2026-10-09,Puppis,rascadores,gato,Gimnasio Para Gato Tipo Silla (Colores Surtidos) Único,Generico,,1,unidad,186900,186900,186900,https://www.puppis.com.co/gimnasio-para-gato-tipo-silla-colores-surtidos/p
@@ -946,7 +952,7 @@ fecha,tienda,categoria,especie,producto,marca,caracteristica,cantidad,unidad,pre
 2026-10-09,Puppis,rascadores,gato,Rascador Para Gato Pet Comfort Poste Gris 30x30x50 cm,Pet Comfort,50 cm,1,unidad,88900,88900,88900,https://www.puppis.com.co/rascador-para-gato-pet-comfort-poste-gris/p
 2026-10-09,Puppis,rascadores,gato,Rascador Para Gato Tabla Único,Carlos Martinez,,1,unidad,84900,84900,84900,https://www.puppis.com.co/rascador-para-gato-tabla/p
 2026-10-09,Puppis,rascadores,gato,Rascador Para Gatos Pawise Fred Único,Pawise,,1,unidad,51900,51900,51900,https://www.puppis.com.co/pawise-rascador-para-gatos-fred/p
-2026-10-09,Puppis,rascadores,gato,"Rascador Plegable 3 En 1 Pawise 56 x 20,5 cm",Pawise,"20,5 cm",1,unidad,39120,48900,39120,https://www.puppis.com.co/rascador-plegable-3-en-1-pawise/p
+2026-10-09,Puppis,rascadores,gato,"Rascador Plegable 3 En 1 Pawise 56 x 20,5 cm",Pawise,"20,5 cm",1,unidad,48900,48900,48900,https://www.puppis.com.co/rascador-plegable-3-en-1-pawise/p
 2026-10-09,Puppis,rascadores,gato,Rascador Scratch-N-Play Para Gato Pawise Narrow Único,Pawise,,1,unidad,17900,17900,17900,https://www.puppis.com.co/rascador-scratch-n-play-para-gato-pawise-narrow/p
 2026-10-09,Puppis,rascadores,gato,Rascador de Esquinas Pawise Para Gato Único,Pawise,,1,unidad,63900,63900,63900,https://www.puppis.com.co/pawise-rascador-de-esquinas-para-gato/p
 2026-10-09,Puppis,rascadores,gato,Rascador de Pared Afp Para Gato Único,Afp,,1,unidad,62900,62900,62900,https://www.puppis.com.co/afp-rascador-de-pared-para-gato/p
@@ -957,7 +963,7 @@ fecha,tienda,categoria,especie,producto,marca,caracteristica,cantidad,unidad,pre
 2026-10-09,Puppis,rascadores,gato,Rascador tipo flor para gato Pawise 35 x 35 x 44 cm,Pawise,44 cm,1,unidad,114900,114900,114900,https://www.puppis.com.co/rascador-tipo-flor-para-gato-pawise/p
 2026-10-09,Puppis,rascadores,gato,Rascador tipo torre para gato Pawise 35 x 35 x 55 cm,Pawise,55 cm,1,unidad,114900,114900,114900,https://www.puppis.com.co/rascador-tipo-torre-para-gato-pawise/p
 2026-10-09,Puppis,rascadores,gato,Repuesto Rascador Doble  Pawise Único,Pawise,,1,unidad,24900,24900,24900,https://www.puppis.com.co/repuesto-rascador-doble-pawise/p
-2026-10-09,Puppis,rascadores,gato,Repuesto Rascador Pawise Único,Pawise,,1,unidad,12720,15900,12720,https://www.puppis.com.co/repuesto-rascador-pawise/p
+2026-10-09,Puppis,rascadores,gato,Repuesto Rascador Pawise Único,Pawise,,1,unidad,15900,15900,15900,https://www.puppis.com.co/repuesto-rascador-pawise/p
 2026-10-09,Puppis,rascadores,gato,Sillón Rascador De Gato Pawise Único,Pawise,,1,unidad,34900,34900,34900,https://www.puppis.com.co/sillon-rascador-de-gato-pawise/p
 2026-10-09,Puppis,rascadores,gato,Tapete Rascador Para Gato Pet Antojos 45 cm,Pet Antojos,45 cm,1,unidad,80900,80900,80900,https://www.puppis.com.co/tapete-rascador-para-gato-pet-antojos/p
 2026-10-09,Puppis,rascadores,gato,Torre rascadora de esquina para gato Pawise Único,Pawise,,1,unidad,99900,99900,99900,https://www.puppis.com.co/torre-rascadora-de-esquina-para-gato-pawise/p

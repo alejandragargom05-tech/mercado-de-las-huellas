@@ -27,7 +27,7 @@ Surten a pet shops, veterinarias y agropecuarias.
 
 - Doctor Pet: https://doctorpet.com.co
 - AM Mascotas (fabricante de Menthic): https://ammascotas.com
-- Xipa (fabricante de arneses, rascadores, camas, areneros y comederos): https://www.xipamascotas.com
+- Xipa (fabricante de arneses, rascadores, camas, areneros y comederos): https://www.xipamascotas.com — **dominio sin respuesta, revisar**
 - Jarapets (importador y mayorista de Medellín): servicioalcliente@jaramillopets.com. **Sitio web pendiente de verificar**: una primera búsqueda no encontró página oficial.
 - Omega Importaciones: https://www.omegaimportaciones.com
 - Animal Home: https://animalhome.co
