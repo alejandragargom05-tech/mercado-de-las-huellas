@@ -225,7 +225,7 @@ EXCLUIR = re.compile(
     r"pipeta|desparasit|antiparasit|vermifug|vitamina|suplemento|jarabe|pastilla|tableta|inyectable|\bkit\b|combo|"
     r"medicad|clorhex|insecticida|keracleen|sebocalm|antiseborre|recuperacion|isabelino|talco|panal|"
     r"mix de carne|comestible|hueso.*(?:\bres\b|beff|beef|cerdo|femur|caramelo|bono|my pet|antisarro)|"
-    r"milk bone|(?:snack|galleta|premio|stick|barra|tira|masticable|comestible)s?\\s+dental|dental\\s+(?:snack|stick|treat|galleta|premio|masticable|comestible)s?|arener[oa]|\bpala\b|destructor de olores|caja de arena|amarre|oreja|traquea|pezuna|cuerno|tendon|cuerito|"
+    r"milk bone|(?:snack|galleta|premio|stick|barra|tira|masticable|comestible)s?\s+dental|dental\s+(?:snack|stick|treat|galleta|premio|masticable|comestible)s?|arener[oa]|\bpala\b|destructor de olores|caja de arena|amarre|oreja|traquea|pezuna|cuerno|tendon|cuerito|"
     r"hamster|pajaro|\bloro|cepillo|furminator|corta ?unas|collar"
 )
 
