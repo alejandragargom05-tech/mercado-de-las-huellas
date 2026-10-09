@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 200" role="img" aria-labelledby="t d">
+<title id="t">Perro con arnés corriendo</title><desc id="d">Un perro con arnés y correa al viento corre a toda velocidad, con rayas de movimiento atrás.</desc>
+<style>
+.l,.w,.v{stroke:#2B3CA0;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+.l{fill:none}.w{fill:#fff}.v{fill:#C8CBE8}
+.t{stroke-width:1.8}
+.b{fill:#2B3CA0;stroke:none}
+.s{fill:#C8CBE8;stroke:none}
+.n{fill:none;stroke:#C8CBE8;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
+.d{stroke-dasharray:1;stroke-dashoffset:1;animation:dibuja .9s ease-out forwards}
+@keyframes dibuja{to{stroke-dashoffset:0}}
+.cola,.oreja,.ojo,.resp{transform-box:fill-box}
+.cola{transform-origin:0 100%;animation:cola 3s ease-in-out 1s infinite}
+@keyframes cola{0%,25%,100%{transform:rotate(0)}8%{transform:rotate(-12deg)}17%{transform:rotate(7deg)}}
+.oreja{transform-origin:50% 100%;animation:oreja 5s ease-in-out 1.5s infinite}
+@keyframes oreja{0%,12%,100%{transform:rotate(0)}4%{transform:rotate(-14deg)}8%{transform:rotate(4deg)}}
+.ojo{transform-origin:50% 50%;animation:ojo 4s ease-in-out 1s infinite}
+@keyframes ojo{0%,94%,100%{transform:scaleY(1)}97%{transform:scaleY(.1)}}
+.bola{transform-origin:150px 76px;animation:bola 1s ease-in-out infinite alternate}
+@keyframes bola{from{transform:rotate(-9deg)}to{transform:rotate(9deg)}}
+.gota{animation:gota 1s ease-in infinite}
+@keyframes gota{0%{transform:translateY(0);opacity:1}100%{transform:translateY(16px);opacity:0}}
+.zz{animation:zz 3s ease-out infinite}
+@keyframes zz{0%{transform:translateY(6px);opacity:0}15%{opacity:1}33%,100%{transform:translateY(-6px);opacity:0}}
+.resp{transform-origin:50% 100%;animation:resp 3s ease-in-out infinite}
+@keyframes resp{0%,33%,100%{transform:scale(1)}16%{transform:scale(1.025,1.04)}}
+.burb{animation:burb 3s ease-out infinite}
+@keyframes burb{0%{transform:translateY(4px);opacity:0}12%{opacity:1}33%,100%{transform:translateY(-8px);opacity:0}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important}.d{stroke-dasharray:none;stroke-dashoffset:0}}
+</style>
+<path class="n" d="M40 190 V181 H50 V187 H44 V184 M50 190 H54 M54 190 V181 H64 V187 H58 V184 M64 190 H68 M68 190 V181 H78 V187 H72 V184 M78 190 H82 M82 190 V181 H92 V187 H86 V184 M92 190 H96 M96 190 V181 H106 V187 H100 V184 M106 190 H110 M110 190 V181 H120 V187 H114 V184 M120 190 H124 M124 190 V181 H134 V187 H128 V184 M134 190 H138 M138 190 V181 H148 V187 H142 V184 M148 190 H152 "/><path class="n" d="M14 96 H46 M8 112 H38 M20 128 H48"/><ellipse class="s" cx="120" cy="168" rx="44" ry="5" /><path class="l d" pathLength="1" d="M28 62 Q44 76 66 66 T108 72 T134 82" style="stroke-width:2.2"/><path class="l d" pathLength="1" d="M20 62 Q18 48 30 50 Q38 56 28 64" style="stroke-width:2.2"/><path class="w d" pathLength="1" d="M72 104 Q72 84 100 84 H148 Q172 84 172 104 Q172 124 148 124 H96 Q72 124 72 104Z" /><path class="l d" pathLength="1" d="M156 118 L184 138 L198 134 M146 122 L168 148 L182 146 M84 114 L58 134 L46 130 M96 122 L74 148 L62 146" /><g class="cola" style="transform-origin:100% 100%"><path class="l d" pathLength="1" d="M74 98 Q56 82 58 64" /></g><path class="w d" pathLength="1" d="M168 78 Q172 62 190 66 Q204 70 206 84 L222 88 Q226 96 218 100 L202 100 Q192 108 180 104 Q164 98 168 78Z" /><ellipse class="b" cx="222" cy="91" rx="3.6" ry="3"/><ellipse class="b ojo" cx="193" cy="80" rx="2.5" ry="3.2"/><g class="oreja" ><path class="v d" pathLength="1" d="M174 68 Q160 74 164 94 Q176 94 180 76Z" /></g><path class="l" d="M150 85 Q160 104 148 124" style="stroke-width:5"/><path class="l" d="M120 84 H152" style="stroke-width:5"/><circle class="w" cx="134" cy="84" r="5" style="stroke:#2B3CA0;stroke-width:2.5"/>
+</svg>

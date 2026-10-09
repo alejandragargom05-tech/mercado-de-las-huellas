@@ -21,3 +21,4 @@ Web que compara precios de productos y accesorios para gatos y perros entre tien
 - Siempre visible: "Mercado de las Huellas compara precios; no reemplaza la recomendación de tu veterinario".
 - La lista de tiendas no es cerrada: el proyecto debe seguir buscando tiendas de mascotas de Colombia competitivas en precio que no estén en la lista.
 - Tiendas, distribuidores y marcas a buscar (Trixie, Chuckit): ver `TIENDAS.md`.
+- Identidad visual y de voz: ver `BRAND.md`. Toda pantalla debe seguirlo (colores, tipografía, ilustraciones, voz y movimiento). La referencia visual es `brand.html`.

@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 200" role="img" aria-labelledby="t d">
+<title id="t">Gato frente a su fuente de agua</title><desc id="d">Un gato sentado mira una fuente de agua con una cúpula y un chorro que cae al plato.</desc>
+<style>
+.l,.w,.v{stroke:#2B3CA0;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+.l{fill:none}.w{fill:#fff}.v{fill:#C8CBE8}
+.t{stroke-width:1.8}
+.b{fill:#2B3CA0;stroke:none}
+.s{fill:#C8CBE8;stroke:none}
+.n{fill:none;stroke:#C8CBE8;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
+.d{stroke-dasharray:1;stroke-dashoffset:1;animation:dibuja .9s ease-out forwards}
+@keyframes dibuja{to{stroke-dashoffset:0}}
+.cola,.oreja,.ojo,.resp{transform-box:fill-box}
+.cola{transform-origin:0 100%;animation:cola 3s ease-in-out 1s infinite}
+@keyframes cola{0%,25%,100%{transform:rotate(0)}8%{transform:rotate(-12deg)}17%{transform:rotate(7deg)}}
+.oreja{transform-origin:50% 100%;animation:oreja 5s ease-in-out 1.5s infinite}
+@keyframes oreja{0%,12%,100%{transform:rotate(0)}4%{transform:rotate(-14deg)}8%{transform:rotate(4deg)}}
+.ojo{transform-origin:50% 50%;animation:ojo 4s ease-in-out 1s infinite}
+@keyframes ojo{0%,94%,100%{transform:scaleY(1)}97%{transform:scaleY(.1)}}
+.bola{transform-origin:150px 76px;animation:bola 1s ease-in-out infinite alternate}
+@keyframes bola{from{transform:rotate(-9deg)}to{transform:rotate(9deg)}}
+.gota{animation:gota 1s ease-in infinite}
+@keyframes gota{0%{transform:translateY(0);opacity:1}100%{transform:translateY(16px);opacity:0}}
+.zz{animation:zz 3s ease-out infinite}
+@keyframes zz{0%{transform:translateY(6px);opacity:0}15%{opacity:1}33%,100%{transform:translateY(-6px);opacity:0}}
+.resp{transform-origin:50% 100%;animation:resp 3s ease-in-out infinite}
+@keyframes resp{0%,33%,100%{transform:scale(1)}16%{transform:scale(1.025,1.04)}}
+.burb{animation:burb 3s ease-out infinite}
+@keyframes burb{0%{transform:translateY(4px);opacity:0}12%{opacity:1}33%,100%{transform:translateY(-8px);opacity:0}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important}.d{stroke-dasharray:none;stroke-dashoffset:0}}
+</style>
+<g transform="translate(14 36) rotate(-8) scale(0.9)" ><path class="n" d="M0 0 Q24 -4 46 -2" style="stroke-width:2"/><ellipse class="s" cx="10" cy="-6" rx="7" ry="3" transform="rotate(-40 10 -6)"/><ellipse class="s" cx="22" cy="-12" rx="7" ry="3" transform="rotate(-30 22 -12)"/><ellipse class="s" cx="34" cy="-14" rx="7" ry="3" transform="rotate(-15 34 -14)"/><ellipse class="s" cx="10" cy="6" rx="7" ry="3" transform="rotate(40 10 6)"/><ellipse class="s" cx="24" cy="8" rx="7" ry="3" transform="rotate(30 24 8)"/><ellipse class="s" cx="38" cy="6" rx="7" ry="3" transform="rotate(15 38 6)"/></g><path class="n" d="M36 190 V181 H46 V187 H40 V184 M46 190 H50 M50 190 V181 H60 V187 H54 V184 M60 190 H64 M64 190 V181 H74 V187 H68 V184 M74 190 H78 M78 190 V181 H88 V187 H82 V184 M88 190 H92 M92 190 V181 H102 V187 H96 V184 M102 190 H106 M106 190 V181 H116 V187 H110 V184 M116 190 H120 M120 190 V181 H130 V187 H124 V184 M130 190 H134 M134 190 V181 H144 V187 H138 V184 M144 190 H148 M148 190 V181 H158 V187 H152 V184 M158 190 H162 "/><path class="l d" pathLength="1" d="M18 171 Q40 166 62 171 T106 170 T150 172 T194 170 T222 171" style="stroke-width:2.5"/><path class="w d" pathLength="1" d="M100 150 H200 Q200 170 150 170 Q100 170 100 150Z" /><path class="v d" pathLength="1" d="M122 150 Q122 108 150 108 Q178 108 178 150Z" /><path class="l d" pathLength="1" d="M150 108 Q150 88 176 92 Q192 96 192 140" /><path class="n" d="M132 138 Q150 128 168 138" style="stroke:#2B3CA0;stroke-width:1.8"/><g class="gota" ><path class="b" d="M192 126 q-4 6 0 10 q4 -4 0 -10z"/></g><path class="l" d="M110 154 Q150 158 190 154" style="stroke-width:1.8"/><g transform="translate(58 106)" ><path class="w d" pathLength="1" d="M-20 62 Q-34 44 -20 30 Q-8 22 12 26 Q28 32 28 54 Q28 62 18 62Z" /><g class="cola" ><path class="l d" pathLength="1" d="M24 58 Q50 56 44 30 Q42 22 34 24" /></g><g transform="translate(0 0) rotate(8)" ><g ><path class="w d" pathLength="1" d="M-25 -6 L-24 -29 L-7 -19" /></g><g class="oreja" ><path class="w d" pathLength="1" d="M25 -6 L24 -29 L7 -19" /></g><path class="w d" pathLength="1" d="M-26 -6 Q-30 18 0 20 Q30 18 26 -6 Q14 -19 0 -19 Q-14 -19 -26 -6Z" /><ellipse class="b ojo" cx="-10" cy="2" rx="2.4" ry="3.2"/><ellipse class="b ojo" cx="10" cy="2" rx="2.4" ry="3.2"/><path class="b" d="M-3.5 8 H3.5 L0 12Z"/><path class="l t" d="M0 12 Q-3 16 -7 14 M0 12 Q3 16 7 14 M-19 10 L-35 7 M-19 14 L-35 17 M19 10 L35 7 M19 14 L35 17"/></g></g><path class="l" d="M42 170 V136" style="display:none"/>
+</svg>

@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 200" role="img" aria-labelledby="t d">
+<title id="t">Perro con su hueso de juguete</title><desc id="d">Un perro sentado sostiene con la boca un hueso de juguete; una pelota descansa a su lado.</desc>
+<style>
+.l,.w,.v{stroke:#2B3CA0;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+.l{fill:none}.w{fill:#fff}.v{fill:#C8CBE8}
+.t{stroke-width:1.8}
+.b{fill:#2B3CA0;stroke:none}
+.s{fill:#C8CBE8;stroke:none}
+.n{fill:none;stroke:#C8CBE8;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
+.d{stroke-dasharray:1;stroke-dashoffset:1;animation:dibuja .9s ease-out forwards}
+@keyframes dibuja{to{stroke-dashoffset:0}}
+.cola,.oreja,.ojo,.resp{transform-box:fill-box}
+.cola{transform-origin:0 100%;animation:cola 3s ease-in-out 1s infinite}
+@keyframes cola{0%,25%,100%{transform:rotate(0)}8%{transform:rotate(-12deg)}17%{transform:rotate(7deg)}}
+.oreja{transform-origin:50% 100%;animation:oreja 5s ease-in-out 1.5s infinite}
+@keyframes oreja{0%,12%,100%{transform:rotate(0)}4%{transform:rotate(-14deg)}8%{transform:rotate(4deg)}}
+.ojo{transform-origin:50% 50%;animation:ojo 4s ease-in-out 1s infinite}
+@keyframes ojo{0%,94%,100%{transform:scaleY(1)}97%{transform:scaleY(.1)}}
+.bola{transform-origin:150px 76px;animation:bola 1s ease-in-out infinite alternate}
+@keyframes bola{from{transform:rotate(-9deg)}to{transform:rotate(9deg)}}
+.gota{animation:gota 1s ease-in infinite}
+@keyframes gota{0%{transform:translateY(0);opacity:1}100%{transform:translateY(16px);opacity:0}}
+.zz{animation:zz 3s ease-out infinite}
+@keyframes zz{0%{transform:translateY(6px);opacity:0}15%{opacity:1}33%,100%{transform:translateY(-6px);opacity:0}}
+.resp{transform-origin:50% 100%;animation:resp 3s ease-in-out infinite}
+@keyframes resp{0%,33%,100%{transform:scale(1)}16%{transform:scale(1.025,1.04)}}
+.burb{animation:burb 3s ease-out infinite}
+@keyframes burb{0%{transform:translateY(4px);opacity:0}12%{opacity:1}33%,100%{transform:translateY(-8px);opacity:0}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important}.d{stroke-dasharray:none;stroke-dashoffset:0}}
+</style>
+<g transform="translate(206 136) scale(1)" ><path class="s" d="M-8 -32 H8 L6 -24 Q22 -16 22 4 Q22 22 10 28 L8 36 H-8 L-10 28 Q-22 22 -22 4 Q-22 -16 -6 -24Z"/><path class="n" d="M-7 -28 Q-26 -28 -21 -8 M7 -28 Q26 -28 21 -8" style="stroke:#2B3CA0;stroke-opacity:.55"/><path d="M-21 2 H21 M-20 8 H20" fill="none" stroke="#2B3CA0" stroke-opacity=".5" stroke-width="1.8"/><path d="M-17 -3 V-9 H-7 V-5 H-12 V-7 M0 -3 V-9 H10 V-5 H5 V-7" fill="none" stroke="#2B3CA0" stroke-opacity=".5" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></g><path class="n" d="M30 190 V181 H40 V187 H34 V184 M40 190 H44 M44 190 V181 H54 V187 H48 V184 M54 190 H58 M58 190 V181 H68 V187 H62 V184 M68 190 H72 M72 190 V181 H82 V187 H76 V184 M82 190 H86 M86 190 V181 H96 V187 H90 V184 M96 190 H100 M100 190 V181 H110 V187 H104 V184 M110 190 H114 M114 190 V181 H124 V187 H118 V184 M124 190 H128 M128 190 V181 H138 V187 H132 V184 M138 190 H142 M142 190 V181 H152 V187 H146 V184 M152 190 H156 "/><path class="l d" pathLength="1" d="M18 171 Q40 166 62 171 T106 170 T150 172 T194 170 T222 171" style="stroke-width:2.5"/><g ><path class="l" d="M-26 108 Q-22 80 -26 80" style="display:none"/></g><path class="w d" pathLength="1" d="M76 100 Q64 140 76 168 H124 Q136 140 124 100" /><path class="l" d="M92 140 V168 M108 140 V168" style="stroke-width:2"/><g class="cola" ><path class="l d" pathLength="1" d="M126 162 Q154 160 152 128" /></g><g transform="translate(100 80)" ><g ><path class="v d" pathLength="1" d="M-22 -14 Q-40 -8 -35 15 Q-26 17 -22 4Z" /></g><g class="oreja" style="transform-origin:0 0"><path class="v d" pathLength="1" d="M22 -14 Q40 -8 35 15 Q26 17 22 4Z" /></g><path class="w d" pathLength="1" d="M-24 -10 Q-26 18 0 22 Q26 18 24 -10 Q14 -22 0 -22 Q-14 -22 -24 -10Z" /><ellipse class="b ojo" cx="-9" cy="-4" rx="2.5" ry="3.3"/><ellipse class="b ojo" cx="9" cy="-4" rx="2.5" ry="3.3"/><ellipse class="b" cx="0" cy="6" rx="4.8" ry="3.4"/><path class="l t" d="M0 9 V13 M0 13 Q-5 17 -8 13 M0 13 Q5 17 8 13"/></g><g><circle class="v" cx="70" cy="96" r="5.5"/><circle class="v" cx="70" cy="108" r="5.5"/><circle class="v" cx="130" cy="96" r="5.5"/><circle class="v" cx="130" cy="108" r="5.5"/></g><rect class="v" x="70" y="97" width="60" height="10" rx="4" style="stroke:#2B3CA0;stroke-width:3"/><circle class="b" cx="44" cy="158" r="11"/><path class="n" d="M38 154 Q42 148 50 150" style="stroke:#fff;stroke-width:2"/>
+</svg>
