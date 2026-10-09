@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="es-CO">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<title>Mercado de las Huellas — Mismo producto. Menos pesos.</title>
+<meta name="description" content="Compara precios de productos y accesorios para gatos y perros entre tiendas de Colombia.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jost:wght@400;600&family=Patrick+Hand&display=swap">
+<link rel="stylesheet" href="assets/css/marca.css">
+<link rel="stylesheet" href="assets/css/app.css">
+</head>
+<body>
+
+<header class="cabecera">
+  <div class="contenedor">
+    <a class="marca" href="./"><img src="assets/ilustraciones/camas.svg" alt="Gato durmiendo en su cama" width="44" height="37"><b>Mercado de las Huellas</b></a>
+    <div class="portada">
+      <h1>Mismo producto. Menos pesos.</h1>
+      <p class="apoyo">Compara precios para gatos y perros en tiendas de Colombia.</p>
+      <p class="apoyo" id="actualizacion" aria-live="polite"></p>
+    </div>
+  </div>
+</header>
+
+<div class="buscador">
+  <div class="contenedor">
+    <form id="form-busqueda" role="search" autocomplete="off">
+      <label class="solo-lectores" for="buscar">Buscar por producto, marca o categoría</label>
+      <input id="buscar" type="search" placeholder="Busca arena, arnés, cama…" enterkeyhint="search">
+      <button class="boton" type="submit">Ver la más barata</button>
+    </form>
+  </div>
+</div>
+
+<main>
+  <section class="seccion seccion--rama" aria-label="Filtros">
+    <div class="contenedor">
+      <p class="etiqueta">Especie</p>
+      <div class="chips" id="chips-especie" role="group" aria-label="Especie"></div>
+      <p class="etiqueta">Categoría</p>
+      <div class="chips" id="chips-categoria" role="group" aria-label="Categoría"></div>
+      <p><button class="boton" id="quitar" type="button" hidden>Quitar filtros</button></p>
+    </div>
+  </section>
+
+  <div class="onda" aria-hidden="true"></div>
+
+  <section class="seccion" aria-label="Resultados">
+    <div class="contenedor">
+      <div id="estado"></div>
+      <div id="resultados" hidden>
+        <p class="apoyo" id="conteo" aria-live="polite"></p>
+        <div id="bloque-resumen" hidden>
+          <h2>Las más baratas</h2>
+          <div class="resumen" id="resumen"></div>
+        </div>
+        <div id="grupos"></div>
+        <p class="mas"><button class="boton" id="ver-mas" type="button" hidden>Ver más grupos</button></p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="pie">
+  <div class="contenedor">
+    <p class="etiqueta" style="color:#fff">Mercado de las Huellas</p>
+    <p id="pie-fecha"></p>
+    <p>Mercado de las Huellas compara precios; no reemplaza la recomendación de tu veterinario.</p>
+  </div>
+</footer>
+
+<script src="assets/js/logica.js"></script>
+<script src="assets/js/app.js"></script>
+</body>
+</html>

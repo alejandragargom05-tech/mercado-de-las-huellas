@@ -1,0 +1,57 @@
+/* Mercado de las Huellas — pantalla del buscador. Se apoya en marca.css. */
+.solo-lectores {
+  position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden;
+  clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+}
+[hidden] { display: none !important; }
+
+.portada h1 { margin-top: 20px; }
+.portada p { margin: 0 0 4px; }
+
+/* Buscador fijo arriba */
+.buscador { position: sticky; top: 0; z-index: 10; background: var(--crema); padding: 12px 0; box-shadow: 0 6px 12px -10px rgba(43, 60, 160, .35); }
+.buscador form { display: grid; gap: 10px; }
+.buscador input {
+  width: 100%; min-height: 52px; padding: 0 22px; border: 2px solid var(--azul); border-radius: 999px;
+  background: var(--blanco); color: var(--texto); font: 400 1rem/1.4 var(--f-texto);
+}
+.buscador input::placeholder { color: var(--gris); opacity: 1; }
+
+.seccion--rama { padding-bottom: 8px; }
+.etiqueta { margin: 0 0 4px; }
+.chip { font-size: 1rem; }
+
+/* Resumen de las más baratas */
+.resumen { display: flex; gap: 14px; overflow-x: auto; padding: 4px 2px 16px; scroll-snap-type: x proximity; }
+.resumen .tarjeta { flex: none; width: min(78vw, 280px); scroll-snap-align: start; display: grid; gap: 4px; align-content: start; }
+.resumen .cifra { color: #fff; font-size: 1.75rem; line-height: 1.2; }
+.resumen .cifra small { font-size: .9375rem; font-weight: 400; }
+.resumen p { margin: 0; }
+.resumen a { color: #fff; }
+
+/* Grupos y tarjetas */
+.grupo { padding-top: 24px; }
+.grupo h3 { margin-bottom: 2px; }
+.grupo > .apoyo { margin: 0 0 12px; }
+.grupo .rejilla { margin-bottom: 12px; }
+.producto { max-width: none; align-content: start; }
+.producto .nombre { margin: 4px 0 0; font-weight: 600; }
+.producto .marca-nombre { margin: 0; color: var(--gris); font-size: .9375rem; }
+.producto .boton { margin-top: 12px; width: 100%; }
+.producto--barata { box-shadow: 0 0 0 3px var(--azul), var(--sombra); }
+.producto .aviso-vencido { margin: 4px 0 0; font-size: .9375rem; text-align: right; }
+.sin-unidad { text-align: right; color: var(--texto); }
+.mas { text-align: center; }
+
+.estado.tarjeta { max-width: 420px; margin: 0 auto; }
+
+@media (min-width: 720px) {
+  .buscador form { grid-template-columns: minmax(0, 1fr) auto; }
+  .grupo .rejilla { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (min-width: 960px) {
+  .grupo .rejilla { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+
+/* El buscador fijo no debe tapar los destinos de los enlaces */
+.grupo, #bloque-resumen, #conteo { scroll-margin-top: 150px; }
