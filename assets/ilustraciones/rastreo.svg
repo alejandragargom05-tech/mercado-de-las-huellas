@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 200" role="img" aria-labelledby="t d">
+<title id="t">Perro con su placa y su GPS</title><desc id="d">Un perro corre con un collar y una placa colgando; arriba, un pin de ubicación con ondas de señal marca dónde está.</desc>
+<style>
+.l,.w,.v{stroke:#2B3CA0;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+.l{fill:none}.w{fill:#fff}.v{fill:#C8CBE8}
+.t{stroke-width:1.8}
+.b{fill:#2B3CA0;stroke:none}
+.s{fill:#C8CBE8;stroke:none}
+.n{fill:none;stroke:#C8CBE8;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
+.d{stroke-dasharray:1;stroke-dashoffset:1;animation:dibuja .9s ease-out forwards}
+@keyframes dibuja{to{stroke-dashoffset:0}}
+.cola,.oreja,.ojo,.resp{transform-box:fill-box}
+.cola{transform-origin:0 100%;animation:cola 3s ease-in-out 1s infinite}
+@keyframes cola{0%,25%,100%{transform:rotate(0)}8%{transform:rotate(-12deg)}17%{transform:rotate(7deg)}}
+.oreja{transform-origin:50% 100%;animation:oreja 5s ease-in-out 1.5s infinite}
+@keyframes oreja{0%,12%,100%{transform:rotate(0)}4%{transform:rotate(-14deg)}8%{transform:rotate(4deg)}}
+.ojo{transform-origin:50% 50%;animation:ojo 4s ease-in-out 1s infinite}
+@keyframes ojo{0%,94%,100%{transform:scaleY(1)}97%{transform:scaleY(.1)}}
+.bola{transform-origin:150px 76px;animation:bola 1s ease-in-out infinite alternate}
+@keyframes bola{from{transform:rotate(-9deg)}to{transform:rotate(9deg)}}
+.gota{animation:gota 1s ease-in infinite}
+@keyframes gota{0%{transform:translateY(0);opacity:1}100%{transform:translateY(16px);opacity:0}}
+.zz{animation:zz 3s ease-out infinite}
+@keyframes zz{0%{transform:translateY(6px);opacity:0}15%{opacity:1}33%,100%{transform:translateY(-6px);opacity:0}}
+.resp{transform-origin:50% 100%;animation:resp 3s ease-in-out infinite}
+@keyframes resp{0%,33%,100%{transform:scale(1)}16%{transform:scale(1.025,1.04)}}
+.burb{animation:burb 3s ease-out infinite}
+@keyframes burb{0%{transform:translateY(4px);opacity:0}12%{opacity:1}33%,100%{transform:translateY(-8px);opacity:0}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important}.d{stroke-dasharray:none;stroke-dashoffset:0}}
+</style>
+<g transform="translate(14 36) rotate(-8) scale(0.9)"><path class="n" d="M0 0 Q24 -4 46 -2" style="stroke-width:2"/><ellipse class="s" cx="10" cy="-6" rx="7" ry="3" transform="rotate(-40 10 -6)"/><ellipse class="s" cx="22" cy="-12" rx="7" ry="3" transform="rotate(-30 22 -12)"/><ellipse class="s" cx="34" cy="-14" rx="7" ry="3" transform="rotate(-15 34 -14)"/><ellipse class="s" cx="10" cy="6" rx="7" ry="3" transform="rotate(40 10 6)"/><ellipse class="s" cx="24" cy="8" rx="7" ry="3" transform="rotate(30 24 8)"/><ellipse class="s" cx="38" cy="6" rx="7" ry="3" transform="rotate(15 38 6)"/></g>
+<path class="n" d="M40 190 V181 H50 V187 H44 V184 M50 190 H54 M54 190 V181 H64 V187 H58 V184 M64 190 H68 M68 190 V181 H78 V187 H72 V184 M78 190 H82 M82 190 V181 H92 V187 H86 V184 M92 190 H96 M96 190 V181 H106 V187 H100 V184 M106 190 H110 M110 190 V181 H120 V187 H114 V184 M120 190 H124 M124 190 V181 H134 V187 H128 V184 M134 190 H138 M138 190 V181 H148 V187 H142 V184 M148 190 H152"/><path class="n" d="M14 116 H46 M8 132 H38 M20 148 H48"/><ellipse class="s" cx="120" cy="168" rx="44" ry="5"/>
+<path class="w d" pathLength="1" d="M72 108 Q72 88 100 88 H148 Q172 88 172 108 Q172 128 148 128 H96 Q72 128 72 108Z"/><path class="l d" pathLength="1" d="M156 122 L184 142 L198 138 M146 126 L168 152 L182 150 M84 118 L58 138 L46 134 M96 126 L74 152 L62 150"/><g class="cola" style="transform-origin:100% 100%"><path class="l d" pathLength="1" d="M74 102 Q56 86 58 68"/></g>
+<path class="w d" pathLength="1" d="M168 82 Q172 66 190 70 Q204 74 206 88 L222 92 Q226 100 218 104 L202 104 Q192 112 180 108 Q164 102 168 82Z"/><ellipse class="b" cx="222" cy="95" rx="3.6" ry="3"/><ellipse class="b ojo" cx="193" cy="84" rx="2.5" ry="3.2"/><g class="oreja"><path class="v d" pathLength="1" d="M174 72 Q160 78 164 98 Q176 98 180 80Z"/></g>
+<path class="l" d="M166 92 Q158 108 170 118" style="stroke-width:5"/><g class="oreja" style="transform-origin:50% 0"><path class="l" d="M166 114 V122" style="stroke-width:2"/><circle class="w" cx="166" cy="130" r="8" style="stroke-width:2.5"/><path class="l" d="M166 127 V133 M163 130 H169" style="stroke-width:1.8"/></g>
+<path class="l d" pathLength="1" d="M112 70 C98 54 98 34 112 34 C126 34 126 54 112 70Z" style="stroke-width:3"/><circle class="v" cx="112" cy="48" r="5" style="stroke-width:2.2"/><path class="n" d="M92 44 Q86 52 92 60 M132 44 Q138 52 132 60 M82 38 Q72 52 82 66 M142 38 Q152 52 142 66" style="stroke-width:2.2"/><path class="n" d="M114 74 Q130 90 152 100" style="stroke-dasharray:3 6"/>
+</svg>

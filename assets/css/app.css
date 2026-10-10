@@ -39,7 +39,6 @@
 
 .etiqueta { margin: 0 0 4px; }
 .chip { font-size: 1rem; }
-.pie__nombre { color: #fff; }
 
 /* Avisos: informan qué pasó, por qué y qué hacer */
 .aviso {
@@ -51,7 +50,7 @@
 .aviso--info { border-left-color: var(--azul); }
 .aviso--ambar { background: var(--ambar-fondo); border-color: var(--ambar); color: var(--ambar); }
 .aviso--error { background: var(--terracota-fondo); border-color: var(--terracota); color: var(--terracota); }
-.aviso--ok { border-left-color: var(--oliva); }
+.aviso--ok { border-left-color: var(--azul); }
 .aviso .boton { min-height: 44px; padding: 0 20px; }
 .aviso--ambar .boton, .aviso--error .boton { background: transparent; color: inherit; border: 2px solid currentColor; }
 .avisos-rejilla { display: grid; gap: 12px; margin-bottom: 8px; }
@@ -206,3 +205,52 @@
   .producto, .chips-envoltorio::before, .chips-envoltorio::after { transition: none; }
   .producto:hover, .producto:focus-within { transform: none; }
 }
+
+/* Filtro de marca: aparece solo dentro de Concentrado */
+#chips-marca { flex-wrap: nowrap; }
+@media (min-width: 720px) { #chips-marca { flex-wrap: wrap; overflow: visible; } }
+
+/* Botones suaves */
+.boton--suave { background: transparent; color: var(--azul); border: 2px solid var(--azul); }
+.boton--suave:hover { background: var(--blanco); }
+
+/* Vacío: invitación a sugerir */
+.estado__sugerir { margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--linea); }
+.estado__sugerir p { margin: 0 auto 12px; font-weight: 600; }
+
+/* Formulario «Sugiere un producto» */
+.sugerir {
+  width: min(100% - 24px, 560px); max-height: calc(100dvh - 24px); margin: auto; padding: 0; border: 0; border-radius: var(--radio);
+  background: var(--blanco); color: var(--texto); box-shadow: 0 24px 64px rgba(20, 26, 68, .45); overflow: auto;
+}
+.sugerir::backdrop { background: rgba(20, 26, 68, .6); }
+.sugerir__cuerpo { padding: 28px 22px 24px; }
+.sugerir__cerrar { position: absolute; top: 8px; right: 8px; font-size: 1.75rem; line-height: 1; }
+.sugerir h2 { margin-top: 0; padding-right: 40px; }
+.sugerir__form { display: grid; gap: 20px; }
+.sugerir fieldset { border: 0; padding: 0; margin: 0; min-width: 0; }
+.sugerir legend, .campo label { font-weight: 600; padding: 0; margin-bottom: 6px; display: block; }
+.opciones { display: grid; gap: 8px; }
+.opcion { display: flex; align-items: center; gap: 12px; min-height: 48px; padding: 6px 14px; border: 2px solid var(--linea); border-radius: 16px; cursor: pointer; }
+.opcion:has(input:checked) { border-color: var(--azul); background: var(--crema); }
+.opcion:has(input:focus-visible) { outline: 3px solid var(--azul); outline-offset: 2px; }
+.opcion input { width: 20px; height: 20px; accent-color: var(--azul); flex: none; }
+.campo { display: grid; gap: 4px; }
+.sugerir textarea, .sugerir input[type="url"], .sugerir select {
+  width: 100%; min-height: 48px; padding: 10px 16px; border: 2px solid var(--azul); border-radius: 16px;
+  background: var(--crema); color: var(--texto); font: 400 1rem/1.5 var(--f-texto);
+}
+.sugerir textarea { resize: vertical; min-height: 120px; }
+.cuenta { margin: 0; text-align: right; }
+.sugerir .botones { display: flex; flex-wrap: wrap; gap: 10px; }
+.trampa { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+.sugerir .aviso { margin: 0; }
+
+/* Páginas de texto (cómo funciona) */
+.portada--texto .portada__fila { grid-template-columns: minmax(0, 1fr); }
+.seccion--texto { padding: 12px 0; }
+.contenedor--texto { max-width: 720px; }
+.seccion--texto .tarjeta { padding: 24px 22px; }
+.seccion--texto h2 { margin-top: 0; }
+.seccion--texto p { max-width: 62ch; }
+@media (min-width: 720px) { .portada--texto .portada__fila { grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); } }

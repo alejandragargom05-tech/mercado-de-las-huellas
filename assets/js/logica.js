@@ -14,7 +14,9 @@ var Huellas = (function () {
     { id: 'juguetes', etiqueta: 'Juguetes', slugs: ['juguetes'], img: 'juguetes-interactivos.svg', claves: 'juguete interactivo' },
     { id: 'camas', etiqueta: 'Camas', slugs: ['camas'], img: 'camas.svg', claves: 'cama' },
     { id: 'shampoo-panos', etiqueta: 'Shampoo y paños', slugs: ['shampoo', 'panos'], img: 'shampoo-panos.svg', claves: 'shampoo pano humedo' },
-    { id: 'transportadores', etiqueta: 'Bolsos transportadores', slugs: ['transportadores'], img: 'bolsos-transportadores.svg', claves: 'bolso transportador' }
+    { id: 'transportadores', etiqueta: 'Bolsos transportadores', slugs: ['transportadores'], img: 'bolsos-transportadores.svg', claves: 'bolso transportador' },
+    { id: 'concentrado', etiqueta: 'Concentrado', slugs: ['concentrado'], img: 'concentrado.svg', claves: 'concentrado croquetas alimento seco' },
+    { id: 'rastreo', etiqueta: 'Rastreo', slugs: ['rastreo'], img: 'rastreo.svg', claves: 'gps rastreador airtag placa' }
   ];
   var ESPECIES = [
     { id: 'gato', etiqueta: 'Gatos' },
@@ -90,7 +92,7 @@ var Huellas = (function () {
       var nombreN = normalizar(r.producto);
       out.push({
         fecha: r.fecha, tienda: r.tienda, categoria: cat.id, especie: r.especie,
-        producto: r.producto, marca: r.marca, caracteristica: carac,
+        producto: r.producto, marca: r.marca, linea: r.linea || '', caracteristica: carac,
         cantidad: cantidad, unidad: unidad, precio: precio, precioUnidad: pu, url: r.url,
         imagen: /^https?:\/\//i.test(r.imagen || '') ? r.imagen : '',
         nombreN: nombreN, puntaje: 0,
@@ -174,7 +176,8 @@ var Huellas = (function () {
   }
 
   function contiene(texto, f) {
-    return f.length <= 3 ? (' ' + texto + ' ').indexOf(' ' + f + ' ') !== -1 : texto.indexOf(f) !== -1;
+    // Cortas: palabra exacta. Largas: al comienzo de una palabra (así «arne», de arnés, no encuentra «carne»).
+    return f.length <= 3 ? (' ' + texto + ' ').indexOf(' ' + f + ' ') !== -1 : (' ' + texto).indexOf(' ' + f) !== -1;
   }
   /* Cuántos productos contienen alguna de las formas (se detiene en `tope`). */
   function cuantos(productos, fs, tope) {
@@ -247,12 +250,13 @@ var Huellas = (function () {
     return mejor;
   }
 
-  function coincidencias(productos, interpretacion, especieId, categoriaId) {
+  function coincidencias(productos, interpretacion, especieId, categoriaId, marcaId) {
     var cond = interpretacion.condiciones, frase = interpretacion.frase;
     var lista = [];
     productos.forEach(function (p) {
       if (especieId && p.especie !== especieId) return;
       if (categoriaId && p.categoria !== categoriaId) return;
+      if (marcaId && p.marca !== marcaId) return;
       var total = 0;
       for (var i = 0; i < cond.length; i++) {
         var s = puntajeDe(p, cond[i]);
@@ -273,11 +277,11 @@ var Huellas = (function () {
     var texto = f.texto || '';
     var inter = texto.trim() ? interpretar(productos, texto) : { condiciones: [], avisos: { sinonimos: [], correcciones: [], dijo: '' } };
     inter.frase = inter.condiciones.length > 1 ? normalizar(texto) : '';
-    var lista = coincidencias(productos, inter, f.especie, f.categoria), ampliada = null;
+    var lista = coincidencias(productos, inter, f.especie, f.categoria, f.marca), ampliada = null;
     if (!lista.length && inter.condiciones.length && (f.especie || f.categoria) && !f.estricto) {
-      var otra = f.categoria ? coincidencias(productos, inter, f.especie, '') : [];
+      var otra = f.categoria ? coincidencias(productos, inter, f.especie, '', '') : [];
       var quitoEspecie = false;
-      if (!otra.length) { otra = coincidencias(productos, inter, '', ''); quitoEspecie = !!f.especie; }
+      if (!otra.length) { otra = coincidencias(productos, inter, '', '', ''); quitoEspecie = !!f.especie; }
       if (otra.length) {
         lista = otra;
         var dentro = [];
@@ -332,7 +336,12 @@ var Huellas = (function () {
     var sueltos = {};
     productos.forEach(function (p) {
       var base = { categoria: p.categoria, especie: p.especie, unidad: p.unidad };
-      if (p.caracteristica) {
+      if (p.categoria === 'concentrado' && p.marca) {
+        // Solo es equivalente el mismo concentrado: misma marca, línea, etapa y tamaño de raza (en cualquier tamaño de bolsa).
+        var etiqueta = [p.marca, p.linea, p.caracteristica].filter(Boolean).join(' · ');
+        meter([p.categoria, p.especie, 'k', normalizar(p.marca), normalizar(p.linea), normalizar(p.caracteristica), p.unidad].join('|'),
+          Object.assign({ tipo: 'caracteristica', caracteristica: etiqueta }, base), p);
+      } else if (p.caracteristica) {
         meter([p.categoria, p.especie, 'c', normalizar(p.caracteristica), p.unidad].join('|'),
           Object.assign({ tipo: 'caracteristica', caracteristica: p.caracteristica }, base), p);
       } else {
@@ -386,6 +395,16 @@ var Huellas = (function () {
     return lista;
   }
 
+  /* Marcas de concentrado con su número de productos, de más a menos. */
+  function marcasConcentrado(productos) {
+    var c = {};
+    productos.forEach(function (p) { if (p.categoria === 'concentrado' && p.marca) c[p.marca] = (c[p.marca] || 0) + 1; });
+    return Object.keys(c).sort(function (a, b) { return c[b] - c[a] || a.localeCompare(b, 'es'); })
+      .map(function (m) { return { marca: m, n: c[m] }; });
+  }
+  /* Los microchips los implanta el veterinario: no se comparan, pero se explica. */
+  function pideMicrochip(texto) { return /micro ?chip/.test(normalizar(texto)); }
+
   function formatoPesos(n) {
     return '$ ' + String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g, '.');
   }
@@ -409,7 +428,7 @@ var Huellas = (function () {
   return {
     CATEGORIAS: CATEGORIAS, ESPECIES: ESPECIES, UNIDADES: UNIDADES,
     DIAS_ADVERTENCIA: DIAS_ADVERTENCIA, DIAS_MAXIMO: DIAS_MAXIMO,
-    categoria: categoria, especie: especie, normalizar: normalizar,
+    categoria: categoria, especie: especie, normalizar: normalizar, marcasConcentrado: marcasConcentrado, pideMicrochip: pideMicrochip,
     configurarSinonimos: configurarSinonimos, buscar: buscar,
     parsearCSV: parsearCSV, leerProductos: leerProductos, filtrar: filtrar, agrupar: agrupar,
     edadEnDias: edadEnDias, textoEdad: textoEdad,

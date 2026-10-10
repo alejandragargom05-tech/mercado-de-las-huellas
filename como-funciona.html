@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="es-CO">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<title>Cómo funciona y privacidad — Mercado de las Huellas</title>
+<meta name="description" content="De dónde salen los precios, cómo los comparamos y qué datos guardamos en Mercado de las Huellas.">
+<script>
+try { var t = localStorage.getItem('tema'); if (t === 'claro' || t === 'oscuro') document.documentElement.dataset.tema = t; } catch (e) {}
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jost:wght@400;600&family=Patrick+Hand&display=swap">
+<link rel="stylesheet" href="assets/css/marca.css">
+<link rel="stylesheet" href="assets/css/app.css">
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <symbol id="olivo" viewBox="0 0 120 200"><path d="M60 196C58 140 66 80 84 6" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><g fill="currentColor"><ellipse cx="46" cy="160" rx="16" ry="6" transform="rotate(-35 46 160)"/><ellipse cx="74" cy="140" rx="16" ry="6" transform="rotate(35 74 140)"/><ellipse cx="48" cy="118" rx="16" ry="6" transform="rotate(-35 48 118)"/><ellipse cx="78" cy="98" rx="15" ry="6" transform="rotate(35 78 98)"/><ellipse cx="56" cy="76" rx="15" ry="6" transform="rotate(-35 56 76)"/><ellipse cx="86" cy="58" rx="14" ry="5.5" transform="rotate(35 86 58)"/><ellipse cx="68" cy="36" rx="13" ry="5" transform="rotate(-35 68 36)"/><ellipse cx="90" cy="20" rx="12" ry="5" transform="rotate(30 90 20)"/></g></symbol>
+  <symbol id="casitas" viewBox="0 0 200 90"><g fill="currentColor"><path d="M4 88V46h46v42z"/><path d="M60 88V30h34v58z"/><path d="M104 88V52h50v36z"/><path d="M162 88V38h34v50z"/><path d="M60 30a17 17 0 0 1 34 0z"/><path d="M162 38a17 17 0 0 1 34 0z"/></g><g fill="var(--crema)"><path d="M18 88V70a6 6 0 0 1 12 0v18z"/><rect x="70" y="46" width="10" height="12" rx="5"/><rect x="120" y="62" width="10" height="12" rx="5"/><rect x="172" y="54" width="10" height="12" rx="5"/></g></symbol>
+  <symbol id="logo" viewBox="0 0 64 64"><path d="M9 60V30a23 23 0 0 1 46 0v30M5 60h54"/>
+<g stroke-width="2.2"><path d="M20 55C17 47 18 41 21 36L20 28l7 5q5-1.4 10 0l7-5-1 8c3 5 4 11 1 19-7 4-17 4-24 0Z"/><circle cx="25" cy="44" r="1.6" fill="currentColor" stroke="none"/><circle cx="39" cy="44" r="1.6" fill="currentColor" stroke="none"/><path d="M30 48.5h4l-2 2.2z" fill="currentColor" stroke-width="1.2"/><path d="M32 50.7v2M32 52.7q-2 1.6-4 .6M32 52.7q2 1.6 4 .6"/><path d="M20 49l-6 -1.5M20 52l-6 1.5M44 49l6-1.5M44 52l6 1.5" stroke-width="1.4"/></g></symbol>
+  <symbol id="gato-camina" viewBox="0 0 64 40"><g fill="currentColor"><path d="M10 28c0-9 6-14 16-14h16c8 0 14 4 14 12v4H10z"/><path d="M48 14l2-9 6 7z"/><path d="M42 14l-2-9-6 7z" transform="translate(6 0)"/><path d="M10 28C4 26 2 20 5 15" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><rect x="14" y="30" width="5" height="9" rx="2.5"/><rect x="24" y="30" width="5" height="9" rx="2.5"/><rect x="40" y="30" width="5" height="9" rx="2.5"/><rect x="50" y="30" width="5" height="9" rx="2.5"/></g></symbol>
+</svg>
+
+<header class="nav">
+  <div class="contenedor nav__fila">
+    <a class="marca" href="index.html"><svg class="logo" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#logo"/></svg><b>Mercado de las Huellas</b></a>
+    <div class="nav__acciones">
+      <button class="icono-boton" id="tema" type="button" role="switch" aria-checked="false" aria-label="Modo oscuro">
+        <svg class="icono-luna" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4 8.5 8.5 0 1 0 20 14.5Z"/></svg>
+        <svg class="icono-sol" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.5"/><path d="M12 2.5v2.5M12 19v2.5M2.5 12H5M19 12h2.5M5.3 5.3l1.8 1.8M16.9 16.9l1.8 1.8M5.3 18.7l1.8-1.8M16.9 7.1l1.8-1.8"/></svg>
+      </button>
+      <a class="icono-boton" data-instagram target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r=".6"/></svg>
+        <span class="solo-lectores">Instagram de Mercado de las Huellas (se abre en una pestaña nueva)</span>
+      </a>
+    </div>
+  </div>
+</header>
+
+<section class="portada portada--texto">
+  <svg class="deco deco--olivo deco--izq" aria-hidden="true"><use href="#olivo"/></svg>
+  <div class="contenedor portada__fila">
+    <div>
+      <h1>Cómo funciona y privacidad</h1>
+      <p class="apoyo">Lo que hacemos con los precios y con tus datos, en pocas palabras.</p>
+    </div>
+    <img class="portada__ilus" src="assets/ilustraciones/camas.svg" alt="" aria-hidden="true" width="240" height="200">
+  </div>
+</section>
+
+<main class="articulo">
+  <section class="seccion seccion--texto" id="de-donde-salen">
+    <div class="contenedor contenedor--texto">
+      <div class="tarjeta">
+        <h2>De dónde salen los precios</h2>
+        <p>Los traemos de los catálogos públicos de tiendas de mascotas de Colombia. Solo consultamos las tiendas que lo permiten en su archivo <i>robots.txt</i>, y lo hacemos una vez al día, tienda por tienda.</p>
+        <p>Nadie escribe ni edita los precios a mano. Cada precio muestra su tienda y su fecha, y arriba de la página verás cuándo fue la última actualización.</p>
+        <p>Si un precio tiene más de 7 días, te lo avisamos. Si pasa de 30, ya no cuenta para marcar la más barata.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="seccion seccion--texto" id="como-comparamos">
+    <div class="contenedor contenedor--texto">
+      <div class="tarjeta">
+        <h2>Cómo comparamos</h2>
+        <p>Comparamos por precio por unidad de medida, no por paquete: por kilo en arena y concentrado, por mililitro en shampoo, por paño en paños húmedos y por unidad en accesorios.</p>
+        <p>Solo ponemos frente a frente productos equivalentes: misma especie, mismo tipo y características parecidas (talla, capacidad, altura o tipo de arena). En el concentrado, además, la misma marca, línea, etapa de vida y tamaño de raza, para que compares el mismo alimento entre tiendas y tamaños de bolsa. En rastreo, solo el mismo tipo: GPS, porta-AirTag, placa QR o placa grabada.</p>
+        <p>Marcamos «La más barata» cuando al menos dos tiendas tienen el producto con precio al día. Si solo una lo tiene, te lo decimos y no marcamos nada.</p>
+        <p>No incluimos snacks, premios, alimento húmedo, medicamentos ni dietas veterinarias de prescripción. Tampoco microchips: los implanta tu veterinario.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="seccion seccion--texto" id="tiendas">
+    <div class="contenedor contenedor--texto">
+      <div class="tarjeta">
+        <h2>Te llevamos a la tienda</h2>
+        <p>No vendemos nada. La foto y el botón de cada tarjeta te llevan a la página del producto en la tienda; las fotos las muestra la tienda misma y no las copiamos.</p>
+        <p>El pago, el envío y la garantía son con la tienda. Antes de comprar, confirma allí el precio: puede haber cambiado desde la última actualización.</p>
+        <p>Mercado de las Huellas compara precios; no reemplaza la recomendación de tu veterinario.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="seccion seccion--texto" id="privacidad">
+    <div class="contenedor contenedor--texto">
+      <div class="tarjeta">
+        <h2>Sugerencias anónimas y privacidad</h2>
+        <p>El formulario «Sugiere un producto» no te pide correo, nombre ni cuenta. Lo que escribas llega a una hoja de cálculo privada que solo vemos quienes hacemos esta página, y lo usamos para mejorar el catálogo.</p>
+        <p>Por favor no escribas datos personales en el detalle. El formulario lo aloja Google, que puede registrar sus propios datos técnicos, como la dirección IP.</p>
+        <p>En tu dispositivo guardamos una sola cosa: si prefieres el modo claro o el oscuro. No usamos cuentas ni cookies de publicidad. La tipografía se carga desde Google Fonts.</p>
+        <p><button class="boton" type="button" data-sugerir>Sugiere un producto</button></p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="pie">
+  <div class="contenedor">
+    <a class="pie__marca" href="index.html"><svg class="logo" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#logo"/></svg><b>Mercado de las Huellas</b></a>
+    <p class="pie__frase">Mismo producto. Menos pesos.</p>
+    <div class="pie__columnas">
+      <nav aria-labelledby="pie-explora"><h2 class="pie__titulo" id="pie-explora">Explora</h2><ul><li><a href="index.html?categoria=arena#filtros" data-categoria="arena">Arena</a></li><li><a href="index.html?categoria=concentrado#filtros" data-categoria="concentrado">Concentrado</a></li><li><a href="index.html?categoria=rascadores#filtros" data-categoria="rascadores">Gimnasios y rascadores</a></li><li><a href="index.html?categoria=fuentes-comederos#filtros" data-categoria="fuentes-comederos">Fuentes y comederos</a></li><li><a href="index.html?categoria=arneses-correas#filtros" data-categoria="arneses-correas">Arneses y correas</a></li><li><a href="index.html?categoria=juguetes#filtros" data-categoria="juguetes">Juguetes interactivos</a></li><li><a href="index.html?categoria=camas#filtros" data-categoria="camas">Camas</a></li><li><a href="index.html?categoria=shampoo-panos#filtros" data-categoria="shampoo-panos">Shampoo y paños</a></li><li><a href="index.html?categoria=transportadores#filtros" data-categoria="transportadores">Bolsos transportadores</a></li><li><a href="index.html?categoria=rastreo#filtros" data-categoria="rastreo">Rastreo e identificación</a></li></ul></nav>
+      <nav aria-labelledby="pie-quien"><h2 class="pie__titulo" id="pie-quien">Para quién</h2><ul>
+        <li><a href="index.html?especie=gato#filtros" data-especie="gato">Gatos</a></li>
+        <li><a href="index.html?especie=perro#filtros" data-especie="perro">Perros</a></li>
+        <li><a href="index.html?especie=ambos#filtros" data-especie="ambos">Para los dos</a></li></ul></nav>
+      <nav aria-labelledby="pie-ayuda"><h2 class="pie__titulo" id="pie-ayuda">Ayuda</h2><ul>
+        <li><a class="boton boton--pie" href="index.html?sugerir=1" data-sugerir>Sugiere un producto</a></li>
+        <li><a href="como-funciona.html#como-comparamos">Cómo comparamos los precios</a></li></ul></nav>
+      <nav aria-labelledby="pie-sigue"><h2 class="pie__titulo" id="pie-sigue">Síguenos</h2><ul>
+        <li><a data-instagram target="_blank" rel="noopener">Instagram<span class="solo-lectores"> (se abre en una pestaña nueva)</span></a></li></ul></nav>
+    </div>
+    <div class="pie__base">
+      <p>© 2026 Mercado de las Huellas</p>
+      <p>Mercado de las Huellas compara precios; no reemplaza la recomendación de tu veterinario.</p>
+      <p><a href="como-funciona.html">Cómo funciona y privacidad</a></p>
+          </div>
+  </div>
+</footer>
+
+<script src="assets/js/comun.js"></script>
+</body>
+</html>

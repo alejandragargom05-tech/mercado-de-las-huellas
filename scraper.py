@@ -4,6 +4,7 @@
 Solo usa la biblioteca estándar. Genera:
   data/tiendas.csv          estado de cada tienda (aprobada, bloqueada por robots.txt, sin catálogo público)
   data/scrapeado-hoy.csv    productos disponibles clasificados, con precio por unidad de medida
+  data/precios.csv          copia de la misma corrida: es el archivo que lee la web
 
 Respeta robots.txt (se revisa cada URL antes de pedirla) y espera 1,5 s entre consultas.
 """
@@ -24,6 +25,7 @@ RAIZ = Path(__file__).resolve().parent
 TIENDAS_MD = RAIZ / "TIENDAS.md"
 SALIDA_TIENDAS = RAIZ / "data" / "tiendas.csv"
 SALIDA_PRODUCTOS = RAIZ / "data" / "scrapeado-hoy.csv"
+SALIDA_PRECIOS = RAIZ / "data" / "precios.csv"  # lo que lee la web; sale de la misma corrida, sin editar a mano
 
 USER_AGENT = (
     "MercadoDeLasHuellasBot/1.0 (comparador de precios de mascotas en Colombia; "
@@ -56,9 +58,18 @@ TERMINOS = [
     "comedero automatico", "arnes para perro", "correa para perro", "juguete interactivo",
     "lanzador de pelotas", "cama para perro", "cama para gato", "shampoo para perro",
     "paños humedos mascotas", "bolso transportador", "trixie", "chuckit",
+    # Concentrado (alimento seco): términos genéricos y marcas más vendidas en Colombia
+    "concentrado para perro", "concentrado para gato", "croquetas",
+    "hill's", "royal canin", "pro plan", "dog chow", "cat chow", "pedigree", "whiskas", "chunky",
+    "agility gold", "ringo", "mirringo", "max", "equilibrio", "taste of the wild", "nutra nuggets",
+    # Rastreo e identificación (los microchips implantables no se incluyen: los implanta el veterinario)
+    "collar gps", "rastreador gps", "soporte airtag", "placa qr", "placa de identificacion",
 ]
+# Palabras que solo sirven para filtrar el catálogo completo de Shopify.
+CLAVES_SHOPIFY_EXTRA = ["concentrado", "croqueta", "alimento", "gps", "airtag", "placa", "collar", "rastread", "qr"]
 
 HOY = date.today().isoformat()
+CANDIDATOS_RASTREO = set()  # nombres con collar/placa/GPS/AirTag que se descartaron (para revisar la regla)
 
 
 # ---------------------------------------------------------------- utilidades
@@ -226,8 +237,101 @@ EXCLUIR = re.compile(
     r"medicad|clorhex|insecticida|keracleen|sebocalm|antiseborre|recuperacion|isabelino|talco|panal|"
     r"mix de carne|comestible|hueso.*(?:\bres\b|beff|beef|cerdo|femur|caramelo|bono|my pet|antisarro)|"
     r"milk bone|(?:snack|galleta|premio|stick|barra|tira|masticable|comestible)s?\s+dental|dental\s+(?:snack|stick|treat|galleta|premio|masticable|comestible)s?|arener[oa]|\bpala\b|destructor de olores|caja de arena|amarre|oreja|traquea|pezuna|cuerno|tendon|cuerito|"
-    r"hamster|pajaro|\bloro|cepillo|furminator|corta ?unas|collar"
+    r"hamster|pajaro|\bloro|cepillo|furminator|corta ?unas|microchip|lector de chip"
 )
+
+# Concentrado (alimento seco). Solo entra si el nombre lo dice o es de una marca conocida con peso en kg/lb.
+# Siguen fuera: snacks, premios, alimento húmedo (latas y sobres), medicamentos y dietas veterinarias de prescripción.
+MARCAS_CONCENTRADO = {
+    # nombre que se muestra: (expresión que lo reconoce, especie fija o None)
+    "Hill's": (r"hill'?s|hills", None),
+    "Royal Canin": (r"royal canin", None),
+    "Pro Plan": (r"pro ?plan", None),
+    "Dog Chow": (r"dog chow", "perro"),
+    "Cat Chow": (r"cat chow", "gato"),
+    "Pedigree": (r"pedigree", "perro"),
+    "Whiskas": (r"whiskas", "gato"),
+    "Chunky": (r"chunky", "perro"),
+    "Agility Gold": (r"agility(?: gold)?", "perro"),
+    "Ringo": (r"ringo", "perro"),
+    "Mirringo": (r"mirringo", "gato"),
+    "Max": (r"max", None),
+    "Equilibrio": (r"equilibrio", None),
+    "Taste of the Wild": (r"taste of the wild", None),
+    "Nutra Nuggets": (r"nutra nuggets?", None),
+}
+# Marcas con más productos en las tiendas aprobadas que no estaban en la lista (se llena sola al correr).
+MARCAS_DESCUBIERTAS = {}
+RE_CONC_FUERTE = re.compile(
+    r"concentrado|croqueta|alimento (?:seco|completo|balanceado|para (?:perro|gato|cachorro|gatito))|"
+    r"comida (?:seca|para (?:perro|gato))|\bcuido\b|\bpepas?\b|dry food")
+RE_NO_CONC = re.compile(
+    r"snack|galleta|premio|treat|\blatas?\b|\bsobres?\b|pouch|humed|\bpate\b|medicament|prescri|veterinar|"
+    r"\b[rkicz]/d\b|renal|hepatic|urinar|gastro|hydroliz|hidroliz|hypoalerg|neurocare|diabetic|cardiac|vet ?life|"
+    r"pipeta|antipulga|vitamina|suplemento|jarabe|pastilla|"
+    r"comedero|bebedero|dispensador|plato|bowl|contenedor|recipiente|lanzador|juguete|medidor|cuchara|bolso|"
+    r"\bpala\b|hueso|mordedor|dental|arena")
+MIN_KG_CONCENTRADO = 0.3  # por debajo suelen ser sobres, latas o premios
+
+
+RE_RAZON_SOCIAL = re.compile(r"\b(?:sas|s a s|s a|sca|ltda|cia|group|grupo|logisticos|comercial|servicios|distribuciones?|importaciones|colombia|sa|occidente)\b")
+
+
+def marca_comercial(marca):
+    """Algunas tiendas ponen la razón social como marca (p. ej. "NESTLE PURINA PET CARE DE COLOMBIA SA"): se deja la marca."""
+    n = norm(marca)
+    if "purina" in n:
+        return "Purina"
+    return "" if RE_RAZON_SOCIAL.search(re.sub(r"[^a-z0-9]+", " ", n)) else marca
+
+
+def marca_concentrado(n, marca):
+    """Devuelve (nombre de marca, especie fija) si el nombre o la marca de la tienda es de concentrado conocida."""
+    m = norm(marca)
+    for nombre, (rx, esp) in list(MARCAS_CONCENTRADO.items()) + [(k, (re.escape(norm(k)), None)) for k in MARCAS_DESCUBIERTAS]:
+        patron = re.compile(r"\b(?:%s)\b" % rx)
+        if nombre == "Max":  # "max" suelta confunde: solo si es la marca o abre el nombre
+            if m == "max" or n.startswith("max "):
+                return nombre, esp
+            continue
+        if patron.search(m) or patron.search(n):
+            return nombre, esp
+    return None, None
+
+
+def es_concentrado(n, marca):
+    """¿Es concentrado (alimento seco)? Devuelve (bool, marca, especie fija)."""
+    if RE_NO_CONC.search(n):
+        return False, None, None
+    nombre, esp = marca_concentrado(n, marca)
+    fuerte = RE_CONC_FUERTE.search(n)
+    pesa = RE_PESO.search(n)
+    if fuerte or (nombre and pesa):
+        return True, nombre, esp
+    return False, None, None
+
+
+# Rastreo e identificación
+RE_RASTREO = re.compile(r"gps|rastread|localizador|air ?tag|\bqr\b|\bplacas?\b|chapa|medalla|in?dent?ificacion")
+RE_CONTEXTO_PLACA = re.compile(r"in?dent?ificacion|\bid\b|mascota|perro|gato|\bpet\b|nombre|grabad|personaliz|hueso|huella|\bqr\b")
+RE_NO_RASTREO = re.compile(r"calor|termic|calefa|hornilla|solar|base|cama|pantalla|\bplaca madre")
+RE_PORTA_AIRTAG = re.compile(r"soporte|porta|holder|funda|estuche|collar|llavero|\bcase\b|cover|arnes|clip")
+
+
+def tipo_rastreo(n):
+    """GPS, porta-AirTag, placa QR o placa grabada; None si no es de rastreo."""
+    if RE_NO_RASTREO.search(n):
+        return None
+    if re.search(r"gps|rastread|localizador", n):
+        return "GPS"
+    if re.search(r"air ?tag", n):
+        return "porta-AirTag" if RE_PORTA_AIRTAG.search(n) else None
+    if re.search(r"\bqr\b", n):
+        return "placa QR"
+    if re.search(r"\bplacas?\b|chapa|medalla|in?dent?ificacion", n) and RE_CONTEXTO_PLACA.search(n):
+        return "placa grabada"
+    return None
+
 
 # Orden importa: la primera regla que coincide decide la categoría.
 CATEGORIAS = [
@@ -237,6 +341,7 @@ CATEGORIAS = [
     ("transportadores", re.compile(r"bolso|morral|transportador|guacal|maletin|cargador")),
     ("rascadores", re.compile(r"rascador|gimnasio|\bgym\b|torre para gato|arbol para gato|cat tower|poste")),
     ("fuentes-comederos", re.compile(r"fuente|bebedero|(comedero|alimentador|dispensador).*(automatic|programable)|(automatic|programable).*(comedero|alimentador|dispensador)")),
+    ("rastreo", RE_RASTREO),
     ("arneses-correas", re.compile(r"arnes|correa|pechera|trailla")),
     ("camas", re.compile(r"\bcamas?\b|colchon|cucha")),
     ("juguetes", re.compile(
@@ -244,22 +349,32 @@ CATEGORIAS = [
         r"catnip|ovillo|\bvara\b|cascabel|resorte|\braton\b|pluma|\bkong\b|nylabone|petstages|outward hound")),
 ]
 
-RE_GATO = re.compile(r"\bgat[oa]s?\b|felin|\bcats?\b")
-RE_PERRO = re.compile(r"\bperr[oa]s?\b|canin|\bdogs?\b|cachorro")
+RE_GATO = re.compile(r"\bgat[oa]s?\b|gatit[oa]s?|felin|\bcats?\b|\bkitten")
+RE_PERRO = re.compile(r"\bperr[oa]s?\b|perrit[oa]s?|canin|\bdogs?\b|cachorro|\bpupp(?:y|ies)\b")
 
-POR_DEFECTO = {"arena": "gato", "rascadores": "gato"}
+POR_DEFECTO = {"arena": "gato", "rascadores": "gato", "rastreo": "ambos"}
 
 
-def clasificar(nombre, extra):
+def clasificar(nombre, extra, marca=""):
+    """Devuelve (categoría, especie, marca de concentrado)."""
     n, e = norm(nombre), norm(extra)
-    if EXCLUIR.search(n) or EXCLUIR.search(e):
-        return None, None
-    # La categoría sale solo del nombre: la de la tienda mezcla cepillos, comida y otros productos.
-    categoria = next((c for c, rx in CATEGORIAS if rx.search(n)), None)
-    if not categoria:
-        return None, None
-    gato = RE_GATO.search(n) or None
-    perro = RE_PERRO.search(n) or None
+    conc, marca_c, esp_fija = es_concentrado(n, marca)
+    if conc:
+        categoria = "concentrado"
+    else:
+        if EXCLUIR.search(n) or EXCLUIR.search(e):
+            return None, None, None
+        if "collar" in n and not RE_RASTREO.search(n):  # solo se salvan los collares con GPS, AirTag o QR
+            return None, None, None
+        # La categoría sale solo del nombre: la de la tienda mezcla cepillos, comida y otros productos.
+        categoria = next((c for c, rx in CATEGORIAS if rx.search(n)), None)
+        if not categoria:
+            return None, None, None
+        if categoria == "rastreo" and not tipo_rastreo(n):
+            return None, None, None
+    n_esp = n.replace("royal canin", " ")  # "canin" de la marca no significa perro
+    gato = RE_GATO.search(n_esp) or None
+    perro = RE_PERRO.search(n_esp) or None
     if not gato and not perro:
         gato, perro = RE_GATO.search(e), RE_PERRO.search(e)
     if "chuckit" in n and not gato:
@@ -270,9 +385,13 @@ def clasificar(nombre, extra):
         especie = "gato"
     elif perro:
         especie = "perro"
+    elif categoria == "concentrado":
+        especie = esp_fija
+        if not especie:
+            return None, None, None  # sin saber para quién es, no se compara
     else:
         especie = POR_DEFECTO.get(categoria, "ambos")
-    return categoria, especie
+    return categoria, especie, marca_c
 
 
 NUM = r"(\d+(?:[.,]\d+)?)"
@@ -293,10 +412,10 @@ def cantidad_unidad(nombre, categoria, variante=""):
     Si la variante (p. ej. "25 Kg") trae una cantidad, manda sobre la del título del producto."""
     if variante:
         cant, unidad = cantidad_unidad(variante, categoria)
-        if cant and not (categoria in ("arena", "shampoo", "panos") and unidad == "unidad"):
+        if cant and not (categoria in ("arena", "shampoo", "panos", "concentrado") and unidad == "unidad"):
             return cant, unidad
     n = norm(nombre)
-    if categoria == "arena":
+    if categoria in ("arena", "concentrado"):
         m = RE_PESO.search(n)
         if m:
             cant = numero(m.group(2)) * int(m.group(1) or 1)
@@ -307,7 +426,7 @@ def cantidad_unidad(nombre, categoria, variante=""):
                 return cant * 0.45359237, "kg"
             return cant / 1000, "kg"
         m = RE_VOLUMEN.search(n)
-        if m and not m.group(3) in ("ml", "cc"):
+        if categoria == "arena" and m and not m.group(3) in ("ml", "cc"):
             return numero(m.group(2)) * int(m.group(1) or 1), "l"  # solo litros: no se convierte a kg
         return None, None
     if categoria == "shampoo":
@@ -336,10 +455,49 @@ TIPOS_ARENA = [
 ]
 
 
+# Concentrado: etapa de vida y tamaño de raza, solo cuando el nombre lo dice.
+RE_ETAPAS = [
+    ("cachorro", re.compile(r"cachorros?|puppy|puppies|junior|kitten|gatit[oa]s?|crecimiento|\bbaby")),
+    ("senior", re.compile(r"senior|mature|maduro|\b[5-9]\+|\+ ?[5-9]\b|adulto mayor|\b7 ?\+|vejez")),
+    ("adulto", re.compile(r"adult[oa]?s?\b")),
+]
+RE_TAMANOS = [
+    ("pequeña", re.compile(r"peque[nñ]|\bmini\b|\bsmall\b|\btoy\b|\bxs\b")),
+    ("mediana", re.compile(r"median|\bmedium\b")),
+    ("grande", re.compile(r"grande|\blarge\b|\bmaxi\b|gigante|\bgiant\b")),
+]
+# Palabras que no forman parte de la línea del producto (marca, etapa, tamaño, especie, empaque).
+RE_RUIDO_LINEA = re.compile(
+    r"\b(?:concentrado|croquetas?|alimento|comida|seco|completo|balanceado|premium|super|para|perros?|gatos?|gatit[oa]s?|"
+    r"cachorros?|adult[oa]?s?|senior|mature|junior|kitten|puppy|razas?|tamano|peque\w*|medi\w+|grandes?|mini|small|"
+    r"medium|large|maxi|toy|de|x|y|con|por|todas|todos|las|los|bulto|bolsa|empaque|kgs?|kls?|kilos?|kilogramos?|"
+    r"gramos?|grs?|g|lbs?|libras?|purina|dog|cat|\d+(?:[.,]\d+)?)\b|[+\-–/()®™&!]")
+
+
+def etapa_tamano(n):
+    etapa = next((e for e, rx in RE_ETAPAS if rx.search(n)), "")
+    tam = " y ".join(t for t, rx in RE_TAMANOS if rx.search(n))
+    return etapa, tam
+
+
+def linea_concentrado(nombre, marca):
+    """Línea del producto: el nombre sin marca, etapa, tamaño, especie ni cantidad (p. ej. "Science Diet")."""
+    n = norm(nombre)
+    if marca:
+        n = re.sub(r"\b(?:%s)\b" % (MARCAS_CONCENTRADO.get(marca, (re.escape(norm(marca)),))[0]), " ", n)
+    n = RE_RUIDO_LINEA.sub(" ", n)
+    return " ".join(w[:1].upper() + w[1:] for w in n.split())
+
+
 def caracteristica(nombre, categoria, cantidad, unidad):
     n = norm(nombre)
     if categoria == "arena":
         return next((t for t, rx in TIPOS_ARENA if re.search(rx, n)), "sin especificar")
+    if categoria == "concentrado":
+        etapa, tam = etapa_tamano(n)
+        return "; ".join(x for x in (etapa, ("raza " + tam) if tam else "") if x)
+    if categoria == "rastreo":
+        return tipo_rastreo(n) or ""
     partes = []
     m = RE_TALLA.search(nombre) or RE_TALLA_MAYUS.search(nombre)
     if m:
@@ -381,14 +539,22 @@ def fmt(x):
 
 
 def armar_fila(tienda, nombre, marca, extra, url, precio, precio_lista, variante="", imagen=""):
-    categoria, especie = clasificar(nombre, extra)
+    categoria, especie, marca_c = clasificar(nombre, extra, marca)
     if not categoria:
+        if RE_RASTREO.search(norm(nombre)) or "collar" in norm(nombre):
+            CANDIDATOS_RASTREO.add("%s | %s" % (tienda, nombre.strip()))
         return None
     cant, unidad = cantidad_unidad(nombre, categoria, variante)
+    linea = ""
+    if categoria == "concentrado":
+        if not cant or cant < MIN_KG_CONCENTRADO:
+            return None  # sin peso en kg no hay precio por kg; menos de 300 g suele ser sobre, lata o premio
+        marca = marca_c or marca_comercial(marca)
+        linea = linea_concentrado(nombre, marca_c)
     p_unidad = round(precio / cant, 2) if cant else None
     return {
         "fecha": HOY, "tienda": tienda, "categoria": categoria, "especie": especie,
-        "producto": nombre.strip(), "marca": (marca or "").strip(),
+        "producto": nombre.strip(), "marca": (marca or "").strip(), "linea": linea,
         "caracteristica": caracteristica(nombre, categoria, cant, unidad),
         "cantidad": fmt(round(cant, 3)) if cant else "", "unidad": unidad if cant else "",
         "precio": fmt(precio), "precio_lista": fmt(precio_lista) if precio_lista and precio_lista >= precio else "",
@@ -415,9 +581,9 @@ def imagen_shopify(p, variante):
     return por_id or (imgs[0].get("src") if imgs else "") or ""
 
 
-def consultar_vtex(fila_tienda, robots, filas):
+def consultar_vtex(fila_tienda, robots, filas, terminos=None):
     base = fila_tienda["url"]
-    for termino in TERMINOS:
+    for termino in (terminos or TERMINOS):
         url = base + "/api/catalog_system/pub/products/search?ft=%s&_from=0&_to=49" % urllib.parse.quote(termino)
         if not robots.permitido(ruta_de(url)):
             print("  robots.txt no permite %r; se omite" % termino)
@@ -442,10 +608,14 @@ def consultar_vtex(fila_tienda, robots, filas):
                     agregar(filas, fila)
 
 
-def consultar_shopify(fila_tienda, robots, filas):
-    """Recorre /products.json por páginas (una sola vez por tienda) y filtra localmente por los términos."""
-    base = fila_tienda["url"]
-    claves = {norm(t.split()[0]).rstrip("s") for t in TERMINOS}  # arena, rascador, gimnasio, fuente, ...
+_CATALOGO_SHOPIFY = {}  # base -> productos ya descargados (la segunda pasada no vuelve a pedirlos)
+
+
+def paginas_shopify(base, robots):
+    if base in _CATALOGO_SHOPIFY:
+        yield _CATALOGO_SHOPIFY[base]
+        return
+    acumulado = _CATALOGO_SHOPIFY[base] = []
     for pagina in range(1, MAX_PAGINAS_SHOPIFY + 1):
         url = base + "/products.json?limit=250&page=%d" % pagina
         if not robots.permitido(ruta_de(url)):
@@ -455,6 +625,19 @@ def consultar_shopify(fila_tienda, robots, filas):
         productos = (datos or {}).get("products") if isinstance(datos, dict) else None
         if not productos:
             return
+        acumulado.extend(productos)
+        yield productos
+        if len(productos) < 250:
+            return
+
+
+def consultar_shopify(fila_tienda, robots, filas, terminos=None):
+    """Recorre /products.json por páginas (una sola vez por tienda) y filtra localmente por los términos."""
+    base = fila_tienda["url"]
+    claves = {norm(t.split()[0]).rstrip("s") for t in (terminos or TERMINOS)}  # arena, rascador, gimnasio, fuente, ...
+    if not terminos:
+        claves.update(CLAVES_SHOPIFY_EXTRA)
+    for productos in paginas_shopify(base, robots):
         for p in productos:
             tags = p.get("tags") or []
             extra = "%s %s" % (p.get("product_type") or "", tags if isinstance(tags, str) else " ".join(tags))
@@ -475,8 +658,6 @@ def consultar_shopify(fila_tienda, robots, filas):
                                   imagen=imagen_shopify(p, v))
                 if fila:
                     agregar(filas, fila)
-        if len(productos) < 250:
-            return
 
 
 # ---------------------------------------------------------------- salida
@@ -500,8 +681,35 @@ def imprimir_tabla(columnas, filas, anchos=None):
 
 
 COL_TIENDAS = ["tienda", "url", "plataforma", "estado", "motivo", "fecha_revision"]
-COL_PRODUCTOS = ["fecha", "tienda", "categoria", "especie", "producto", "marca", "caracteristica",
+COL_PRODUCTOS = ["fecha", "tienda", "categoria", "especie", "producto", "marca", "linea", "caracteristica",
                  "cantidad", "unidad", "precio", "precio_lista", "precio_unidad", "url", "imagen"]
+
+
+def unificar_marcas(filas):
+    """Una sola escritura por marca (MONELLO y Monello son la misma); la marca no puede ser la tienda."""
+    formas = {}
+    for f in filas:
+        if f["categoria"] == "concentrado" and f["marca"]:
+            formas.setdefault(norm(f["marca"]), {}).setdefault(f["marca"], 0)
+            formas[norm(f["marca"])][f["marca"]] += 1
+    for f in filas:
+        if f["categoria"] != "concentrado" or not f["marca"]:
+            continue
+        k = norm(f["marca"])
+        if k == norm(f["tienda"]):
+            f["marca"] = ""
+            continue
+        opciones = formas[k]
+        f["marca"] = max(opciones, key=lambda m: (not m.isupper(), opciones[m]))
+
+
+MIN_PRODUCTOS_MARCA = 3
+MAX_MARCAS_DESCUBIERTAS = 10
+
+
+def tiendas_nombres(revisadas):
+    """Nombres de tienda normalizados: un vendor que es la propia tienda no es una marca."""
+    return {norm(f["tienda"]) for f, _ in revisadas}
 
 
 def main():
@@ -525,9 +733,36 @@ def main():
         else:
             consultar_shopify(fila_tienda, robots, filas)
         print("  %d filas nuevas" % (len(filas) - antes), flush=True)
+    # Segunda pasada: marcas de concentrado con más productos en las tiendas aprobadas que no estaban en la lista.
+    conocidas = {norm(m) for m in MARCAS_CONCENTRADO}
+    cuenta = {}
+    for f in filas.values():
+        if f["categoria"] == "concentrado" and f["marca"] and norm(f["marca"]) not in conocidas:
+            cuenta.setdefault(f["marca"], {"n": 0, "tiendas": set()})
+            cuenta[f["marca"]]["n"] += 1
+            cuenta[f["marca"]]["tiendas"].add(f["tienda"])
+    nuevas = sorted((m for m, c in cuenta.items() if c["n"] >= MIN_PRODUCTOS_MARCA and norm(m) not in tiendas_nombres(revisadas)),
+                    key=lambda m: -cuenta[m]["n"])[:MAX_MARCAS_DESCUBIERTAS]
+    if nuevas:
+        print("\nMarcas de concentrado descubiertas: %s" % ", ".join("%s (%d)" % (m, cuenta[m]["n"]) for m in nuevas), flush=True)
+        for m in nuevas:
+            MARCAS_DESCUBIERTAS[m] = (re.escape(norm(m)), None)
+        for fila_tienda, robots in revisadas:
+            if fila_tienda["estado"] != "aprobada":
+                continue
+            if fila_tienda["plataforma"] == "vtex":
+                consultar_vtex(fila_tienda, robots, filas, terminos=nuevas)
+            else:
+                consultar_shopify(fila_tienda, robots, filas, terminos=nuevas)
+    unificar_marcas(filas.values())
     resultado = sorted(filas.values(), key=lambda f: (f["categoria"], f["especie"], f["tienda"], f["producto"]))
     escribir_csv(SALIDA_PRODUCTOS, COL_PRODUCTOS, resultado)
+    escribir_csv(SALIDA_PRECIOS, COL_PRODUCTOS, resultado)
     print("\n%d filas guardadas en %s" % (len(resultado), SALIDA_PRODUCTOS.relative_to(RAIZ)))
+
+    print("\nCANDIDATOS DE RASTREO DESCARTADOS (%d)" % len(CANDIDATOS_RASTREO))
+    for c in sorted(CANDIDATOS_RASTREO)[:40]:
+        print("  " + c)
 
     arena = [f for f in resultado if f["categoria"] == "arena" and f["especie"] == "gato"]
     arena.sort(key=lambda f: (f["precio_unidad"] == "", float(f["precio_unidad"] or 0)))

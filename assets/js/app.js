@@ -2,13 +2,12 @@
 (function () {
   'use strict';
   var H = Huellas;
-  var URL_INSTAGRAM = 'https://www.instagram.com/boliitattoo/'; // cambia aquí el enlace de Instagram
   var RUTA_IMG = 'assets/ilustraciones/';
   var GRUPOS_POR_PAGINA = 15;
   var TARJETAS_POR_GRUPO = 6;
   var MAX_RESUMEN = 12;
 
-  var estado = { texto: '', especie: '', categoria: '', limite: GRUPOS_POR_PAGINA, estricto: false };
+  var estado = { texto: '', especie: '', categoria: '', marca: '', limite: GRUPOS_POR_PAGINA, estricto: false };
   var productos = [];
   var hoy = new Date();
 
@@ -51,10 +50,12 @@
   }
   function dondeBuscaste() {
     var d = [];
+    if (estado.marca) d.push('de ' + estado.marca);
     if (estado.categoria) d.push('en ' + H.categoria(estado.categoria).etiqueta);
     if (estado.especie) d.push('para ' + H.especie(estado.especie).etiqueta);
     return d.join(' ');
   }
+  var AVISO_MICROCHIP = 'Los microchips los implanta tu veterinario, por eso no los comparamos. Pregúntale por él en tu próxima visita; aquí sí puedes comparar placas de identificación y collares con GPS.';
   function anunciar(texto) { el.anuncio.textContent = texto; }
 
   /* Estados: carga, vacío y error. Cada uno dice qué pasó, por qué y qué hacer. */
@@ -75,11 +76,14 @@
       var botones = h('div', { 'class': 'botones' });
       if (estado.estricto && q) botones.appendChild(botonAccion('Ver en todas las categorías', function () { estado.estricto = false; refrescar(); }));
       botones.appendChild(botonAccion('Quitar filtros', quitarFiltros));
+      var sugerir = h('div', { 'class': 'estado__sugerir' }, h('p', { texto: '¿No encuentras lo que buscas? Cuéntanos' }),
+        botonAccion('Sugiere un producto', function () { Comun.abrirSugerencia({ tipo: Comun.TIPOS[0], detalle: q }, this); }));
       t = h('div', { 'class': 'tarjeta estado', role: 'status' },
         img('camas.svg', 'Gato durmiendo en su cama', 160, 133),
         h('p', { 'class': 'titulo-estado', texto: que }),
+        H.pideMicrochip(q) ? h('p', { texto: AVISO_MICROCHIP }) : null,
         h('p', { texto: 'Puede que esté escrito distinto o que ninguna tienda lo tenga hoy. Prueba otra palabra o quita un filtro.' }),
-        botones);
+        botones, sugerir);
       anunciar('Sin resultados. ' + que);
     } else {
       t = h('div', { 'class': 'tarjeta estado estado--error', role: 'alert' },
@@ -107,22 +111,37 @@
       var b = chip(x.id === 'ambos' ? 'Para los dos' : x.etiqueta, function () { estado.especie = estado.especie === x.id ? '' : x.id; refrescar(); });
       b.dataset.id = x.id; e.appendChild(b); return b;
     });
-    var todas = chip('Todas las categorías', function () { estado.categoria = ''; refrescar(); });
+    var todas = chip('Todas las categorías', function () { estado.categoria = ''; estado.marca = ''; refrescar(); });
     todas.dataset.id = ''; c.appendChild(todas);
     chipsCategoria = [todas].concat(H.CATEGORIAS.map(function (x) {
-      var b = chip(x.etiqueta, function () { estado.categoria = estado.categoria === x.id ? '' : x.id; refrescar(); }, x.img);
+      var b = chip(x.etiqueta, function () { estado.categoria = estado.categoria === x.id ? '' : x.id; estado.marca = ''; refrescar(); }, x.img);
       b.dataset.id = x.id; c.appendChild(b); return b;
     }));
+    dibujarMarcas();
     marcarChips();
   }
+  var chipsMarca = [];
+  function dibujarMarcas() {
+    var m = $('chips-marca');
+    m.textContent = '';
+    var todas = chip('Todas las marcas', function () { estado.marca = ''; refrescar(); });
+    todas.dataset.id = ''; m.appendChild(todas);
+    chipsMarca = [todas].concat(H.marcasConcentrado(productos).map(function (x) {
+      var b = chip(x.marca, function () { estado.marca = estado.marca === x.marca ? '' : x.marca; refrescar(); });
+      b.dataset.id = x.marca; m.appendChild(b); return b;
+    }));
+  }
   function marcarChips() {
+    $('filtro-marca').hidden = estado.categoria !== 'concentrado';
+    chipsMarca.forEach(function (b) { b.setAttribute('aria-pressed', String(estado.marca === b.dataset.id)); });
+    flechas.forEach(function (f) { f(); });
     chipsEspecie.forEach(function (b) { b.setAttribute('aria-pressed', String(estado.especie === b.dataset.id)); });
     chipsCategoria.forEach(function (b) { b.setAttribute('aria-pressed', String(estado.categoria === b.dataset.id)); });
-    el.quitar.hidden = !(estado.texto || estado.especie || estado.categoria);
+    el.quitar.hidden = !(estado.texto || estado.especie || estado.categoria || estado.marca);
   }
 
   function quitarFiltros() {
-    estado.texto = ''; estado.especie = ''; estado.categoria = ''; estado.estricto = false;
+    estado.texto = ''; estado.especie = ''; estado.categoria = ''; estado.marca = ''; estado.estricto = false;
     el.buscar.value = '';
     refrescar();
   }
@@ -267,6 +286,7 @@
         'No hay «' + q + '» ' + a.dentro + '. Te mostramos ' + a.cantidad + (a.cantidad === 1 ? ' resultado ' : ' resultados ') + a.preposicion + ' ' + a.en + '.'],
         botonAccion('Volver al filtro', function () { estado.estricto = true; refrescar(); })));
     }
+    if (H.pideMicrochip(q)) cont.appendChild(avisoBloque('aviso--info', [AVISO_MICROCHIP]));
     r.avisos.sinonimos.forEach(function (s) {
       cont.appendChild(avisoBloque('aviso--info', ['Mostrando ' + s.grupo + ', también buscamos ' + lista_y(s.palabras) + '.']));
     });
@@ -333,28 +353,12 @@
         if (datos) H.configurarSinonimos(datos); // sin sinónimos la búsqueda sigue funcionando
         hoy = new Date();
         mostrarActualizacion(H.fechaMasReciente(productos), modificado);
+        try { aplicarFiltroDeURL(new URLSearchParams(location.search)); } catch (e) { /* sin filtros en la URL */ }
         dibujarChips();
         dibujar();
       })
       .catch(function () { mostrarEstado('error'); });
   }
-
-  /* Modo claro / oscuro: sigue al sistema hasta que la persona elige; la elección se recuerda. */
-  var interruptor = $('tema'), modoOscuroSistema = window.matchMedia ? window.matchMedia('(prefers-color-scheme: dark)') : null;
-  function esOscuro() {
-    var t = document.documentElement.dataset.tema;
-    return t ? t === 'oscuro' : !!(modoOscuroSistema && modoOscuroSistema.matches);
-  }
-  function pintarInterruptor() { interruptor.setAttribute('aria-checked', String(esOscuro())); }
-  interruptor.addEventListener('click', function () {
-    var nuevo = esOscuro() ? 'claro' : 'oscuro';
-    document.documentElement.dataset.tema = nuevo;
-    try { localStorage.setItem('tema', nuevo); } catch (e) { /* sin almacenamiento: vale para esta visita */ }
-    pintarInterruptor();
-  });
-  if (modoOscuroSistema && modoOscuroSistema.addEventListener) modoOscuroSistema.addEventListener('change', pintarInterruptor);
-  pintarInterruptor();
-  $('instagram').href = URL_INSTAGRAM;
 
   var temporizador;
   el.buscar.addEventListener('input', function () {
@@ -374,22 +378,43 @@
   el.quitar.addEventListener('click', quitarFiltros);
   el.verMas.addEventListener('click', function () { estado.limite += GRUPOS_POR_PAGINA; dibujar(); });
 
-  /* Chips de categoría en celular: flechas y degradado según haya más a cada lado */
-  var env = $('envoltorio-categoria'), tira = $('chips-categoria');
-  var flechaAnt = env.querySelector('.flecha--ant'), flechaSig = env.querySelector('.flecha--sig');
-  function actualizarFlechas() {
-    var max = tira.scrollWidth - tira.clientWidth - 2;
-    var hay = max > 0;
-    flechaAnt.hidden = !hay || tira.scrollLeft <= 2;
-    flechaSig.hidden = !hay || tira.scrollLeft >= max;
-    env.classList.toggle('hay-ant', !flechaAnt.hidden);
-    env.classList.toggle('hay-sig', !flechaSig.hidden);
+  /* Chips en celular: flechas y degradado según haya más a cada lado */
+  var flechas = [];
+  function conectarTira(idEnvoltorio, idTira) {
+    var env = $(idEnvoltorio), tira = $(idTira);
+    var ant = env.querySelector('.flecha--ant'), sig = env.querySelector('.flecha--sig');
+    function actualizar() {
+      var max = tira.scrollWidth - tira.clientWidth - 2, hay = max > 0;
+      ant.hidden = !hay || tira.scrollLeft <= 2;
+      sig.hidden = !hay || tira.scrollLeft >= max;
+      env.classList.toggle('hay-ant', !ant.hidden);
+      env.classList.toggle('hay-sig', !sig.hidden);
+    }
+    ant.addEventListener('click', function () { tira.scrollBy({ left: -tira.clientWidth * .7, behavior: 'smooth' }); });
+    sig.addEventListener('click', function () { tira.scrollBy({ left: tira.clientWidth * .7, behavior: 'smooth' }); });
+    tira.addEventListener('scroll', actualizar, { passive: true });
+    window.addEventListener('resize', actualizar);
+    new MutationObserver(actualizar).observe(tira, { childList: true });
+    flechas.push(actualizar);
   }
-  flechaAnt.addEventListener('click', function () { tira.scrollBy({ left: -tira.clientWidth * .7, behavior: 'smooth' }); });
-  flechaSig.addEventListener('click', function () { tira.scrollBy({ left: tira.clientWidth * .7, behavior: 'smooth' }); });
-  tira.addEventListener('scroll', actualizarFlechas, { passive: true });
-  window.addEventListener('resize', actualizarFlechas);
-  new MutationObserver(actualizarFlechas).observe(tira, { childList: true });
+  conectarTira('envoltorio-categoria', 'chips-categoria');
+  conectarTira('envoltorio-marca', 'chips-marca');
+
+  /* Enlaces del pie y de la URL (?categoria=, ?especie=) que activan un filtro */
+  function aplicarFiltroDeURL(params) {
+    var c = params.get('categoria'), e = params.get('especie');
+    if (c && H.categoria(c)) { estado.categoria = c; estado.marca = ''; }
+    if (e && H.especie(e)) estado.especie = e;
+  }
+  document.addEventListener('click', function (ev) {
+    var a = ev.target.closest ? ev.target.closest('a[data-categoria], a[data-especie]') : null;
+    if (!a) return;
+    ev.preventDefault();
+    if (a.dataset.categoria) { estado.categoria = a.dataset.categoria; estado.marca = ''; }
+    if (a.dataset.especie) estado.especie = a.dataset.especie;
+    refrescar();
+    $('filtros').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
 
   cargar();
 })();

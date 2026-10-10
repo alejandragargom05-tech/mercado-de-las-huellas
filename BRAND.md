@@ -24,7 +24,7 @@ Se usan con moderación, siempre acompañados de texto (nunca solo el color) y c
 
 | Significado | Modo claro (texto / fondo) | Modo oscuro (texto / fondo) | Uso |
 |---|---|---|---|
-| Verde oliva: "La más barata" y el ahorro | `#4F5B17` / `#EEF2DC` | `#BCCE6C` / `#2A3114` | Insignia y borde de la tarjeta más barata |
+| Verde oliva: "La más barata" y el ahorro | `#4F5B17` / `#EEF2DC` | `#A9B56B` / `#2A3114` | Insignia y borde de la tarjeta más barata |
 | Ámbar: precio de más de 7 días | `#7A4700` / `#FFF1D1` | `#F2B84B` / `#3A2A0A` | Insignia "Precio de hace X días", fecha y avisos de precios viejos |
 | Terracota: errores | `#A23D24` / `#FBE9E4` | `#F4A08A` / `#3E1D17` | Error de carga y fallos |
 
@@ -32,9 +32,9 @@ Contrastes: oliva 7,4:1, ámbar 7,7:1 y terracota 6,5:1 sobre blanco; en oscuro,
 El azul se reserva para el precio por unidad, los enlaces, los titulares y el botón principal; el resto de la interfaz va en texto principal sobre blanco o crema.
 
 Reglas:
-- **Dos modos: claro y oscuro** (`color-scheme: light dark`). Por defecto sigue la preferencia del sistema; un interruptor accesible en la barra superior permite cambiarlo y recuerda la elección (`localStorage`, protegido con `try/catch`). El modo claro es el de la paleta de arriba.
-- **Modo oscuro:** fondo azul noche `#0F1330`, tarjetas un poco más claras `#1A2052`, texto `#ECEBF2`, gris de apoyo `#B4B1C2` y azul aclarado `#A9B6FF` (precio por unidad, enlaces, titulares y botón principal, con texto azul noche encima). Pie `#1F2766`. Las ilustraciones van siempre sobre una base blanca para conservar su trazo. Las fotos de producto también van sobre blanco.
-- Contraste mínimo de 4,5:1 para texto en ambos modos. Claro: blanco sobre azul 9,3:1, azul sobre crema 8,2:1, gris sobre crema 4,6:1. Oscuro: azul aclarado sobre tarjeta 7,9:1, texto 12,9:1, gris 7,3:1.
+- **Dos modos: claro y oscuro** (`color-scheme: light dark`). Por defecto abre en modo claro; un interruptor accesible en la barra superior permite cambiarlo y recuerda la elección (`localStorage`, protegido con `try/catch`). El modo claro es el de la paleta de arriba.
+- **Modo oscuro:** fondo azul noche `#141A44`, tarjetas un poco más claras `#1B2257`, texto crema `#F4F0EA`, gris de apoyo `#B4B1C2` y azul aclarado `#AEB8F6` (precio por unidad, enlaces, titulares y botón principal, con texto azul noche encima). Pie `#1B2257`. El verde pasa a un oliva apagado `#A9B56B`, solo en la insignia y el borde de la más barata. La web siempre abre en modo claro; el oscuro solo si la persona lo elige. Las ilustraciones van siempre sobre una base blanca para conservar su trazo. Las fotos de producto también van sobre blanco.
+- Contraste mínimo de 4,5:1 para texto en ambos modos. Claro: blanco sobre azul 9,3:1, azul sobre crema 8,2:1, gris sobre crema 4,6:1. Oscuro: azul aclarado sobre tarjeta 7,8:1, texto 13,1:1, gris 7,1:1.
 - Titulares en azul sobre crema o blanco. Fondo crema y tarjetas blancas; los bloques azules grandes ya no se usan: el resumen "Hallazgos del día" son tarjetas blancas con borde verde oliva e insignia.
 
 ## Forma y estructura
@@ -60,6 +60,9 @@ Cálida, serena y segura. Español de Colombia, tuteando. Frases cortas. Sin exc
 | Botón a la tienda | IR A [TIENDA] ↗ |
 | Botón limpiar | QUITAR FILTROS |
 | Filtro de especie | Gatos · Perros · Para los dos |
+| Título de marca (solo en Concentrado) | ¿De qué marca? |
+| Sin resultados, invitación | ¿No encuentras lo que buscas? Cuéntanos · SUGIERE UN PRODUCTO |
+| Microchip | Los microchips los implanta tu veterinario, por eso no los comparamos. |
 | Título de especie | ¿Para quién es? |
 | Título de categoría | ¿Qué necesita hoy? · Todas las categorías |
 | Resumen | Hallazgos del día |
@@ -98,7 +101,7 @@ Cada categoría del catálogo tiene su ilustración en `assets/ilustraciones/`, 
 ## Experiencia móvil
 - Buscador fijo arriba. Chips de especie y de categoría (con su ilustración), desplazables, de al menos 44 px.
 - Arriba de los resultados, un resumen con la opción más barata de cada grupo.
-- Barra superior fija y delgada: a la izquierda el logo (ilustración de 56 px y el nombre en la letra rotulada); a la derecha el interruptor de modo claro u oscuro y el enlace a Instagram (ícono, texto accesible, pestaña nueva). El enlace vive en una sola constante (`URL_INSTAGRAM` en `assets/js/app.js`).
+- Barra superior fija y delgada: a la izquierda el logo (ilustración de 56 px y el nombre en la letra rotulada); a la derecha el interruptor de modo claro u oscuro y el enlace a Instagram (ícono, texto accesible, pestaña nueva). El enlace vive en una sola constante (`URL_INSTAGRAM` en `assets/js/comun.js`, que usan todas las páginas).
 - Tarjeta con orden de lectura fijo: insignia "La más barata" (solo si aplica), tienda en negrita, precio por unidad grande con su unidad, nombre del producto, foto cuadrada de 88 px al lado (fondo blanco, `object-fit: contain`, carga diferida; si falta o falla, la ilustración de su categoría), lista corta de datos (marca, cantidad, precio total, fecha; cifras a la derecha) y botón "IR A [TIENDA] ↗" en pestaña nueva. Queda espacio para el botón "Mismo producto, más barato".
 - La tarjeta más barata lleva borde verde oliva.
 - Búsqueda: entiende sinónimos colombianos (`data/sinonimos.json`), singular y plural, tildes y errores de una o dos letras, y lo dice arriba de los resultados. Si el filtro activo no da resultados, muestra los de otras categorías con un aviso y un botón para volver al filtro; el filtro activo siempre se ve marcado (borde, relleno suave y ✓).
@@ -110,3 +113,9 @@ Cada categoría del catálogo tiene su ilustración en `assets/ilustraciones/`, 
 - Chip activo: azul de la marca con check, nunca verde. Cada filtro va con su título en una tarjeta suave. En escritorio los chips se ven todos (varias filas); en celular se desplazan con scroll-snap, degradado en el borde y flechas.
 - Decoración (olivo, casitas, mascota sobre la onda): lavanda tenue, `aria-hidden`, sin clics, quieta con `prefers-reduced-motion`; menos y más pequeña en celular.
 - Logo: mascota dentro de un arco cicládico en línea azul (`assets/ilustraciones/logo.svg`, también favicon), sin caja blanca.
+
+## Pie, formulario y páginas de texto
+- **Pie** (azul de la marca, con onda de entrada): logo arriba y cuatro columnas con título: «Explora» (cada categoría; activa su filtro), «Para quién» (Gatos, Perros, Para los dos), «Ayuda» (botón «Sugiere un producto» y «Cómo comparamos los precios») y «Síguenos» (Instagram). Abajo: «© 2026 Mercado de las Huellas», el aviso del veterinario y «Cómo funciona y privacidad». En celular las columnas se apilan.
+- **Sugerencias:** formulario corto dentro de la página (`<dialog>`), sin pedir correo, nombre ni cuenta. Tipo (Un producto que no encontré, Una tienda que falta, Un precio que no cuadra, Otra idea), detalle (máx. 500 caracteres), para quién (opcional) y enlace (opcional). Va a un Google Form (constantes `URL_FORMULARIO` y `ENTRADAS` en `assets/js/comun.js`) con un campo trampa oculto contra spam, mensaje de gracias y mensaje claro si falla.
+- **`como-funciona.html`:** corta y con la misma marca: de dónde salen los precios, cómo comparamos, que enlazamos a cada tienda y que las sugerencias son anónimas.
+- **Concentrado y Rastreo** tienen su ilustración (`concentrado.svg`: perro y gato junto a su plato; `rastreo.svg`: perro con su placa y su GPS).

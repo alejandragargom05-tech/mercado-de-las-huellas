@@ -1,23 +1,23 @@
 /* Mercado de las Huellas — estilos de marca. Ver BRAND.md */
 :root {
-  /* Sigue el sistema; [data-tema] lo fija el interruptor. Cada color: light-dark(claro, oscuro). */
-  color-scheme: light dark;
-  --crema: light-dark(#F4F0EA, #0F1330);
-  --blanco: light-dark(#FFFFFF, #1A2052);
-  --azul: light-dark(#2B3CA0, #A9B6FF);
-  --sobre-azul: light-dark(#FFFFFF, #0F1330);
-  --azul-hover: light-dark(#22308a, #C4CDFF);
-  --texto: light-dark(#2E2B33, #ECEBF2);
+  /* Abre en claro; [data-tema="oscuro"] lo fija el interruptor. Cada color: light-dark(claro, oscuro). */
+  color-scheme: light;
+  --crema: light-dark(#F4F0EA, #141A44);
+  --blanco: light-dark(#FFFFFF, #1B2257);
+  --azul: light-dark(#2B3CA0, #AEB8F6);
+  --sobre-azul: light-dark(#FFFFFF, #141A44);
+  --azul-hover: light-dark(#22308a, #C9D0FA);
+  --texto: light-dark(#2E2B33, #F4F0EA);
   --gris: light-dark(#6F6B76, #B4B1C2);
   --lavanda: light-dark(#C8CBE8, #3A4382);
-  --linea: light-dark(rgba(200, 203, 232, .7), rgba(169, 182, 255, .22));
-  --oliva: light-dark(#4F5B17, #BCCE6C);
+  --linea: light-dark(rgba(200, 203, 232, .7), rgba(174, 184, 246, .22));
+  --oliva: light-dark(#4F5B17, #A9B56B);
   --oliva-fondo: light-dark(#EEF2DC, #2A3114);
   --ambar: light-dark(#7A4700, #F2B84B);
   --ambar-fondo: light-dark(#FFF1D1, #3A2A0A);
   --terracota: light-dark(#A23D24, #F4A08A);
   --terracota-fondo: light-dark(#FBE9E4, #3E1D17);
-  --pie: light-dark(#2B3CA0, #1F2766);
+  --pie: light-dark(#2B3CA0, #1B2257);
   --radio: 24px;
   --sombra: light-dark(0 6px 24px rgba(43, 60, 160, .10), 0 6px 24px rgba(0, 0, 0, .35));
   --f-titulo: "Patrick Hand", "Segoe Print", "Comic Sans MS", cursive;
@@ -160,7 +160,7 @@ h1::after, h2::after {
 .voz th { font-weight: 600; width: 36%; }
 
 /* Pie */
-.pie { position: relative; background: var(--pie); color: #fff; margin-top: 48px; padding: 24px 0 40px; }
+.pie { position: relative; background: var(--pie); color: #fff; margin-top: 56px; padding: 32px 0 32px; }
 .pie::before {
   content: ""; position: absolute; left: 0; right: 0; top: -39px; height: 40px;
   background: var(--pie);
@@ -169,8 +169,22 @@ h1::after, h2::after {
 }
 .pie a { color: #fff; }
 .pie p { margin: 0 0 8px; }
+.pie__marca { display: inline-flex; align-items: center; gap: 10px; min-height: 44px; text-decoration: none; }
+.pie__marca .logo { width: 56px; height: 56px; color: #fff; }
+.pie__marca b { font: 400 1.5rem/1.1 var(--f-titulo); text-transform: uppercase; letter-spacing: .08em; color: #fff; }
+.pie__frase { margin: 0 0 8px; opacity: .85; }
+.pie__columnas { display: grid; grid-template-columns: minmax(0, 1fr); gap: 28px; margin: 24px 0 28px; }
+.pie__titulo, .pie h2.pie__titulo { font: 400 .8125rem/1.4 var(--f-texto); text-transform: uppercase; letter-spacing: 4px; color: #fff; margin: 0 0 10px; opacity: .8; }
+.pie h2.pie__titulo::after { display: none; }
+.pie ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; }
+.pie li a { display: inline-flex; align-items: center; min-height: 44px; }
+.pie__base { border-top: 1px solid rgba(255, 255, 255, .25); padding-top: 20px; display: grid; gap: 4px; font-size: .9375rem; }
+.pie__base p { margin: 0; }
+.boton--pie { background: #fff; color: #2B3CA0; min-height: 48px; text-align: center; letter-spacing: 2px; }
+.boton--pie:hover { background: #F4F0EA; }
 
 @media (min-width: 720px) {
+  .pie__columnas { grid-template-columns: 1.3fr .9fr 1.2fr .9fr; gap: 32px; }
   .hero { grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); }
   .rejilla--2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .rejilla--4, .rejilla--4.galeria { grid-template-columns: repeat(4, minmax(0, 1fr)); }
