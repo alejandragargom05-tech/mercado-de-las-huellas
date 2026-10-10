@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 200" role="img" aria-labelledby="t d">
+<title id="t">Perro con su saco de lana</title><desc id="d">Un perro de pie lleva un saco tejido de rayas y mueve la cola; a su lado cuelga un abrigo pequeño de un gancho.</desc>
+<style>
+.l,.w,.v{stroke:#2B3CA0;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+.l{fill:none}.w{fill:#fff}.v{fill:#C8CBE8}
+.t{stroke-width:1.8}
+.b{fill:#2B3CA0;stroke:none}
+.s{fill:#C8CBE8;stroke:none}
+.n{fill:none;stroke:#C8CBE8;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
+.d{stroke-dasharray:1;stroke-dashoffset:1;animation:dibuja .9s ease-out forwards}
+@keyframes dibuja{to{stroke-dashoffset:0}}
+.cola,.oreja,.ojo,.resp{transform-box:fill-box}
+.cola{transform-origin:0 100%;animation:cola 3s ease-in-out 1s infinite}
+@keyframes cola{0%,25%,100%{transform:rotate(0)}8%{transform:rotate(-12deg)}17%{transform:rotate(7deg)}}
+.oreja{transform-origin:50% 100%;animation:oreja 5s ease-in-out 1.5s infinite}
+@keyframes oreja{0%,12%,100%{transform:rotate(0)}4%{transform:rotate(-14deg)}8%{transform:rotate(4deg)}}
+.ojo{transform-origin:50% 50%;animation:ojo 4s ease-in-out 1s infinite}
+@keyframes ojo{0%,94%,100%{transform:scaleY(1)}97%{transform:scaleY(.1)}}
+.bola{transform-origin:150px 76px;animation:bola 1s ease-in-out infinite alternate}
+@keyframes bola{from{transform:rotate(-9deg)}to{transform:rotate(9deg)}}
+.gota{animation:gota 1s ease-in infinite}
+@keyframes gota{0%{transform:translateY(0);opacity:1}100%{transform:translateY(16px);opacity:0}}
+.zz{animation:zz 3s ease-out infinite}
+@keyframes zz{0%{transform:translateY(6px);opacity:0}15%{opacity:1}33%,100%{transform:translateY(-6px);opacity:0}}
+.resp{transform-origin:50% 100%;animation:resp 3s ease-in-out infinite}
+@keyframes resp{0%,33%,100%{transform:scale(1)}16%{transform:scale(1.025,1.04)}}
+.burb{animation:burb 3s ease-out infinite}
+@keyframes burb{0%{transform:translateY(4px);opacity:0}12%{opacity:1}33%,100%{transform:translateY(-8px);opacity:0}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important}.d{stroke-dasharray:none;stroke-dashoffset:0}}
+.cuelga{transform-origin:60px 24px;animation:cuelga 2.4s ease-in-out infinite alternate}
+@keyframes cuelga{from{transform:rotate(-5deg)}to{transform:rotate(5deg)}}
+</style>
+<path class="n" d="M40 190 V181 H50 V187 H44 V184 M50 190 H54 M54 190 V181 H64 V187 H58 V184 M64 190 H68 M68 190 V181 H78 V187 H72 V184 M78 190 H82 M82 190 V181 H92 V187 H86 V184 M92 190 H96 M96 190 V181 H106 V187 H100 V184 M106 190 H110 M110 190 V181 H120 V187 H114 V184 M120 190 H124 M124 190 V181 H134 V187 H128 V184 M134 190 H138 M138 190 V181 H148 V187 H142 V184 M148 190 H152 "/><g transform="translate(150 34) rotate(15) scale(0.9)"><path class="n" d="M0 0 Q24 -4 46 -2" style="stroke-width:2"/><ellipse class="s" cx="10" cy="-6" rx="7" ry="3" transform="rotate(-40 10 -6)"/><ellipse class="s" cx="22" cy="-12" rx="7" ry="3" transform="rotate(-30 22 -12)"/><ellipse class="s" cx="34" cy="-14" rx="7" ry="3" transform="rotate(-15 34 -14)"/><ellipse class="s" cx="10" cy="6" rx="7" ry="3" transform="rotate(40 10 6)"/><ellipse class="s" cx="24" cy="8" rx="7" ry="3" transform="rotate(30 24 8)"/><ellipse class="s" cx="38" cy="6" rx="7" ry="3" transform="rotate(15 38 6)"/></g><path class="n" d="M214 30 l5 -3 l5 3 l-5 3z M20 120 l4 -2 l4 2 l-4 2z"/><ellipse class="s" cx="124" cy="168" rx="52" ry="5"/><g transform="translate(-26 -2)"><g class="cuelga"><path class="l d" pathLength="1" d="M60 36 V30 Q60 22 52 22 Q46 22 46 28" style="stroke-width:2.5"/><path class="l d" pathLength="1" d="M60 36 L34 54 H86 Z" style="stroke-width:2.5"/><path class="v d" pathLength="1" d="M40 54 L36 90 H84 L80 54Z" style="stroke-width:2.5"/><path class="l" d="M50 54 V90 M60 54 V90 M70 54 V90" style="stroke-width:1.5"/></g></g><g class="cola"><path class="l d" pathLength="1" d="M92 98 Q76 84 78 66" /></g><path class="w d" pathLength="1" d="M92 100 Q92 84 114 84 H156 Q178 84 178 102 Q178 122 156 122 H114 Q92 122 92 100Z" /><path class="l d" pathLength="1" d="M108 120 V156 H100 M124 120 V156 H116 M150 120 V156 H142 M166 120 V156 H158" /><path class="v d" pathLength="1" d="M110 85 H156 Q176 86 178 102 Q178 120 158 124 H112 Q104 124 102 112 Q100 96 110 85Z" /><path class="l" d="M118 87 V122 M130 87 V122 M142 87 V122 M154 87 V122" style="stroke-width:1.6"/><path class="l d" pathLength="1" d="M170 80 Q182 82 186 96 L178 112 Q172 100 166 86Z" style="stroke-width:2.5"/><path class="w d" pathLength="1" d="M178 74 Q182 58 198 62 Q212 66 214 80 L228 84 Q232 92 224 96 L210 96 Q202 104 190 100 Q176 94 178 74Z" /><ellipse class="b" cx="228" cy="87" rx="3.6" ry="3"/><ellipse class="b ojo" cx="201" cy="76" rx="2.5" ry="3.2"/><g class="oreja"><path class="v d" pathLength="1" d="M184 64 Q170 70 174 90 Q186 90 190 72Z" /></g>
+</svg>

@@ -1,174 +1,6 @@
 {
-  "_ayuda": "Fácil de editar. Cada categoría tiene 'sinonimos' (palabras que significan la categoría completa: si alguien escribe 'sofá', se muestran las camas) y 'variantes' (palabras que aparecen en los nombres de las tiendas; sirven para corregir errores de escritura y no amplían la búsqueda). La primera palabra de 'sinonimos' es el nombre que se muestra en el aviso. Con o sin tildes y en singular o plural da igual.",
+  "_ayuda": "Fácil de editar. Cada categoría tiene 'sinonimos' (palabras que significan la categoría completa: si alguien escribe 'sofá', se muestran las camas) y 'variantes' (palabras que aparecen en los nombres de las tiendas; sirven para corregir errores de escritura y no amplían la búsqueda). 'grupos' es opcional: cada grupo apunta a una o varias subcategorías del CSV (columna subcategoria) y sus sinónimos solo muestran esas subcategorías ('tapete' muestra solo tapetes y pañales). Si una palabra está en un grupo y en la categoría, gana el grupo. La primera palabra de 'sinonimos' es el nombre que se muestra en el aviso. Con o sin tildes y en singular o plural da igual.",
   "categorias": {
-    "arena": {
-      "sinonimos": [
-        "arena",
-        "arena sanitaria",
-        "piedras sanitarias",
-        "litter",
-        "arenero"
-      ],
-      "variantes": [
-        "aglomerante",
-        "bentonita",
-        "silica",
-        "sílice",
-        "tofu",
-        "scoopable",
-        "absorbente",
-        "cristales",
-        "carbón activado"
-      ]
-    },
-    "rascadores": {
-      "sinonimos": [
-        "rascador",
-        "gimnasio",
-        "rascadora",
-        "scratcher",
-        "torre",
-        "árbol para gato",
-        "gym"
-      ],
-      "variantes": [
-        "poste",
-        "sisal",
-        "tower",
-        "scratch",
-        "plataforma",
-        "hamaca",
-        "escalera"
-      ]
-    },
-    "fuentes-comederos": {
-      "sinonimos": [
-        "fuente",
-        "bebedero",
-        "comedero",
-        "dispensador",
-        "alimentador",
-        "fountain",
-        "tomadero"
-      ],
-      "variantes": [
-        "automático",
-        "automatica",
-        "filtro",
-        "colapsable",
-        "antideslizante",
-        "acero inoxidable"
-      ]
-    },
-    "arneses-correas": {
-      "sinonimos": [
-        "arnés",
-        "pechera",
-        "traílla",
-        "correa",
-        "paseador"
-      ],
-      "variantes": [
-        "retráctil",
-        "nylon",
-        "acolchado",
-        "antishock",
-        "mesh",
-        "cinturón",
-        "guía",
-        "bloqueo"
-      ]
-    },
-    "juguetes": {
-      "sinonimos": [
-        "juguete",
-        "juguetes interactivos",
-        "toy"
-      ],
-      "variantes": [
-        "peluche",
-        "pelota",
-        "bola",
-        "lanzador",
-        "frisbee",
-        "mordedor",
-        "ratón",
-        "cascabel",
-        "catnip",
-        "hierba gatera",
-        "resorte",
-        "jalador",
-        "caucho",
-        "ball"
-      ]
-    },
-    "camas": {
-      "sinonimos": [
-        "cama",
-        "sofá",
-        "colchoneta",
-        "cojín",
-        "nido",
-        "casita",
-        "cucha",
-        "colchón",
-        "cuna"
-      ],
-      "variantes": [
-        "almohada",
-        "puff",
-        "dona",
-        "donut",
-        "hamaca",
-        "cueva",
-        "acolchada",
-        "nube"
-      ]
-    },
-    "shampoo-panos": {
-      "sinonimos": [
-        "shampoo",
-        "champú",
-        "jabón",
-        "pañitos",
-        "toallitas",
-        "paños",
-        "pañuelos húmedos",
-        "wipes"
-      ],
-      "variantes": [
-        "acondicionador",
-        "hidratante",
-        "antipulgas",
-        "avena",
-        "clorhexidina",
-        "hipoalergénico",
-        "húmedos",
-        "antibacterial",
-        "repuesto"
-      ]
-    },
-    "transportadores": {
-      "sinonimos": [
-        "bolso transportador",
-        "guacal",
-        "kennel",
-        "maletín",
-        "transportador",
-        "cargador",
-        "morral",
-        "tula",
-        "mochila"
-      ],
-      "variantes": [
-        "carrier",
-        "ruedas",
-        "panorámico",
-        "viajes",
-        "acolchado",
-        "canguro"
-      ]
-    },
     "concentrado": {
       "sinonimos": [
         "concentrado",
@@ -193,10 +25,342 @@
         "equilibrio",
         "taste of the wild",
         "nutra nuggets",
+        "br for dog",
+        "br for cat",
+        "monello",
         "cachorro",
         "adulto",
         "senior",
         "kibble"
+      ]
+    },
+    "arena": {
+      "sinonimos": [
+        "arena",
+        "arena sanitaria",
+        "piedras sanitarias",
+        "litter",
+        "areneras"
+      ],
+      "variantes": [
+        "aglomerante",
+        "bentonita",
+        "silica",
+        "sílice",
+        "tofu",
+        "scoopable",
+        "absorbente",
+        "cristales",
+        "carbón activado"
+      ],
+      "grupos": [
+        {
+          "subcategorias": [
+            "arenera"
+          ],
+          "sinonimos": [
+            "arenera",
+            "arenero",
+            "caja de arena",
+            "caja sanitaria",
+            "bandeja sanitaria",
+            "litter box"
+          ]
+        },
+        {
+          "subcategorias": [
+            "pala"
+          ],
+          "sinonimos": [
+            "pala",
+            "palita",
+            "pala para arena"
+          ]
+        },
+        {
+          "subcategorias": [
+            "bolsa para arenero"
+          ],
+          "sinonimos": [
+            "bolsas para arenero",
+            "liner",
+            "bolsa sanitaria"
+          ]
+        }
+      ]
+    },
+    "rascadores": {
+      "sinonimos": [
+        "rascador",
+        "gimnasio",
+        "rascadora",
+        "scratcher",
+        "torre",
+        "árbol para gato",
+        "gym"
+      ],
+      "variantes": [
+        "poste",
+        "sisal",
+        "tower",
+        "scratch",
+        "plataforma",
+        "hamaca",
+        "escalera"
+      ]
+    },
+    "comederos": {
+      "sinonimos": [
+        "comedero",
+        "plato",
+        "coca",
+        "tazón",
+        "bowl",
+        "bebedero",
+        "fuente",
+        "dispensador",
+        "alimentador",
+        "fountain",
+        "tomadero",
+        "cuenco",
+        "contenedor de alimento"
+      ],
+      "variantes": [
+        "automático",
+        "automatica",
+        "filtro",
+        "colapsable",
+        "antideslizante",
+        "acero inoxidable",
+        "elevado",
+        "doble",
+        "lento",
+        "slow feeder",
+        "recipiente",
+        "lickimat"
+      ]
+    },
+    "paseo": {
+      "sinonimos": [
+        "paseo",
+        "arnés",
+        "pechera",
+        "traílla",
+        "correa",
+        "paseador",
+        "bozal",
+        "coche",
+        "cochecito"
+      ],
+      "variantes": [
+        "retráctil",
+        "nylon",
+        "acolchado",
+        "antishock",
+        "mesh",
+        "guía",
+        "bloqueo",
+        "extensible",
+        "collar",
+        "reflectivo",
+        "luminoso"
+      ],
+      "grupos": [
+        {
+          "subcategorias": [
+            "bolsa recolectora",
+            "recogedor",
+            "dispensador de bolsas"
+          ],
+          "sinonimos": [
+            "popó",
+            "popo",
+            "caca",
+            "heces",
+            "excremento",
+            "recogedor",
+            "bolsitas",
+            "bolsitas para paseo",
+            "bolsas recolectoras",
+            "bolsas para popó",
+            "dispensador de bolsas",
+            "porta bolsas"
+          ]
+        },
+        {
+          "subcategorias": [
+            "collar"
+          ],
+          "sinonimos": [
+            "collar",
+            "collares"
+          ]
+        }
+      ]
+    },
+    "camas": {
+      "sinonimos": [
+        "cama",
+        "sofá",
+        "colchoneta",
+        "cojín",
+        "nido",
+        "casita",
+        "cucha",
+        "colchón",
+        "cuna",
+        "manta",
+        "cobija",
+        "casa"
+      ],
+      "variantes": [
+        "almohada",
+        "puff",
+        "dona",
+        "donut",
+        "hamaca",
+        "cueva",
+        "acolchada",
+        "nube",
+        "iglú"
+      ]
+    },
+    "juguetes": {
+      "sinonimos": [
+        "juguete",
+        "juguetes interactivos",
+        "toy",
+        "catnip",
+        "hierba gatera",
+        "pasto para gato",
+        "pasto"
+      ],
+      "variantes": [
+        "peluche",
+        "pelota",
+        "bola",
+        "lanzador",
+        "frisbee",
+        "mordedor",
+        "ratón",
+        "cascabel",
+        "resorte",
+        "jalador",
+        "caucho",
+        "ball",
+        "valeriana"
+      ]
+    },
+    "higiene": {
+      "sinonimos": [
+        "higiene",
+        "aseo",
+        "shampoo",
+        "champú",
+        "jabón",
+        "pañitos",
+        "toallitas",
+        "paños",
+        "pañuelos húmedos",
+        "wipes",
+        "peinilla",
+        "cepillo",
+        "uñas",
+        "cortaúñas",
+        "peine",
+        "colonia",
+        "perfume",
+        "eliminador de olores",
+        "eliminador de manchas"
+      ],
+      "variantes": [
+        "acondicionador",
+        "hidratante",
+        "avena",
+        "hipoalergénico",
+        "húmedos",
+        "antibacterial",
+        "repuesto",
+        "loción",
+        "deslanador",
+        "rastrillo",
+        "pasta dental",
+        "dental"
+      ],
+      "grupos": [
+        {
+          "subcategorias": [
+            "tapete",
+            "pañal"
+          ],
+          "sinonimos": [
+            "tapete",
+            "tapete de entrenamiento",
+            "pads",
+            "pad",
+            "pañal",
+            "pañales",
+            "empapador",
+            "tapete absorbente",
+            "entrenador"
+          ]
+        }
+      ]
+    },
+    "ropa": {
+      "sinonimos": [
+        "ropa",
+        "saco",
+        "buzo",
+        "chaqueta",
+        "impermeable",
+        "disfraz",
+        "abrigo",
+        "camiseta",
+        "pijama",
+        "sudadera",
+        "chaleco",
+        "gabardina",
+        "poncho"
+      ],
+      "variantes": [
+        "capa de lluvia",
+        "sueter",
+        "hoodie",
+        "bandana",
+        "talla",
+        "vestido"
+      ]
+    },
+    "transporte": {
+      "sinonimos": [
+        "transporte",
+        "seguridad",
+        "reja",
+        "corral",
+        "cinturón",
+        "bolso transportador",
+        "guacal",
+        "kennel",
+        "maletín",
+        "transportador",
+        "cargador",
+        "morral",
+        "tula",
+        "mochila",
+        "protector"
+      ],
+      "variantes": [
+        "carrier",
+        "ruedas",
+        "panorámico",
+        "viajes",
+        "acolchado",
+        "canguro",
+        "jaula",
+        "asiento",
+        "baúl",
+        "carro"
       ]
     },
     "rastreo": {

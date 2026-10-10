@@ -62,11 +62,39 @@ TERMINOS = [
     "concentrado para perro", "concentrado para gato", "croquetas",
     "hill's", "royal canin", "pro plan", "dog chow", "cat chow", "pedigree", "whiskas", "chunky",
     "agility gold", "ringo", "mirringo", "max", "equilibrio", "taste of the wild", "nutra nuggets",
+    "br for dog", "br for cat", "monello",
     # Rastreo e identificación (los microchips implantables no se incluyen: los implanta el veterinario)
     "collar gps", "rastreador gps", "soporte airtag", "placa qr", "placa de identificacion",
+    # Arena y areneras
+    "arenera", "arenero", "pala para arena", "bolsas para arenero",
+    # Rascadores
+    "poste rascador", "torre para gatos",
+    # Comederos y bebederos
+    "plato para perro", "plato para gato", "comedero doble", "comedero elevado", "comedero lento",
+    "bebedero", "tazon para mascotas", "contenedor de alimento", "dispensador de agua",
+    # Paseo
+    "collar para perro", "collar para gato", "pechera para perro", "bozal", "bolsas recolectoras popo",
+    "bolsitas para paseo", "dispensador de bolsas", "recogedor de popo", "coche para perro", "paseador",
+    # Camas y descanso
+    "colchoneta para perro", "manta para mascotas", "cojin para perro", "sofa para perro", "cucha", "casa para gato",
+    # Juguetes
+    "catnip", "pasto para gato", "hierba gatera", "mordedor", "peluche para perro",
+    # Higiene y aseo
+    "tapete de entrenamiento", "pads de entrenamiento", "panal para perro", "toallitas humedas mascotas",
+    "colonia para perro", "eliminador de olores", "eliminador de manchas", "cepillo para perro", "peinilla para gato",
+    "cortaunas para perro", "limpieza dental perro", "cepillo de dientes mascotas",
+    # Ropa
+    "saco para perro", "buzo para perro", "impermeable para perro", "chaqueta para perro", "disfraz para mascotas",
+    "ropa para gato",
+    # Transporte y seguridad
+    "guacal", "morral para perro", "cinturon de seguridad perro", "protector asiento carro perro",
+    "reja para carro perro", "corral para perro", "reja de seguridad mascotas",
 ]
 # Palabras que solo sirven para filtrar el catálogo completo de Shopify.
-CLAVES_SHOPIFY_EXTRA = ["concentrado", "croqueta", "alimento", "gps", "airtag", "placa", "collar", "rastread", "qr"]
+CLAVES_SHOPIFY_EXTRA = ["concentrado", "croqueta", "alimento", "gps", "airtag", "placa", "collar", "rastread", "qr",
+                        "panal", "tapete", "pad", "bolsa", "bolsita", "bozal", "cepillo", "peine", "saco", "buzo", "impermeable",
+                        "chaqueta", "disfraz", "tazon", "coca", "contenedor", "manta", "cojin", "sofa", "casa", "reja", "corral",
+                        "cinturon", "morral", "eliminador", "colonia", "catnip", "pasto", "hierba", "arenera", "arenero"]
 
 HOY = date.today().isoformat()
 CANDIDATOS_RASTREO = set()  # nombres con collar/placa/GPS/AirTag que se descartaron (para revisar la regla)
@@ -231,13 +259,24 @@ def revisar_tienda(nombre, url):
 
 # ---------------------------------------------------------------- clasificación
 
-EXCLUIR = re.compile(
-    r"alimento|concentrado|snack|galleta|premio|croqueta|comida|\bpate\b|medicament|antipulga|pulga|garrapata|"
-    r"pipeta|desparasit|antiparasit|vermifug|vitamina|suplemento|jarabe|pastilla|tableta|inyectable|\bkit\b|combo|"
-    r"medicad|clorhex|insecticida|keracleen|sebocalm|antiseborre|recuperacion|isabelino|talco|panal|"
-    r"mix de carne|comestible|hueso.*(?:\bres\b|beff|beef|cerdo|femur|caramelo|bono|my pet|antisarro)|"
-    r"milk bone|(?:snack|galleta|premio|stick|barra|tira|masticable|comestible)s?\s+dental|dental\s+(?:snack|stick|treat|galleta|premio|masticable|comestible)s?|arener[oa]|\bpala\b|destructor de olores|caja de arena|amarre|oreja|traquea|pezuna|cuerno|tendon|cuerito|"
-    r"hamster|pajaro|\bloro|cepillo|furminator|corta ?unas|microchip|lector de chip"
+# Siguen fuera: snacks, premios, alimento húmedo (latas y sobres), medicamentos, antipulgas, suplementos,
+# dietas de prescripción, collares isabelinos y productos para otras especies.
+RE_MEDICO = re.compile(
+    r"medicament|antipulga|pulga|garrapata|pipeta|desparasit|antiparasit|vermifug|vitamina|suplemento|jarabe|pastilla|"
+    r"tableta|inyectable|medicad|clorhex|insecticida|keracleen|sebocalm|antiseborre|recuperacion|isabelino|"
+    r"microchip|lector de chip|quirurgic|post ?operatori"
+)
+RE_COMIDA_FIJA = re.compile(  # snacks y alimento húmedo: fuera en toda categoría
+    r"snack|galleta|premio|\btreats?\b|\bpate\b|comestible|mix de carne|milk bone|\blatas?\b|\bsobres? de \d|pouch|"
+    r"alimento humedo|comida humeda|oreja|traquea|pezuna|cuerno|tendon|cuerito|"
+    r"hueso.*(?:\bres\b|beff|beef|cerdo|femur|caramelo|bono|my pet|antisarro)|"
+    r"(?:snack|galleta|premio|stick|barra|tira|masticable|comestible)s?\s+dental|dental\s+(?:snack|stick|treat|galleta|premio|masticable|comestible)s?"
+)
+RE_COMIDA = re.compile(r"alimento|concentrado|croqueta|comida")  # no aplica a comederos: "contenedor de alimento" sí entra
+RE_OTROS = re.compile(r"\bkit\b|combo|talco|amarre")
+RE_OTRA_ESPECIE = re.compile(  # solo si el nombre no menciona perro ni gato
+    r"hamster|pajaro|\bloro|acuario|pecera|conejo|roedor|\bcuy|huron|reptil|tortuga|canario|periquito|cobaya|"
+    r"\bpeces\b|\baves\b|caballo|equino|bovino|porcino"
 )
 
 # Concentrado (alimento seco). Solo entra si el nombre lo dice o es de una marca conocida con peso en kg/lb.
@@ -259,6 +298,9 @@ MARCAS_CONCENTRADO = {
     "Equilibrio": (r"equilibrio", None),
     "Taste of the Wild": (r"taste of the wild", None),
     "Nutra Nuggets": (r"nutra nuggets?", None),
+    "Br for Dog": (r"br ?for ?dog", "perro"),
+    "Br for Cat": (r"br ?for ?cat", "gato"),
+    "Monello": (r"monello", None),
 }
 # Marcas con más productos en las tiendas aprobadas que no estaban en la lista (se llena sola al correr).
 MARCAS_DESCUBIERTAS = {}
@@ -270,7 +312,7 @@ RE_NO_CONC = re.compile(
     r"\b[rkicz]/d\b|renal|hepatic|urinar|gastro|hydroliz|hidroliz|hypoalerg|neurocare|diabetic|cardiac|vet ?life|"
     r"pipeta|antipulga|vitamina|suplemento|jarabe|pastilla|"
     r"comedero|bebedero|dispensador|plato|bowl|contenedor|recipiente|lanzador|juguete|medidor|cuchara|bolso|"
-    r"\bpala\b|hueso|mordedor|dental|arena")
+    r"\bpala\b|hueso|mordedor|dental|arena|combo|\bkit\b")
 MIN_KG_CONCENTRADO = 0.3  # por debajo suelen ser sobres, latas o premios
 
 
@@ -333,50 +375,144 @@ def tipo_rastreo(n):
     return None
 
 
-# Orden importa: la primera regla que coincide decide la categoría.
-CATEGORIAS = [
-    ("panos", re.compile(r"\bpan(?:o|ito)s?\b.*humed|humed.*\bpan(?:o|ito)s?\b|toallitas")),
-    ("shampoo", re.compile(r"shampoo|champu")),
-    ("arena", re.compile(r"\barenas?\b")),
-    ("transportadores", re.compile(r"bolso|morral|transportador|guacal|maletin|cargador")),
-    ("rascadores", re.compile(r"rascador|gimnasio|\bgym\b|torre para gato|arbol para gato|cat tower|poste")),
-    ("fuentes-comederos", re.compile(r"fuente|bebedero|(comedero|alimentador|dispensador).*(automatic|programable)|(automatic|programable).*(comedero|alimentador|dispensador)")),
-    ("rastreo", RE_RASTREO),
-    ("arneses-correas", re.compile(r"arnes|correa|pechera|trailla")),
-    ("camas", re.compile(r"\bcamas?\b|colchon|cucha")),
-    ("juguetes", re.compile(
-        r"juguete|\btoys?\b|pelota|\bball\b|\bbola\b|lanzador|frisbee|peluche|interactiv|jalador|boomerang|"
-        r"catnip|ovillo|\bvara\b|cascabel|resorte|\braton\b|pluma|\bkong\b|nylabone|petstages|outward hound")),
+def R(categoria, sub, patron, no=None):
+    return (categoria, sub, re.compile(patron), re.compile(no) if no else None)
+
+
+# (categoría, subcategoría, patrón, patrón que la descarta). Orden importa: la primera regla que coincide decide.
+# La categoría sale solo del nombre: la de la tienda mezcla cepillos, comida y otros productos.
+REGLAS = [
+    R("arena", "tapete atrapa arena", r"atrapa ?arena|tapete.*\barena|\barena.*tapete"),
+    # Paseo: bolsas recolectoras y sus dispensadores (antes que comederos, bolsos y arena)
+    R("paseo", "dispensador de bolsas", r"dispensador.*bolsa|porta ?bolsas?|bolsas?.*dispensador",
+      r"\bcon\b.*dispensador|incluye|\+ ?dispensador|\d+\s*(?:rollos?|bolsas)"),
+    R("paseo", "bolsa recolectora", r"\bbolsas?\b.*(?:recolector|recogedor|popo|heces|excremento|caca|paseo|desecho|biodegradable)|"
+      r"(?:recolector|popo|heces|excremento)\w*.*\bbolsas?\b|\bbolsitas?\b|\bbolsas? (?:para|de) mascotas?"),
+    R("paseo", "recogedor", r"recogedor|(?:pala|palita).*(?:popo|heces|excremento|caca)|(?:popo|heces|excremento|caca).*(?:pala|palita)|pooper", r"\barena\b|arener|\bbolsas?\b"),
+    # Arena y areneras
+    R("arena", "bolsa para arenero", r"\bbolsas?\s+(?:para|de)\s+(?:el\s+)?(?:arener[oa]|caja)|\bliners?\b"),
+    R("arena", "pala", r"\bpalas?\b|scooper"),
+    R("arena", "arenera", r"arener[oa]s?|caja (?:de )?(?:arena|sanitaria)|baul sanitario|bandeja sanitaria|litter ?box|inodoro"),
+    # Higiene y aseo
+    R("higiene", "eliminador", r"eliminador|removedor|neutralizador|destructor de olores|quita ?manchas", r"^arena\b"),
+    R("higiene", "paño", r"\bpan(?:o|ito)s?\b.*humed|humed.*\bpan(?:o|ito)s?\b|toallitas|\bwipes?\b"),
+    R("higiene", "shampoo", r"shampoo|champu"),
+    R("higiene", "limpieza dental", r"cepillo.*(?:dient|dental)|(?:dient|dental).*cepillo|pasta dental|crema dental|gel dental|"
+      r"\bdedales?\b|enjuague|limpiador dental|spray dental|higiene dental|aliento", r"juguete|petstages|mordedero|mordedor"),
+    R("higiene", "cortaúñas", r"corta ?unas|cortador.*unas|lima.*unas|alicate|tijeras?.*unas|moto ?lima"),
+    R("higiene", "cepillo", r"cepillo|furminator|rastrillo|\bcarda\b|deslanador|guante.*(?:cepill|aseo|bano)", r"juguete"),
+    R("higiene", "peine", r"peine|peinilla|peinador"),
+    R("higiene", "colonia", r"colonia|perfume|locion|fragancia|splash|desodorante|body mist", r"\barenas?\b"),
+    R("higiene", "tapete", r"tapete|empapador|\bpads?\b", r"juguete|petstages|scratch|lick|lamid|comedero|plato|rasc|cama|termic|refresc|yoga"),
+    R("higiene", "pañal", r"\bpanal\w*"),
+    R("arena", "arena", r"\barenas?\b"),
+    # Transporte y seguridad
+    R("transporte", "cinturón", r"cinturon.*(?:seguridad|carro|auto|vehiculo)|arnes.*(?:carro|auto|vehiculo|seguridad)|seat ?belt"),
+    R("transporte", "protector", r"protector.*(?:asiento|carro|auto|vehiculo|baul|silla|puerta)|cubre ?asientos?|"
+      r"funda.*(?:asiento|carro|auto|baul)|hamaca.*(?:carro|auto|asiento)|asiento.*(?:carro|auto)|booster"),
+    R("transporte", "reja", r"\brejas?\b|barrera divisoria"),
+    R("transporte", "corral", r"corral|\bvallas?\b|parque.*(?:perro|mascota|cachorro)|playpen"),
+    R("transporte", "bolso", r"bolsos?|maletin|mochila"),
+    R("transporte", "morral", r"morral|\btula\b"),
+    R("transporte", "guacal", r"guacal|kennel|jaula|transportador|carrier"),
+    # Rascadores
+    R("rascadores", "gimnasio", r"gimnasio|\bgym\b|torre para gato|arbol para gato|cat tower"),
+    R("rascadores", "rascador", r"rascador|scratch"),
+    R("rascadores", "poste", r"\bpostes?\b"),
+    # Comederos y bebederos
+    R("comederos", "lento", r"\blick|lamid|lamer|\blentos?\b|\bslow\b|voracidad|laberinto"),
+    R("comederos", "automático", r"(?:comedero|alimentador|dispensador).*(?:automatic|programable|wifi|inteligente|smart)|"
+      r"(?:automatic|programable|wifi|inteligente|smart).*(?:comedero|alimentador|dispensador)"),
+    R("comederos", "fuente", r"\bfuentes?\b|fountain|surtidor|bebedero.*(?:automatic|electric)", r"fuente de (?:poder|energia|alimentacion)|adaptador|filtro|repuesto"),
+    R("comederos", "bebedero", r"bebedero|tomadero|dispensador de agua|botella.*agua"),
+    R("comederos", "contenedor", r"contenedor|recipiente|porta ?(?:alimento|comida|concentrado)|dispensador de (?:alimento|comida|concentrado)|almacenador|barril"),
+    R("comederos", "comedero doble", r"(?:comedero|plato|tazon|bowl)s?.*(?:doble|double|2 en 1)|(?:doble|double).*(?:comedero|plato|tazon|bowl)"),
+    R("comederos", "elevado", r"(?:comedero|plato|tazon|bowl)s?.*(?:elevad|soporte|stand|altura)|(?:elevad|soporte).*(?:comedero|plato|tazon|bowl)"),
+    R("comederos", "plato", r"comedero|\bplatos?\b|tazon|\bbowls?\b|\bcocas?\b|cuenco|alimentador"),
+    # Rastreo e identificación: el tipo sale de tipo_rastreo()
+    R("rastreo", "", RE_RASTREO.pattern),
+    # Paseo
+    R("paseo", "arnés", r"arnes|pechera"),
+    R("paseo", "collar", r"\bcollar(?:es)?\b"),
+    R("paseo", "correa", r"correa|trailla|\bguias?\b|leash"),
+    R("paseo", "bozal", r"bozal"),
+    R("paseo", "coche", r"\bcoche|cochecito|carrito|stroller"),
+    R("paseo", "paseador", r"paseador"),
+    # Camas y descanso
+    R("camas", "cucha", r"\bcuchas?\b"),
+    R("camas", "casa", r"\bcasas?\b|casita|cueva|iglu"),
+    R("camas", "sofá", r"\bsofas?\b|sillon"),
+    R("camas", "cojín", r"cojin|almohad"),
+    R("camas", "manta", r"\bmantas?\b|cobija|cobertor"),
+    R("camas", "colchoneta", r"colchon"),
+    R("camas", "cama", r"\bcamas?\b|\bnido\b|hamaca|\bdonut\b|\bdona\b|\bmoises\b"),
+    # Ropa
+    R("ropa", "saco", r"\bsacos?\b|sueter|sudadera|hoodie|cardigan", r"dormir|arena"),
+    R("ropa", "buzo", r"\bbuzos?\b"),
+    R("ropa", "impermeable", r"impermeable|capa de lluvia|\bpiloto\b"),
+    R("ropa", "chaqueta", r"chaqueta|chaleco|abrigo|gabardina|poncho|parka"),
+    R("ropa", "disfraz", r"disfraz|costume|cosplay|\btutu\b|\btraje\b|vestido"),
+    R("ropa", "camiseta", r"camiseta|camisa|playera|\bpolo\b|pijama|\bbody\b"),
+    R("ropa", "otra prenda", r"\bropa\b|\bbata\b|botas|zapatos|calcetin|gorro|sombrero|bufanda|bandana|corbata|panuelo"),
+    # Juguetes (catnip y pasto solo si no es un juguete relleno de catnip)
+    R("juguetes", "catnip", r"^(?=.*(?:\d\s*(?:g|gr|grs|gramos|kg|ml|oz)\b|spray|polvo))(?=.*(?:catnip|hierba gatera|menta gatera|valeriana|silvervine))",
+      r"juguete|raton|pelota|peluche|rascador|\bbola\b|pluma|ovillo|cascabel|palo|vara"),
+    R("juguetes", "pasto", r"\bpasto\b|cat grass|cesped", r"juguete|rascador|cama|palo"),
+    R("juguetes", "lanzador", r"lanzador|launcher"),
+    R("juguetes", "pelota", r"pelota|\bball\b|\bbola\b"),
+    R("juguetes", "peluche", r"peluche|\bplush"),
+    R("juguetes", "mordedor", r"mordedor|\bkong\b|nylabone|\bchew|cuerda|jalador"),
+    R("juguetes", "interactivo", r"interactiv|puzzle|laser|raton|pluma|\bvara\b|ovillo|cascabel|resorte|boomerang|frisbee|petstages|outward hound"),
+    R("juguetes", "juguete", r"juguete|\btoys?\b|catnip"),
 ]
 
 RE_GATO = re.compile(r"\bgat[oa]s?\b|gatit[oa]s?|felin|\bcats?\b|\bkitten")
 RE_PERRO = re.compile(r"\bperr[oa]s?\b|perrit[oa]s?|canin|\bdogs?\b|cachorro|\bpupp(?:y|ies)\b")
 
 POR_DEFECTO = {"arena": "gato", "rascadores": "gato", "rastreo": "ambos"}
+POR_DEFECTO_SUB = {"catnip": "gato", "pasto": "gato", "bozal": "perro", "bolsa recolectora": "perro",
+                   "dispensador de bolsas": "perro", "recogedor": "perro"}
+
+
+def buscar_regla(n):
+    """(categoría, subcategoría) de la primera regla que coincide con el nombre normalizado; (None, None) si ninguna."""
+    for categoria, sub, rx, no in REGLAS:
+        if not rx.search(n) or (no and no.search(n)):
+            continue
+        if categoria == "rastreo":
+            tipo = tipo_rastreo(n)
+            if not tipo:
+                continue
+            sub = tipo
+        return categoria, sub
+    return None, None
 
 
 def clasificar(nombre, extra, marca=""):
-    """Devuelve (categoría, especie, marca de concentrado)."""
-    n, e = norm(nombre), norm(extra)
+    """Devuelve (categoría, subcategoría, especie, marca de concentrado); todo None si el producto no entra."""
+    n, e = norm(nombre).replace("la casa del granjero", " "), norm(extra)  # algunas tiendas añaden su nombre al título
     conc, marca_c, esp_fija = es_concentrado(n, marca)
+    sub = ""
     if conc:
         categoria = "concentrado"
     else:
-        if EXCLUIR.search(n) or EXCLUIR.search(e):
-            return None, None, None
-        if "collar" in n and not RE_RASTREO.search(n):  # solo se salvan los collares con GPS, AirTag o QR
-            return None, None, None
-        # La categoría sale solo del nombre: la de la tienda mezcla cepillos, comida y otros productos.
-        categoria = next((c for c, rx in CATEGORIAS if rx.search(n)), None)
+        categoria, sub = buscar_regla(n)
         if not categoria:
-            return None, None, None
-        if categoria == "rastreo" and not tipo_rastreo(n):
-            return None, None, None
+            return None, None, None, None
+        fuera = RE_MEDICO.search(n) or RE_MEDICO.search(e) or RE_COMIDA_FIJA.search(n)
+        if sub != "pasto":  # los kits de pasto para sembrar sí entran
+            fuera = fuera or RE_OTROS.search(n) or RE_OTROS.search(e)
+        if categoria != "comederos":
+            fuera = fuera or RE_COMIDA_FIJA.search(e) or RE_COMIDA.search(n)
+        if fuera:
+            return None, None, None, None
     n_esp = n.replace("royal canin", " ")  # "canin" de la marca no significa perro
     gato = RE_GATO.search(n_esp) or None
     perro = RE_PERRO.search(n_esp) or None
     if not gato and not perro:
         gato, perro = RE_GATO.search(e), RE_PERRO.search(e)
+    if not conc and not gato and not perro and RE_OTRA_ESPECIE.search(n):
+        return None, None, None, None
     if "chuckit" in n and not gato:
         perro = perro or True
     if gato and perro:
@@ -388,16 +524,20 @@ def clasificar(nombre, extra, marca=""):
     elif categoria == "concentrado":
         especie = esp_fija
         if not especie:
-            return None, None, None  # sin saber para quién es, no se compara
+            return None, None, None, None  # sin saber para quién es, no se compara
     else:
-        especie = POR_DEFECTO.get(categoria, "ambos")
-    return categoria, especie, marca_c
+        especie = POR_DEFECTO_SUB.get(sub) or POR_DEFECTO.get(categoria, "ambos")
+    return categoria, sub, especie, marca_c
 
 
 NUM = r"(\d+(?:[.,]\d+)?)"
 RE_PESO = re.compile(r"(?:(\d+)\s*[x×]\s*)?" + NUM + r"\s*(kg|kgs|kls?|kilos?|kilogramos?|g|gr|grs|gramos?|lb|lbs|libras?)\b")
 RE_VOLUMEN = re.compile(r"(?:(\d+)\s*[x×]\s*)?" + NUM + r"\s*(ml|cc|l|lt|lts|litros?)\b")
-RE_PANOS = re.compile(r"(\d+)\s*(?:panos?|toallitas|unidades|und|uds)\b|\b(?:x|pack de)\s*(\d+)\b")
+RE_ONZAS = re.compile(r"(?:(\d+)\s*[x×]\s*)?" + NUM + r"\s*(?:oz|onzas?)\b")
+# Cantidad de piezas de un paquete: "x 30", "pack de 30", "30 tapetes", "4 rollos de 15 bolsas". Las medidas ("60 x 90 cm") no cuentan.
+RE_ROLLOS = re.compile(r"(\d+)\s*rollos?\s*(?:de|x|con)\s*(\d+)")
+RE_PIEZAS = re.compile(r"(\d+)\s*(?:tapetes?|pads?|panales|panal|panos?|panitos?|toallitas|bolsas?|bolsitas?|unidades|unds?|und|uds?|un|u|piezas|pcs)\b")
+RE_PAQUETE = re.compile(r"(?<!\d)(?<!\d\s)(?:\bx|pack de|pack|paquete de|caja de|caja x)\s*(\d+)\b(?!\s*(?:cm|mm|ml|gr?|kgs?|lts?|l|m|x)\b)")
 
 
 def numero(s):
@@ -406,16 +546,23 @@ def numero(s):
     return float(s.replace(",", "."))
 
 
-def cantidad_unidad(nombre, categoria, variante=""):
-    """Devuelve (cantidad, unidad) o (None, None) si el nombre no trae cantidad utilizable.
+def medida_de(categoria, sub):
+    """Con qué se compara el precio: kg, ml, g, conteo (por pieza de un paquete) o unidad."""
+    if categoria == "concentrado" or (categoria == "arena" and sub == "arena"):
+        return "kg"
+    if categoria == "higiene" and sub in ("shampoo", "colonia", "eliminador"):
+        return "ml"
+    if (categoria, sub) in (("higiene", "paño"), ("higiene", "tapete"), ("higiene", "pañal"),
+                            ("paseo", "bolsa recolectora"), ("arena", "bolsa para arenero")):
+        return "conteo"
+    if categoria == "juguetes" and sub in ("catnip", "pasto"):
+        return "g"
+    return "unidad"
 
-    Si la variante (p. ej. "25 Kg") trae una cantidad, manda sobre la del título del producto."""
-    if variante:
-        cant, unidad = cantidad_unidad(variante, categoria)
-        if cant and not (categoria in ("arena", "shampoo", "panos", "concentrado") and unidad == "unidad"):
-            return cant, unidad
-    n = norm(nombre)
-    if categoria in ("arena", "concentrado"):
+
+def medir(n, medida, categoria):
+    """Cantidad y unidad que dice el texto (ya normalizado) para esa medida; (None, None) si no trae."""
+    if medida == "kg":
         m = RE_PESO.search(n)
         if m:
             cant = numero(m.group(2)) * int(m.group(1) or 1)
@@ -429,22 +576,60 @@ def cantidad_unidad(nombre, categoria, variante=""):
         if categoria == "arena" and m and not m.group(3) in ("ml", "cc"):
             return numero(m.group(2)) * int(m.group(1) or 1), "l"  # solo litros: no se convierte a kg
         return None, None
-    if categoria == "shampoo":
+    if medida == "ml":
         m = RE_VOLUMEN.search(n)
         if m:
             cant = numero(m.group(2)) * int(m.group(1) or 1)
             return (cant if m.group(3) in ("ml", "cc") else cant * 1000), "ml"
-        return None, None
-    if categoria == "panos":
-        m = RE_PANOS.search(n)
+        m = RE_ONZAS.search(n)
         if m:
-            return float(m.group(1) or m.group(2)), "paño"
+            return numero(m.group(2)) * int(m.group(1) or 1) * 29.5735, "ml"
         return None, None
+    if medida == "g":
+        m = RE_PESO.search(n)
+        if m:
+            cant = numero(m.group(2)) * int(m.group(1) or 1)
+            u = m.group(3)
+            if u.startswith("k"):
+                return cant * 1000, "g"
+            if u in ("lb", "lbs") or u.startswith("libra"):
+                return cant * 453.59237, "g"
+            return cant, "g"
+        m = RE_VOLUMEN.search(n)  # sprays de catnip
+        if m and m.group(3) in ("ml", "cc"):
+            return numero(m.group(2)) * int(m.group(1) or 1), "ml"
+        return None, None
+    if medida == "conteo":
+        m = RE_ROLLOS.search(n)
+        if m:
+            return float(int(m.group(1)) * int(m.group(2))), "unidad"
+        if re.search(r"\brollos?\b", n) and not RE_PIEZAS.search(n):
+            return None, None  # "x 2 rollos" no dice cuántas bolsas trae cada rollo
+        m = RE_PIEZAS.search(n) or RE_PAQUETE.search(n)
+        if m:
+            return float(m.group(1)), "unidad"
+        if re.search(r"reutilizable|lavable", n):
+            return 1.0, "unidad"  # una sola pieza
+        return None, None  # un paquete sin cantidad no se puede dividir
     return 1.0, "unidad"
 
 
+def cantidad_unidad(nombre, categoria, variante="", sub=""):
+    """Devuelve (cantidad, unidad) o (None, None) si el nombre no trae cantidad utilizable.
+
+    Si la variante (p. ej. "25 Kg") trae una cantidad, manda sobre la del título del producto."""
+    medida = medida_de(categoria, sub)
+    if medida == "unidad":
+        return 1.0, "unidad"
+    if variante:
+        cant, unidad = medir(norm(variante), medida, categoria)
+        if cant:
+            return cant, unidad
+    return medir(norm(nombre), medida, categoria)
+
+
 RE_TALLA = re.compile(r"talla\s*(xs|s|m|l|xl|xxl)\b", re.I)
-RE_TALLA_MAYUS = re.compile(r"(?<!\d)(?<!\d )\b(XS|S|M|L|XL|XXL)\b")
+RE_TALLA_MAYUS = re.compile(r"(?<!\d)(?<!\d )(?<!-)\b(XS|S|M|L|XL|XXL)\b(?!-)")
 RE_ALTURA = re.compile(r"(\d+(?:[.,]\d+)?)\s*cm\b", re.I)
 # Orden importa: la primera que coincide decide el tipo.
 TIPOS_ARENA = [
@@ -489,9 +674,12 @@ def linea_concentrado(nombre, marca):
     return " ".join(w[:1].upper() + w[1:] for w in n.split())
 
 
-def caracteristica(nombre, categoria, cantidad, unidad):
+RE_MEDIDAS = re.compile(r"(?<!\d)(\d{2,3})\s*[x×]\s*(\d{2,3})\b")
+
+
+def caracteristica(nombre, categoria, cantidad, unidad, sub=""):
     n = norm(nombre)
-    if categoria == "arena":
+    if categoria == "arena" and sub == "arena":
         return next((t for t, rx in TIPOS_ARENA if re.search(rx, n)), "sin especificar")
     if categoria == "concentrado":
         etapa, tam = etapa_tamano(n)
@@ -502,12 +690,15 @@ def caracteristica(nombre, categoria, cantidad, unidad):
     m = RE_TALLA.search(nombre) or RE_TALLA_MAYUS.search(nombre)
     if m:
         partes.append("talla " + m.group(1).upper())
+    medidas = RE_MEDIDAS.search(n) if sub == "tapete" else None
+    if medidas:
+        partes.append("%s x %s cm" % medidas.groups())  # tamaño del tapete; la altura de abajo no aplica
     m = RE_VOLUMEN.search(n)
-    if m:
+    if m and medida_de(categoria, sub) != "conteo":
         cap = numero(m.group(2))
         partes.append("%s ml" % fmt(cap) if m.group(3) in ("ml", "cc") else "%s L" % fmt(cap))
     h = RE_ALTURA.search(nombre)
-    if h:
+    if h and not medidas:
         partes.append(fmt(numero(h.group(1))) + " cm")
     return "; ".join(partes)
 
@@ -539,12 +730,12 @@ def fmt(x):
 
 
 def armar_fila(tienda, nombre, marca, extra, url, precio, precio_lista, variante="", imagen=""):
-    categoria, especie, marca_c = clasificar(nombre, extra, marca)
+    categoria, sub, especie, marca_c = clasificar(nombre, extra, marca)
     if not categoria:
         if RE_RASTREO.search(norm(nombre)) or "collar" in norm(nombre):
             CANDIDATOS_RASTREO.add("%s | %s" % (tienda, nombre.strip()))
         return None
-    cant, unidad = cantidad_unidad(nombre, categoria, variante)
+    cant, unidad = cantidad_unidad(nombre, categoria, variante, sub)
     linea = ""
     if categoria == "concentrado":
         if not cant or cant < MIN_KG_CONCENTRADO:
@@ -555,11 +746,12 @@ def armar_fila(tienda, nombre, marca, extra, url, precio, precio_lista, variante
     return {
         "fecha": HOY, "tienda": tienda, "categoria": categoria, "especie": especie,
         "producto": nombre.strip(), "marca": (marca or "").strip(), "linea": linea,
-        "caracteristica": caracteristica(nombre, categoria, cant, unidad),
+        "caracteristica": caracteristica(nombre, categoria, cant, unidad, sub),
         "cantidad": fmt(round(cant, 3)) if cant else "", "unidad": unidad if cant else "",
         "precio": fmt(precio), "precio_lista": fmt(precio_lista) if precio_lista and precio_lista >= precio else "",
         "precio_unidad": fmt(p_unidad) if p_unidad is not None else "", "url": url,
         "imagen": imagen if re.match(r"https?://", imagen or "") else "",
+        "subcategoria": sub,
     }
 
 
@@ -682,7 +874,7 @@ def imprimir_tabla(columnas, filas, anchos=None):
 
 COL_TIENDAS = ["tienda", "url", "plataforma", "estado", "motivo", "fecha_revision"]
 COL_PRODUCTOS = ["fecha", "tienda", "categoria", "especie", "producto", "marca", "linea", "caracteristica",
-                 "cantidad", "unidad", "precio", "precio_lista", "precio_unidad", "url", "imagen"]
+                 "cantidad", "unidad", "precio", "precio_lista", "precio_unidad", "url", "imagen", "subcategoria"]
 
 
 def unificar_marcas(filas):
@@ -755,7 +947,7 @@ def main():
             else:
                 consultar_shopify(fila_tienda, robots, filas, terminos=nuevas)
     unificar_marcas(filas.values())
-    resultado = sorted(filas.values(), key=lambda f: (f["categoria"], f["especie"], f["tienda"], f["producto"]))
+    resultado = sorted(filas.values(), key=lambda f: (f["categoria"], f["subcategoria"], f["especie"], f["tienda"], f["producto"]))
     escribir_csv(SALIDA_PRODUCTOS, COL_PRODUCTOS, resultado)
     escribir_csv(SALIDA_PRECIOS, COL_PRODUCTOS, resultado)
     print("\n%d filas guardadas en %s" % (len(resultado), SALIDA_PRODUCTOS.relative_to(RAIZ)))
@@ -764,7 +956,7 @@ def main():
     for c in sorted(CANDIDATOS_RASTREO)[:40]:
         print("  " + c)
 
-    arena = [f for f in resultado if f["categoria"] == "arena" and f["especie"] == "gato"]
+    arena = [f for f in resultado if f["categoria"] == "arena" and f["subcategoria"] == "arena" and f["especie"] == "gato"]
     arena.sort(key=lambda f: (f["precio_unidad"] == "", float(f["precio_unidad"] or 0)))
     print("\nARENA PARA GATOS (%d filas, de menor a mayor precio por unidad)\n" % len(arena))
     if arena:

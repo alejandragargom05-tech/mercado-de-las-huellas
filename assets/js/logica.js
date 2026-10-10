@@ -7,16 +7,17 @@ var Huellas = (function () {
   var DIAS_MAXIMO = 30;
 
   var CATEGORIAS = [
-    { id: 'arena', etiqueta: 'Arena', slugs: ['arena'], img: 'arena-sanitaria.svg', claves: 'arena sanitaria aglomerante' },
-    { id: 'rascadores', etiqueta: 'Gimnasios y rascadores', slugs: ['rascadores'], img: 'gimnasios-rascadores.svg', claves: 'gimnasio rascador' },
-    { id: 'fuentes-comederos', etiqueta: 'Fuentes y comederos', slugs: ['fuentes-comederos'], img: 'fuentes-comederos.svg', claves: 'fuente comedero automatico' },
-    { id: 'arneses-correas', etiqueta: 'Arneses y correas', slugs: ['arneses-correas'], img: 'arneses-correas.svg', claves: 'arnes correa' },
-    { id: 'juguetes', etiqueta: 'Juguetes', slugs: ['juguetes'], img: 'juguetes-interactivos.svg', claves: 'juguete interactivo' },
-    { id: 'camas', etiqueta: 'Camas', slugs: ['camas'], img: 'camas.svg', claves: 'cama' },
-    { id: 'shampoo-panos', etiqueta: 'Shampoo y paños', slugs: ['shampoo', 'panos'], img: 'shampoo-panos.svg', claves: 'shampoo pano humedo' },
-    { id: 'transportadores', etiqueta: 'Bolsos transportadores', slugs: ['transportadores'], img: 'bolsos-transportadores.svg', claves: 'bolso transportador' },
-    { id: 'concentrado', etiqueta: 'Concentrado', slugs: ['concentrado'], img: 'concentrado.svg', claves: 'concentrado croquetas alimento seco' },
-    { id: 'rastreo', etiqueta: 'Rastreo', slugs: ['rastreo'], img: 'rastreo.svg', claves: 'gps rastreador airtag placa' }
+    { id: 'concentrado', etiqueta: 'Concentrado', img: 'concentrado.svg' },
+    { id: 'arena', etiqueta: 'Arena y areneras', img: 'arena-sanitaria.svg' },
+    { id: 'rascadores', etiqueta: 'Rascadores y gimnasios', img: 'gimnasios-rascadores.svg' },
+    { id: 'comederos', etiqueta: 'Comederos y bebederos', img: 'fuentes-comederos.svg' },
+    { id: 'paseo', etiqueta: 'Paseo', img: 'arneses-correas.svg' },
+    { id: 'camas', etiqueta: 'Camas y descanso', img: 'camas.svg' },
+    { id: 'juguetes', etiqueta: 'Juguetes', img: 'juguetes-interactivos.svg' },
+    { id: 'higiene', etiqueta: 'Higiene y aseo', img: 'shampoo-panos.svg' },
+    { id: 'ropa', etiqueta: 'Ropa', img: 'ropa.svg' },
+    { id: 'transporte', etiqueta: 'Transporte y seguridad', img: 'bolsos-transportadores.svg' },
+    { id: 'rastreo', etiqueta: 'Rastreo e identificación', img: 'rastreo.svg' }
   ];
   var ESPECIES = [
     { id: 'gato', etiqueta: 'Gatos' },
@@ -24,11 +25,11 @@ var Huellas = (function () {
     { id: 'ambos', etiqueta: 'Ambos' }
   ];
   var UNIDADES = {
-    kg: 'por kg', l: 'por litro', ml: 'por ml', 'paño': 'por paño', unidad: 'por unidad'
+    kg: 'por kg', l: 'por litro', ml: 'por ml', g: 'por g', unidad: 'por unidad'
   };
 
   var categoriaPorSlug = {};
-  CATEGORIAS.forEach(function (c) { c.slugs.forEach(function (s) { categoriaPorSlug[s] = c; }); });
+  CATEGORIAS.forEach(function (c) { categoriaPorSlug[c.id] = c; });
 
   function categoria(id) {
     return CATEGORIAS.filter(function (c) { return c.id === id; })[0];
@@ -92,11 +93,11 @@ var Huellas = (function () {
       var nombreN = normalizar(r.producto);
       out.push({
         fecha: r.fecha, tienda: r.tienda, categoria: cat.id, especie: r.especie,
-        producto: r.producto, marca: r.marca, linea: r.linea || '', caracteristica: carac,
+        producto: r.producto, marca: r.marca, linea: r.linea || '', caracteristica: carac, subcategoria: r.subcategoria || '',
         cantidad: cantidad, unidad: unidad, precio: precio, precioUnidad: pu, url: r.url,
         imagen: /^https?:\/\//i.test(r.imagen || '') ? r.imagen : '',
         nombreN: nombreN, puntaje: 0,
-        busqueda: [nombreN, normalizar(r.marca), normalizar(r.tienda),
+        busqueda: [nombreN, normalizar(r.marca), normalizar(r.tienda), normalizar(r.subcategoria),
           r.especie === 'gato' ? 'gato gatos' : r.especie === 'perro' ? 'perro perros' : 'gato gatos perro perros'].join(' ')
       });
     });
@@ -132,6 +133,17 @@ var Huellas = (function () {
       formas(n).forEach(function (k) { if (!indiceSin[k]) indiceSin[k] = grupo; });
     }
     var cats = (datos && datos.categorias) || {};
+    // Primero los grupos de subcategorías (más precisos): si una palabra está en los dos, gana el grupo de la subcategoría.
+    Object.keys(cats).forEach(function (id) {
+      if (!categoria(id)) return;
+      (cats[id].grupos || []).forEach(function (gr) {
+        var palabras = gr.sinonimos || [];
+        if (!palabras.length) return;
+        var g = { tipo: 'subcategoria', id: id, subs: (gr.subcategorias || []).map(normalizar), nombre: palabras[0].toLowerCase(), palabras: palabras };
+        grupos.push(g);
+        palabras.forEach(function (w) { registrar(w, g, true); });
+      });
+    });
     Object.keys(cats).forEach(function (id) {
       var c = categoria(id);
       if (!c) return;
@@ -245,18 +257,20 @@ var Huellas = (function () {
     });
     if (c.grupo && !mejor) {
       var g = c.grupo;
-      if (g.tipo === 'categoria' ? p.categoria === g.id : (p.especie === g.id || p.especie === 'ambos')) mejor = 1;
+      if (g.tipo === 'subcategoria' ? p.categoria === g.id && g.subs.indexOf(normalizar(p.subcategoria)) !== -1
+        : g.tipo === 'categoria' ? p.categoria === g.id : (p.especie === g.id || p.especie === 'ambos')) mejor = 1;
     }
     return mejor;
   }
 
-  function coincidencias(productos, interpretacion, especieId, categoriaId, marcaId) {
+  function coincidencias(productos, interpretacion, especieId, categoriaId, marcaId, subId) {
     var cond = interpretacion.condiciones, frase = interpretacion.frase;
     var lista = [];
     productos.forEach(function (p) {
       if (especieId && p.especie !== especieId) return;
       if (categoriaId && p.categoria !== categoriaId) return;
       if (marcaId && p.marca !== marcaId) return;
+      if (subId && p.subcategoria !== subId) return;
       var total = 0;
       for (var i = 0; i < cond.length; i++) {
         var s = puntajeDe(p, cond[i]);
@@ -277,7 +291,7 @@ var Huellas = (function () {
     var texto = f.texto || '';
     var inter = texto.trim() ? interpretar(productos, texto) : { condiciones: [], avisos: { sinonimos: [], correcciones: [], dijo: '' } };
     inter.frase = inter.condiciones.length > 1 ? normalizar(texto) : '';
-    var lista = coincidencias(productos, inter, f.especie, f.categoria, f.marca), ampliada = null;
+    var lista = coincidencias(productos, inter, f.especie, f.categoria, f.marca, f.subcategoria), ampliada = null;
     if (!lista.length && inter.condiciones.length && (f.especie || f.categoria) && !f.estricto) {
       var otra = f.categoria ? coincidencias(productos, inter, f.especie, '', '') : [];
       var quitoEspecie = false;
@@ -285,7 +299,7 @@ var Huellas = (function () {
       if (otra.length) {
         lista = otra;
         var dentro = [];
-        if (f.categoria) dentro.push('en ' + categoria(f.categoria).etiqueta);
+        if (f.categoria) dentro.push('en ' + categoria(f.categoria).etiqueta + (f.subcategoria ? ' (' + f.subcategoria + ')' : ''));
         if (f.especie) dentro.push('para ' + especie(f.especie).etiqueta);
         var usaCats = !!f.categoria, claves = {}, nombres = [];
         otra.forEach(function (p) {
@@ -335,17 +349,18 @@ var Huellas = (function () {
     }
     var sueltos = {};
     productos.forEach(function (p) {
-      var base = { categoria: p.categoria, especie: p.especie, unidad: p.unidad };
+      var base = { categoria: p.categoria, subcategoria: p.subcategoria, especie: p.especie, unidad: p.unidad };
+      var sc = normalizar(p.subcategoria);
       if (p.categoria === 'concentrado' && p.marca) {
         // Solo es equivalente el mismo concentrado: misma marca, línea, etapa y tamaño de raza (en cualquier tamaño de bolsa).
         var etiqueta = [p.marca, p.linea, p.caracteristica].filter(Boolean).join(' · ');
         meter([p.categoria, p.especie, 'k', normalizar(p.marca), normalizar(p.linea), normalizar(p.caracteristica), p.unidad].join('|'),
           Object.assign({ tipo: 'caracteristica', caracteristica: etiqueta }, base), p);
       } else if (p.caracteristica) {
-        meter([p.categoria, p.especie, 'c', normalizar(p.caracteristica), p.unidad].join('|'),
+        meter([p.categoria, sc, p.especie, 'c', normalizar(p.caracteristica), p.unidad].join('|'),
           Object.assign({ tipo: 'caracteristica', caracteristica: p.caracteristica }, base), p);
       } else {
-        var k = [p.categoria, p.especie, normalizar(p.marca), normalizar(p.producto), p.cantidad, p.unidad].join('|');
+        var k = [p.categoria, sc, p.especie, normalizar(p.marca), normalizar(p.producto), p.cantidad, p.unidad].join('|');
         (sueltos[k] = sueltos[k] || []).push(p);
       }
     });
@@ -353,11 +368,11 @@ var Huellas = (function () {
       var lista = sueltos[k], p0 = lista[0];
       var tiendas = {};
       lista.forEach(function (p) { tiendas[p.tienda] = 1; });
-      var base = { categoria: p0.categoria, especie: p0.especie, unidad: p0.unidad };
+      var base = { categoria: p0.categoria, subcategoria: p0.subcategoria, especie: p0.especie, unidad: p0.unidad };
       if (Object.keys(tiendas).length > 1) {
         lista.forEach(function (p) { meter('p|' + k, Object.assign({ tipo: 'producto', nombre: p0.producto, marca: p0.marca, cantidad: p0.cantidad }, base), p); });
       } else {
-        lista.forEach(function (p) { meter([p0.categoria, p0.especie, 's', p0.unidad].join('|'), Object.assign({ tipo: 'sin-equivalente' }, base), p); });
+        lista.forEach(function (p) { meter([p0.categoria, normalizar(p0.subcategoria), p0.especie, 's', p0.unidad].join('|'), Object.assign({ tipo: 'sin-equivalente' }, base), p); });
       }
     });
 
@@ -387,6 +402,7 @@ var Huellas = (function () {
     lista.sort(function (a, b) {
       return (b.puntaje - a.puntaje) ||
         idx(CATEGORIAS, a.categoria) - idx(CATEGORIAS, b.categoria) ||
+        (a.subcategoria || '').localeCompare(b.subcategoria || '', 'es') ||
         idx(ESPECIES, a.especie) - idx(ESPECIES, b.especie) ||
         orden[a.tipo] - orden[b.tipo] ||
         (a.caracteristica || a.nombre || '').localeCompare(b.caracteristica || b.nombre || '', 'es', { numeric: true }) ||
@@ -402,6 +418,13 @@ var Huellas = (function () {
     return Object.keys(c).sort(function (a, b) { return c[b] - c[a] || a.localeCompare(b, 'es'); })
       .map(function (m) { return { marca: m, n: c[m] }; });
   }
+  /* Subcategorías de una categoría con su número de productos, de más a menos. */
+  function subcategorias(productos, categoriaId) {
+    var c = {};
+    productos.forEach(function (p) { if (p.categoria === categoriaId && p.subcategoria) c[p.subcategoria] = (c[p.subcategoria] || 0) + 1; });
+    return Object.keys(c).sort(function (a, b) { return c[b] - c[a] || a.localeCompare(b, 'es'); })
+      .map(function (x) { return { sub: x, n: c[x] }; });
+  }
   /* Los microchips los implanta el veterinario: no se comparan, pero se explica. */
   function pideMicrochip(texto) { return /micro ?chip/.test(normalizar(texto)); }
 
@@ -413,8 +436,7 @@ var Huellas = (function () {
   }
   function textoCantidad(p) {
     if (p.cantidad === null) return 'Sin cantidad';
-    var u = p.unidad === 'paño' ? (p.cantidad === 1 ? 'paño' : 'paños')
-      : p.unidad === 'unidad' ? (p.cantidad === 1 ? 'unidad' : 'unidades') : p.unidad;
+    var u = p.unidad === 'unidad' ? (p.cantidad === 1 ? 'unidad' : 'unidades') : p.unidad;
     return formatoNumero(p.cantidad) + ' ' + u;
   }
   function fechaLarga(fecha) {
@@ -428,7 +450,7 @@ var Huellas = (function () {
   return {
     CATEGORIAS: CATEGORIAS, ESPECIES: ESPECIES, UNIDADES: UNIDADES,
     DIAS_ADVERTENCIA: DIAS_ADVERTENCIA, DIAS_MAXIMO: DIAS_MAXIMO,
-    categoria: categoria, especie: especie, normalizar: normalizar, marcasConcentrado: marcasConcentrado, pideMicrochip: pideMicrochip,
+    categoria: categoria, especie: especie, normalizar: normalizar, marcasConcentrado: marcasConcentrado, subcategorias: subcategorias, pideMicrochip: pideMicrochip,
     configurarSinonimos: configurarSinonimos, buscar: buscar,
     parsearCSV: parsearCSV, leerProductos: leerProductos, filtrar: filtrar, agrupar: agrupar,
     edadEnDias: edadEnDias, textoEdad: textoEdad,

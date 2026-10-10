@@ -7,7 +7,7 @@
   var TARJETAS_POR_GRUPO = 6;
   var MAX_RESUMEN = 12;
 
-  var estado = { texto: '', especie: '', categoria: '', marca: '', limite: GRUPOS_POR_PAGINA, estricto: false };
+  var estado = { texto: '', especie: '', categoria: '', subcategoria: '', marca: '', limite: GRUPOS_POR_PAGINA, estricto: false };
   var productos = [];
   var hoy = new Date();
 
@@ -51,7 +51,7 @@
   function dondeBuscaste() {
     var d = [];
     if (estado.marca) d.push('de ' + estado.marca);
-    if (estado.categoria) d.push('en ' + H.categoria(estado.categoria).etiqueta);
+    if (estado.categoria) d.push('en ' + H.categoria(estado.categoria).etiqueta + (estado.subcategoria ? ' (' + estado.subcategoria + ')' : ''));
     if (estado.especie) d.push('para ' + H.especie(estado.especie).etiqueta);
     return d.join(' ');
   }
@@ -111,10 +111,10 @@
       var b = chip(x.id === 'ambos' ? 'Para los dos' : x.etiqueta, function () { estado.especie = estado.especie === x.id ? '' : x.id; refrescar(); });
       b.dataset.id = x.id; e.appendChild(b); return b;
     });
-    var todas = chip('Todas las categorías', function () { estado.categoria = ''; estado.marca = ''; refrescar(); });
+    var todas = chip('Todas las categorías', function () { estado.categoria = ''; estado.subcategoria = ''; estado.marca = ''; refrescar(); });
     todas.dataset.id = ''; c.appendChild(todas);
     chipsCategoria = [todas].concat(H.CATEGORIAS.map(function (x) {
-      var b = chip(x.etiqueta, function () { estado.categoria = estado.categoria === x.id ? '' : x.id; estado.marca = ''; refrescar(); }, x.img);
+      var b = chip(x.etiqueta, function () { estado.categoria = estado.categoria === x.id ? '' : x.id; estado.subcategoria = ''; estado.marca = ''; refrescar(); }, x.img);
       b.dataset.id = x.id; c.appendChild(b); return b;
     }));
     dibujarMarcas();
@@ -131,24 +131,42 @@
       b.dataset.id = x.marca; m.appendChild(b); return b;
     }));
   }
+  /* Subcategorías de la categoría elegida (solo si hay más de una con productos). Se redibujan al cambiar de categoría. */
+  var chipsSub = [], subDe = null;
+  function dibujarSubcategorias() {
+    var c = $('chips-sub'), lista = estado.categoria ? H.subcategorias(productos, estado.categoria) : [];
+    if (subDe === estado.categoria) return;
+    subDe = estado.categoria;
+    c.textContent = '';
+    if (lista.length < 2) { chipsSub = []; return; }
+    var todas = chip('Todas', function () { estado.subcategoria = ''; refrescar(); });
+    todas.dataset.id = ''; c.appendChild(todas);
+    chipsSub = [todas].concat(lista.map(function (x) {
+      var b = chip(x.sub.charAt(0).toUpperCase() + x.sub.slice(1), function () { estado.subcategoria = estado.subcategoria === x.sub ? '' : x.sub; refrescar(); });
+      b.dataset.id = x.sub; c.appendChild(b); return b;
+    }));
+  }
   function marcarChips() {
     $('filtro-marca').hidden = estado.categoria !== 'concentrado';
+    dibujarSubcategorias();
+    $('filtro-sub').hidden = !chipsSub.length;
+    chipsSub.forEach(function (b) { b.setAttribute('aria-pressed', String(estado.subcategoria === b.dataset.id)); });
     chipsMarca.forEach(function (b) { b.setAttribute('aria-pressed', String(estado.marca === b.dataset.id)); });
     flechas.forEach(function (f) { f(); });
     chipsEspecie.forEach(function (b) { b.setAttribute('aria-pressed', String(estado.especie === b.dataset.id)); });
     chipsCategoria.forEach(function (b) { b.setAttribute('aria-pressed', String(estado.categoria === b.dataset.id)); });
-    el.quitar.hidden = !(estado.texto || estado.especie || estado.categoria || estado.marca);
+    el.quitar.hidden = !(estado.texto || estado.especie || estado.categoria || estado.subcategoria || estado.marca);
   }
 
   function quitarFiltros() {
-    estado.texto = ''; estado.especie = ''; estado.categoria = ''; estado.marca = ''; estado.estricto = false;
+    estado.texto = ''; estado.especie = ''; estado.categoria = ''; estado.subcategoria = ''; estado.marca = ''; estado.estricto = false;
     el.buscar.value = '';
     refrescar();
   }
 
   /* Títulos de grupo */
   function tituloGrupo(g) {
-    var base = H.categoria(g.categoria).etiqueta + ' · ' + H.especie(g.especie).etiqueta;
+    var base = H.categoria(g.categoria).etiqueta + (g.subcategoria ? ' · ' + g.subcategoria.charAt(0).toUpperCase() + g.subcategoria.slice(1) : '') + ' · ' + H.especie(g.especie).etiqueta;
     if (g.tipo === 'caracteristica') return base + ' · ' + g.caracteristica;
     if (g.tipo === 'producto') return base + ' · ' + g.nombre;
     return base + ' · Sin equivalente';
@@ -399,18 +417,19 @@
   }
   conectarTira('envoltorio-categoria', 'chips-categoria');
   conectarTira('envoltorio-marca', 'chips-marca');
+  conectarTira('envoltorio-sub', 'chips-sub');
 
   /* Enlaces del pie y de la URL (?categoria=, ?especie=) que activan un filtro */
   function aplicarFiltroDeURL(params) {
     var c = params.get('categoria'), e = params.get('especie');
-    if (c && H.categoria(c)) { estado.categoria = c; estado.marca = ''; }
+    if (c && H.categoria(c)) { estado.categoria = c; estado.subcategoria = ''; estado.marca = ''; }
     if (e && H.especie(e)) estado.especie = e;
   }
   document.addEventListener('click', function (ev) {
     var a = ev.target.closest ? ev.target.closest('a[data-categoria], a[data-especie]') : null;
     if (!a) return;
     ev.preventDefault();
-    if (a.dataset.categoria) { estado.categoria = a.dataset.categoria; estado.marca = ''; }
+    if (a.dataset.categoria) { estado.categoria = a.dataset.categoria; estado.subcategoria = ''; estado.marca = ''; }
     if (a.dataset.especie) estado.especie = a.dataset.especie;
     refrescar();
     $('filtros').scrollIntoView({ behavior: 'smooth', block: 'start' });

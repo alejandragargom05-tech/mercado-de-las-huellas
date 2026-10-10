@@ -26,17 +26,17 @@ print('sofa -> ' + r.lista.length + ' ' + cats(r.lista) + ' | ' + aviso(r));
 ok(r.lista.length > 0 && r.lista.every(function (p) { return p.categoria === 'camas'; }), 'sofa debe encontrar solo camas');
 ok(r.avisos.sinonimos.length === 1, 'sofa debe avisar el sinónimo');
 
-// 3. "arnes perro" y "harnes" encuentran arneses
-['arnes perro', 'harnes', 'arneses', 'ARNÉS', 'pechera'].forEach(function (q) {
+// 3. "arnes perro" y "anres" encuentran arneses
+['arnes perro', 'anres', 'arneses', 'ARNÉS', 'pechera'].forEach(function (q) {
   r = Huellas.buscar(productos, { texto: q, categoria: '', especie: '' });
   print(q + ' -> ' + r.lista.length + ' ' + cats(r.lista) + ' | ' + aviso(r));
-  ok(r.lista.length > 0 && r.lista.every(function (p) { return p.categoria === 'arneses-correas'; }), q + ' debe encontrar solo arneses');
+  ok(r.lista.length > 0 && r.lista.every(function (p) { return p.categoria === 'paseo'; }), q + ' debe encontrar solo paseo');
 });
-r = Huellas.buscar(productos, { texto: 'harnes', categoria: '', especie: '' });
-ok(r.avisos.dijo === 'arnés', 'harnes debe sugerir arnés, dijo: ' + r.avisos.dijo);
+r = Huellas.buscar(productos, { texto: 'anres', categoria: '', especie: '' });
+ok(r.avisos.dijo === 'arnés', 'anres debe sugerir arnés, dijo: ' + r.avisos.dijo);
 
 // Otros: varias palabras, plural, sinónimos de la lista, orden por relevancia
-[['guacal', 'transportadores'], ['champu', 'shampoo'], ['panitos', 'panos'], ['bebedero', 'fuentes-comederos'], ['kennel', 'transportadores'], ['cucha', 'camas'], ['arena gatos', 'arena'], ['aren', 'arena']].forEach(function (c) {
+[['guacal', 'transporte'], ['champu', 'higiene'], ['panitos', 'higiene'], ['bebedero', 'comederos'], ['kennel', 'transporte'], ['cucha', 'camas'], ['arena gatos', 'arena'], ['aren', 'arena']].forEach(function (c) {
   r = Huellas.buscar(productos, { texto: c[0], categoria: '', especie: '' });
   print(c[0] + ' -> ' + r.lista.length + ' ' + cats(r.lista) + ' | ' + aviso(r));
   ok(r.lista.length > 0, c[0] + ' no encontró nada');

@@ -93,6 +93,14 @@ try { var t = localStorage.getItem('tema'); if (t === 'claro' || t === 'oscuro')
             <button class="flecha flecha--sig" type="button" tabindex="-1" aria-hidden="true" hidden>›</button>
           </div>
         </div>
+        <div class="filtro" role="group" aria-labelledby="t-sub" id="filtro-sub" hidden>
+          <h2 class="filtro__titulo" id="t-sub">¿Qué tipo?</h2>
+          <div class="chips-envoltorio" id="envoltorio-sub">
+            <button class="flecha flecha--ant" type="button" tabindex="-1" aria-hidden="true" hidden>‹</button>
+            <div class="chips" id="chips-sub"></div>
+            <button class="flecha flecha--sig" type="button" tabindex="-1" aria-hidden="true" hidden>›</button>
+          </div>
+        </div>
         <p class="filtros__quitar"><button class="boton" id="quitar" type="button" hidden>Quitar filtros</button></p>
       </div>
     </div>
@@ -123,7 +131,7 @@ try { var t = localStorage.getItem('tema'); if (t === 'claro' || t === 'oscuro')
     <a class="pie__marca" href="./"><svg class="logo" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#logo"/></svg><b>Mercado de las Huellas</b></a>
     <p class="pie__frase">Mismo producto. Menos pesos.</p>
     <div class="pie__columnas">
-      <nav aria-labelledby="pie-explora"><h2 class="pie__titulo" id="pie-explora">Explora</h2><ul><li><a href="./?categoria=arena#filtros" data-categoria="arena">Arena</a></li><li><a href="./?categoria=concentrado#filtros" data-categoria="concentrado">Concentrado</a></li><li><a href="./?categoria=rascadores#filtros" data-categoria="rascadores">Gimnasios y rascadores</a></li><li><a href="./?categoria=fuentes-comederos#filtros" data-categoria="fuentes-comederos">Fuentes y comederos</a></li><li><a href="./?categoria=arneses-correas#filtros" data-categoria="arneses-correas">Arneses y correas</a></li><li><a href="./?categoria=juguetes#filtros" data-categoria="juguetes">Juguetes interactivos</a></li><li><a href="./?categoria=camas#filtros" data-categoria="camas">Camas</a></li><li><a href="./?categoria=shampoo-panos#filtros" data-categoria="shampoo-panos">Shampoo y paños</a></li><li><a href="./?categoria=transportadores#filtros" data-categoria="transportadores">Bolsos transportadores</a></li><li><a href="./?categoria=rastreo#filtros" data-categoria="rastreo">Rastreo e identificación</a></li></ul></nav>
+      <nav aria-labelledby="pie-explora"><h2 class="pie__titulo" id="pie-explora">Explora</h2><ul><li><a href="./?categoria=concentrado#filtros" data-categoria="concentrado">Concentrado</a></li><li><a href="./?categoria=arena#filtros" data-categoria="arena">Arena y areneras</a></li><li><a href="./?categoria=rascadores#filtros" data-categoria="rascadores">Rascadores y gimnasios</a></li><li><a href="./?categoria=comederos#filtros" data-categoria="comederos">Comederos y bebederos</a></li><li><a href="./?categoria=paseo#filtros" data-categoria="paseo">Paseo</a></li><li><a href="./?categoria=camas#filtros" data-categoria="camas">Camas y descanso</a></li><li><a href="./?categoria=juguetes#filtros" data-categoria="juguetes">Juguetes</a></li><li><a href="./?categoria=higiene#filtros" data-categoria="higiene">Higiene y aseo</a></li><li><a href="./?categoria=ropa#filtros" data-categoria="ropa">Ropa</a></li><li><a href="./?categoria=transporte#filtros" data-categoria="transporte">Transporte y seguridad</a></li><li><a href="./?categoria=rastreo#filtros" data-categoria="rastreo">Rastreo e identificación</a></li></ul></nav>
       <nav aria-labelledby="pie-quien"><h2 class="pie__titulo" id="pie-quien">Para quién</h2><ul>
         <li><a href="./?especie=gato#filtros" data-especie="gato">Gatos</a></li>
         <li><a href="./?especie=perro#filtros" data-especie="perro">Perros</a></li>
