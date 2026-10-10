@@ -55,19 +55,6 @@
 .aviso--ambar .boton, .aviso--error .boton { background: transparent; color: inherit; border: 2px solid currentColor; }
 .avisos-rejilla { display: grid; gap: 12px; margin-bottom: 8px; }
 
-/* Resumen de las más baratas: tarjetas blancas con borde e insignia */
-.resumen { display: flex; gap: 14px; overflow-x: auto; padding: 6px 4px 16px; scroll-snap-type: x proximity; }
-.resumen .tarjeta {
-  flex: none; min-width: 0; width: min(78vw, 280px); scroll-snap-align: start; display: grid; gap: 4px; align-content: start;
-  border: 2px solid var(--oliva); box-shadow: var(--sombra);
-}
-.resumen .insignia { justify-self: start; margin-bottom: 4px; }
-.resumen .etiqueta { color: var(--gris); letter-spacing: 2px; }
-.resumen .precio { font-size: 1.75rem; }
-.resumen p { margin: 0; }
-.resumen .tienda { font-weight: 600; }
-.resumen a { display: inline-flex; align-items: center; min-height: 44px; }
-
 /* Grupos y tarjetas */
 .grupo { padding-top: 24px; }
 .grupo h3 { margin-bottom: 2px; }
@@ -118,7 +105,7 @@
 @media (max-width: 380px) { .marca b { font-size: 1rem; } .marca { gap: 8px; } }
 
 /* La barra y el buscador fijos no deben tapar los destinos de los enlaces */
-.grupo, #bloque-resumen, #conteo { scroll-margin-top: calc(var(--alto-nav) + var(--alto-buscador) + 12px); }
+.grupo, #conteo { scroll-margin-top: calc(var(--alto-nav) + var(--alto-buscador) + 12px); }
 
 
 /* Portada con ilustración principal */
@@ -133,33 +120,8 @@
 }
 .contenedor { position: relative; }
 
-/* Decoración: nuestras ilustraciones asoman entre secciones, junto a los títulos y en los bordes */
 .seccion--filtros { padding: var(--e6) 0 var(--e5); }
-.seccion--resultados { padding-top: var(--e5); overflow: hidden; }
-.deco-img--filtros { z-index: -1; top: var(--e3); right: var(--e4); width: 84px; display: none; }
-.deco-img--titulo { top: 0; right: 0; width: 84px; display: none; }
-.deco-img--borde { display: none; left: var(--e2); top: 96px; width: 96px; }
-.deco-img--onda { right: 8%; bottom: 10px; width: 96px; }
-@media (min-width: 640px) { .deco-img--filtros, .deco-img--titulo { display: block; } .deco-img--onda { width: 120px; } }
-@media (min-width: 1200px) { .deco-img--borde { display: block; } }
-
-/* Onda con mascota que camina */
-.onda { position: relative; margin: 8px 0; overflow: hidden; }
-.onda--asoma { margin-top: 72px; overflow-x: clip; overflow-y: visible; }
-.onda__pj { position: absolute; left: 0; top: 0; width: 0; height: 0; pointer-events: none; opacity: 0; --w: 44px; }
-.onda__pj--gato { --w: 38px; }
-.onda__pj svg { position: absolute; left: calc(var(--w) / -2); bottom: 0; width: var(--w); height: auto; overflow: visible; pointer-events: none; }
-.onda__pj .h-l, .onda__pj .h-w, .onda__pj .h-v { stroke: var(--azul); stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
-.onda__pj .h-l { fill: none; }
-.onda__pj .h-w { fill: var(--crema); }
-.onda__pj .h-v { fill: var(--lavanda); }
-.onda__pj .h-b { fill: var(--azul); stroke: none; }
-.onda__pj.corre .h-pata { animation: h-trote .28s linear infinite alternate; }
-.onda__pj.corre .h-p2 { animation-delay: -.14s; }
-.onda__pj.corre .h-cola { animation: h-cola .3s ease-in-out infinite alternate; }
-@media (min-width: 720px) { .onda__pj { --w: 76px; } .onda__pj--gato { --w: 66px; } }
-.onda--asoma { overflow: visible; }
-@supports (overflow: clip) { .onda--asoma { overflow-x: clip; overflow-y: visible; } }
+.seccion--resultados { padding-top: var(--e5); }
 
 /* Filtros: una tarjeta suave; cada título pegado a sus chips */
 .filtros { position: relative; isolation: isolate; display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--e5); padding: var(--e5) var(--e4); }
@@ -196,9 +158,8 @@
   .chips-envoltorio::before, .chips-envoltorio::after { display: none; }
 }
 
-/* Separación entre filtros, hallazgos y resultados */
-#bloque-resumen { position: relative; padding: var(--e2) 0 var(--e6); margin-bottom: var(--e2); border-bottom: 1px solid var(--linea); }
-#conteo { margin: 0 0 24px; font-size: 1.0625rem; color: var(--texto); }
+/* Separación entre filtros, banner de hallazgos y resultados */
+#conteo { margin: 0 0 var(--e4); font-size: 1.0625rem; color: var(--texto); }
 .grupo { padding-top: 40px; }
 .grupo h3 { margin-bottom: 4px; }
 
@@ -263,3 +224,99 @@
 @keyframes h-trote { from { transform: rotate(-24deg); } to { transform: rotate(24deg); } }
 @keyframes h-cola { from { transform: rotate(-10deg); } to { transform: rotate(14deg); } }
 
+
+
+/* Onda con la persecución: el perro corre adelante y el gato lo sigue, apoyados en la curva. 6 s de carrera y 4 s fuera de pantalla.
+   La onda arranca en x = 0 (cresta en x = 20 px, periodo de 80 px); el vaivén tiene un periodo de 80 px / velocidad
+   y la distancia (48 px × N) cubre el ancho de la pantalla, así que los pasos siguen la curva. */
+.onda--asoma { position: relative; margin-top: 76px; z-index: 5; background-position: left center; }
+.persecucion { position: absolute; left: 0; right: 0; top: 0; height: 0; z-index: 5; overflow-x: clip; overflow-y: visible; pointer-events: none; }
+.pj {
+  --alto: 64px; --ancho: 147px; --sep: 267px; --ini: -424px; --fase-gato: 0.369; --fase-perro: 0.706; --N: 25;
+  --T: calc(10s / var(--N)); --D: calc(48px * var(--N));
+  position: absolute; left: 0; top: calc(12px - var(--alto)); width: var(--ancho); height: calc(var(--alto) * 1.18);
+  animation: pj-corre 10s linear infinite;
+}
+.pj--perro { margin-left: var(--sep); }
+.pj__i {
+  width: 100%; height: 100%; background: var(--azul);
+  -webkit-mask: var(--silueta) no-repeat calc(var(--alto) * -.097) calc(var(--alto) * -.694) / calc(var(--alto) * 2.778) calc(var(--alto) * 2.222);
+  mask: var(--silueta) no-repeat calc(var(--alto) * -.097) calc(var(--alto) * -.694) / calc(var(--alto) * 2.778) calc(var(--alto) * 2.222);
+  animation: pj-vaiven var(--T) ease-in-out infinite;
+  animation-delay: calc(var(--T) * var(--fase-gato) * -1);
+}
+.pj--perro .pj__i { animation-delay: calc(var(--T) * var(--fase-perro) * -1); }
+.pj--gato .pj__i { --silueta: url("../ilustraciones/momentos/gato-corre.svg"); }
+.pj--perro .pj__i { --silueta: url("../ilustraciones/momentos/perro-corre.svg"); }
+@keyframes pj-corre {
+  0% { transform: translateX(var(--ini)); }
+  60%, 100% { transform: translateX(calc(var(--ini) + var(--D))); }
+}
+@keyframes pj-vaiven { 0%, 100% { transform: translateY(-6px); } 50% { transform: translateY(6px); } }
+/* Velocidad según el ancho: la distancia cubre la pantalla más lo que mide la pareja */
+@media (max-width: 719px) {
+  .pj { --alto: 44px; --ancho: 101px; --sep: 181px; --ini: -292px; --fase-gato: 0.731; --fase-perro: 0.994; --N: 14; }
+}
+@media (max-width: 719px) and (min-width: 371px) { .pj { --N: 16; } }
+@media (max-width: 719px) and (min-width: 467px) { .pj { --N: 19; } }
+@media (max-width: 719px) and (min-width: 611px) { .pj { --N: 22; } }
+@media (min-width: 720px) { .pj { --N: 25; } }
+@media (min-width: 767px) { .pj { --N: 29; } }
+@media (min-width: 959px) { .pj { --N: 33; } }
+@media (min-width: 1151px) { .pj { --N: 37; } }
+@media (min-width: 1343px) { .pj { --N: 45; } }
+@media (min-width: 1727px) { .pj { --N: 57; } }
+/* Con movimiento reducido quedan quietos en el centro de la onda, siempre visibles */
+@media (prefers-reduced-motion: reduce) {
+  .pj { animation: none; margin-left: 0; }
+  .pj--gato { left: calc(50% - var(--ancho) - 24px); }
+  .pj--perro { left: calc(50% + 24px); }
+  .pj__i { animation: none; }
+}
+@supports not (overflow: clip) { html { overflow-x: hidden; } }
+
+/* Hallazgos del día: banner compacto con tres miniaturas */
+.hallazgos {
+  display: flex; flex-wrap: wrap; align-items: center; gap: var(--e3) var(--e4); margin: 0 0 var(--e5); padding: var(--e4);
+  background: var(--blanco); border: 1px solid color-mix(in srgb, var(--oliva) 40%, transparent); border-radius: var(--radio); box-shadow: var(--sombra);
+}
+.hallazgos__texto { flex: 1 1 260px; min-width: 0; display: grid; gap: var(--e2); justify-items: start; }
+.hallazgos__texto p { margin: 0; font-weight: 600; }
+.hallazgos .insignia--barata { background: var(--oliva-fondo); color: var(--oliva); border: 1px solid var(--oliva); }
+.hallazgos__mini { display: flex; gap: var(--e2); }
+.miniatura { flex: none; width: 56px; height: 56px; overflow: hidden; border-radius: 14px; background: #fff; border: 1px solid var(--linea); }
+.miniatura .foto { height: 100%; aspect-ratio: auto; border: 0; }
+.miniatura .foto__img { padding: 4px; }
+.miniatura .foto__img--ilustracion { padding: 6px; }
+.hallazgos .boton { flex: none; }
+@media (max-width: 719px) { .hallazgos .boton { width: 100%; } }
+@media (min-width: 720px) { .hallazgos { flex-wrap: nowrap; max-height: 140px; padding: var(--e4) var(--e5); gap: var(--e5); } }
+
+/* Página de hallazgos */
+.seccion--hallazgos .rejilla { margin: var(--e5) 0; }
+@media (min-width: 720px) { .seccion--hallazgos .rejilla { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (min-width: 960px) { .seccion--hallazgos .rejilla { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+.hallazgo__grupo { margin: 0; font: 400 .8125rem/1.4 var(--f-texto); text-transform: uppercase; letter-spacing: 3px; color: var(--azul); }
+
+/* Fondo: nuestras ilustraciones, solo el trazo en lavanda muy suave, dispersas y detrás de todo */
+body { background: transparent; }
+.fondo { position: fixed; inset: 0; z-index: -1; overflow: hidden; pointer-events: none; user-select: none; }
+.fondo i {
+  position: absolute; left: var(--x); top: var(--y); width: clamp(110px, 15vw, 210px); aspect-ratio: 5 / 4;
+  background: #C8CBE8; opacity: .07; transform: rotate(var(--r));
+  -webkit-mask: var(--m) center / contain no-repeat; mask: var(--m) center / contain no-repeat;
+}
+:root[data-tema="oscuro"] .fondo i { opacity: .1; }
+@media (max-width: 719px) { .fondo i { width: clamp(90px, 28vw, 130px); } }
+.fondo i:nth-child(1) { --m: url("../ilustraciones/momentos/gato-pancito.svg"); --x: 4%; --y: 5%; --r: -8deg; }
+.fondo i:nth-child(2) { --m: url("../ilustraciones/momentos/si-quepo-me-siento.svg"); --x: 32%; --y: 2%; --r: 6deg; }
+.fondo i:nth-child(3) { --m: url("../ilustraciones/momentos/gato-contra-el-vaso.svg"); --x: 60%; --y: 8%; --r: -5deg; }
+.fondo i:nth-child(4) { --m: url("../ilustraciones/momentos/perro-sploot.svg"); --x: 82%; --y: 1%; --r: 9deg; }
+.fondo i:nth-child(5) { --m: url("../ilustraciones/momentos/perro-cabeza-ladeada.svg"); --x: 10%; --y: 29%; --r: 7deg; }
+.fondo i:nth-child(6) { --m: url("../ilustraciones/momentos/perro-corre.svg"); --x: 44%; --y: 27%; --r: -10deg; }
+.fondo i:nth-child(7) { --m: url("../ilustraciones/momentos/gato-en-su-gimnasio.svg"); --x: 74%; --y: 31%; --r: 4deg; }
+.fondo i:nth-child(8) { --m: url("../ilustraciones/momentos/perro-dia-de-spa.svg"); --x: 1%; --y: 55%; --r: -6deg; }
+.fondo i:nth-child(9) { --m: url("../ilustraciones/momentos/gato-blep.svg"); --x: 34%; --y: 57%; --r: 11deg; }
+.fondo i:nth-child(10) { --m: url("../ilustraciones/momentos/gato-en-el-lavamanos.svg"); --x: 62%; --y: 59%; --r: -7deg; }
+.fondo i:nth-child(11) { --m: url("../ilustraciones/momentos/perro-con-su-juguete.svg"); --x: 84%; --y: 63%; --r: 8deg; }
+.fondo i:nth-child(12) { --m: url("../ilustraciones/momentos/gato-consentido.svg"); --x: 20%; --y: 81%; --r: -4deg; }

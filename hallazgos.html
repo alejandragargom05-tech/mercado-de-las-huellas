@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="es-CO">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<title>Hallazgos del día — Mercado de las Huellas</title>
+<meta name="description" content="Las opciones más baratas de hoy en tiendas de mascotas de Colombia, por kg y por unidad.">
+<script>
+try { var t = localStorage.getItem('tema'); if (t === 'claro' || t === 'oscuro') document.documentElement.dataset.tema = t; } catch (e) {}
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jost:wght@400;600&family=Patrick+Hand&display=swap">
+<link rel="stylesheet" href="assets/css/marca.css">
+<link rel="stylesheet" href="assets/css/app.css">
+</head>
+<body>
+<div class="fondo" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <symbol id="logo" viewBox="0 0 64 64"><path d="M9 60V30a23 23 0 0 1 46 0v30M5 60h54"/>
+<g stroke-width="2.2"><path d="M20 55C17 47 18 41 21 36L20 28l7 5q5-1.4 10 0l7-5-1 8c3 5 4 11 1 19-7 4-17 4-24 0Z"/><circle cx="25" cy="44" r="1.6" fill="currentColor" stroke="none"/><circle cx="39" cy="44" r="1.6" fill="currentColor" stroke="none"/><path d="M30 48.5h4l-2 2.2z" fill="currentColor" stroke-width="1.2"/><path d="M32 50.7v2M32 52.7q-2 1.6-4 .6M32 52.7q2 1.6 4 .6"/><path d="M20 49l-6 -1.5M20 52l-6 1.5M44 49l6-1.5M44 52l6 1.5" stroke-width="1.4"/></g></symbol>
+  <symbol id="gato-camina" viewBox="0 0 64 40"><g fill="currentColor"><path d="M10 28c0-9 6-14 16-14h16c8 0 14 4 14 12v4H10z"/><path d="M48 14l2-9 6 7z"/><path d="M42 14l-2-9-6 7z" transform="translate(6 0)"/><path d="M10 28C4 26 2 20 5 15" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><rect x="14" y="30" width="5" height="9" rx="2.5"/><rect x="24" y="30" width="5" height="9" rx="2.5"/><rect x="40" y="30" width="5" height="9" rx="2.5"/><rect x="50" y="30" width="5" height="9" rx="2.5"/></g></symbol>
+</svg>
+
+<header class="nav">
+  <div class="contenedor nav__fila">
+    <a class="marca" href="index.html"><svg class="logo" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#logo"/></svg><b>Mercado de las Huellas</b></a>
+    <div class="nav__acciones">
+      <button class="icono-boton" id="tema" type="button" role="switch" aria-checked="false" aria-label="Modo oscuro">
+        <svg class="icono-luna" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4 8.5 8.5 0 1 0 20 14.5Z"/></svg>
+        <svg class="icono-sol" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.5"/><path d="M12 2.5v2.5M12 19v2.5M2.5 12H5M19 12h2.5M5.3 5.3l1.8 1.8M16.9 16.9l1.8 1.8M5.3 18.7l1.8-1.8M16.9 7.1l1.8-1.8"/></svg>
+      </button>
+      <a class="icono-boton" data-instagram target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r=".6"/></svg>
+        <span class="solo-lectores">Instagram de Mercado de las Huellas (se abre en una pestaña nueva)</span>
+      </a>
+    </div>
+  </div>
+</header>
+
+<section class="portada portada--texto">
+  <div class="contenedor portada__fila">
+    <div>
+      <h1>Hallazgos del día</h1>
+      <p class="apoyo">Las opciones más baratas de hoy, por kg y por unidad. Cada una es la más barata de su grupo de productos equivalentes.</p>
+      <div id="actualizacion"></div>
+    </div>
+    <img class="portada__ilus ilus-linea" src="assets/ilustraciones/gato-y-perro-carino.svg" alt="" aria-hidden="true" width="240" height="200">
+  </div>
+</section>
+
+<main>
+  <section class="seccion seccion--hallazgos" aria-label="Hallazgos del día">
+    <div class="contenedor">
+      <div id="estado"></div>
+      <div id="hallazgos" hidden></div>
+      <p><a class="boton boton--suave" href="./">Volver al buscador</a></p>
+    </div>
+  </section>
+</main>
+
+<footer class="pie">
+  <div class="contenedor">
+    <a class="pie__marca" href="index.html"><svg class="logo" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#logo"/></svg><b>Mercado de las Huellas</b></a>
+    <p class="pie__frase">Mismo producto. Menos pesos.</p>
+    <div class="pie__columnas">
+      <nav aria-labelledby="pie-explora"><h2 class="pie__titulo" id="pie-explora">Explora</h2><ul><li><a href="index.html?categoria=concentrado#filtros" data-categoria="concentrado">Concentrado</a></li><li><a href="index.html?categoria=arena#filtros" data-categoria="arena">Arena y areneras</a></li><li><a href="index.html?categoria=higiene#filtros" data-categoria="higiene">Higiene y aseo</a></li><li><a href="index.html?categoria=paseo#filtros" data-categoria="paseo">Paseo</a></li><li><a href="index.html?categoria=juguetes#filtros" data-categoria="juguetes">Juguetes</a></li><li><a href="index.html?categoria=comederos#filtros" data-categoria="comederos">Comederos y bebederos</a></li><li><a href="index.html?categoria=camas#filtros" data-categoria="camas">Camas y descanso</a></li><li><a href="index.html?categoria=rascadores#filtros" data-categoria="rascadores">Rascadores y gimnasios</a></li><li><a href="index.html?categoria=transporte#filtros" data-categoria="transporte">Transporte y seguridad</a></li><li><a href="index.html?categoria=ropa#filtros" data-categoria="ropa">Ropa</a></li><li><a href="index.html?categoria=rastreo#filtros" data-categoria="rastreo">Rastreo e identificación</a></li></ul></nav>
+      <nav aria-labelledby="pie-quien"><h2 class="pie__titulo" id="pie-quien">Para quién</h2><ul>
+        <li><a href="index.html?especie=gato#filtros" data-especie="gato">Gatos</a></li>
+        <li><a href="index.html?especie=perro#filtros" data-especie="perro">Perros</a></li>
+        <li><a href="index.html?especie=ambos#filtros" data-especie="ambos">Para los dos</a></li></ul></nav>
+      <nav aria-labelledby="pie-ayuda"><h2 class="pie__titulo" id="pie-ayuda">Ayuda</h2><ul>
+        <li><a class="boton boton--pie" href="index.html?sugerir=1" data-sugerir><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4.5h14a1.5 1.5 0 0 1 1.5 1.5v9a1.5 1.5 0 0 1-1.5 1.5h-8.5L6 20.5V16.5H5A1.5 1.5 0 0 1 3.5 15V6A1.5 1.5 0 0 1 5 4.5Z"/></svg><span>Sugiere un producto</span></a></li>
+        <li><a href="index.html?sugerir=1&amp;tipo=sumar" data-sugerir data-tipo="sumar"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5 5.5 4h13L20 9.5M4 9.5h16M4 9.5V20h16V9.5M9.5 20v-5.5h5V20"/></svg><span>¿Tienes una tienda? Súmate</span></a></li>
+        <li><a href="como-funciona.html#como-comparamos"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 11v5M12 8v.01"/></svg><span>Cómo comparamos los precios</span></a></li></ul></nav>
+      <nav aria-labelledby="pie-sigue"><h2 class="pie__titulo" id="pie-sigue">Síguenos</h2><ul>
+        <li><a data-instagram target="_blank" rel="noopener"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r=".6"/></svg><span>Instagram<span class="solo-lectores"> (se abre en una pestaña nueva)</span></span></a></li></ul></nav>
+    </div>
+    <div class="pie__base">
+      <p>© 2026 Mercado de las Huellas</p>
+      <p>Mercado de las Huellas compara precios; no reemplaza la recomendación de tu veterinario.</p>
+      <p><a href="como-funciona.html">Cómo funciona y privacidad</a></p>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/js/logica.js"></script>
+<script src="assets/js/tarjetas.js"></script>
+<script src="assets/js/comun.js"></script>
+<script src="assets/js/hallazgos.js"></script>
+</body>
+</html>

@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 160" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="perro sploot">
+<style>.dot{fill:currentColor;stroke:none}</style>
+<defs><filter id="mano-perro-sploot" x="-5%" y="-5%" width="110%" height="110%"><feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="7"/><feDisplacementMap in="SourceGraphic" scale="2.6" xChannelSelector="R" yChannelSelector="G"/></filter></defs>
+<g filter="url(#mano-perro-sploot)"><path d="M50 112c0-16 20-24 50-24 26 0 38 10 38 24z"/><path d="M136 98c-2-18 12-28 24-26 14 2 20 16 16 30-4 10-36 12-40-4z"/><path d="M144 76l-2-20 14 14M164 70l10-16 2 22"/><circle cx="152" cy="90" r="2" class="dot"/><circle cx="168" cy="88" r="2" class="dot"/><path d="M176 96c3 0 4 3 1 4M164 104c0 7 7 7 7 0"/><path d="M54 108c-14 2-24 4-36 2M58 112c-14 6-26 8-38 8"/><path d="M14 108c-3 2-3 5 0 6M16 116c-3 2-3 5 0 6"/><path d="M140 112c4 4 12 4 16 0"/><path d="M8 126h184"/><path d="M100 72c-6-8-16 0 0 10 16-10 6-18 0-10z"/></g>
+</svg>

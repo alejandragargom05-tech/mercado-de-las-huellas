@@ -35,7 +35,7 @@ Reglas:
 - **Dos modos: claro y oscuro** (`color-scheme: light dark`). Por defecto abre en modo claro; un interruptor accesible en la barra superior permite cambiarlo y recuerda la elección (`localStorage`, protegido con `try/catch`). El modo claro es el de la paleta de arriba.
 - **Modo oscuro:** fondo azul noche `#141A44`, tarjetas un poco más claras `#1B2257`, texto crema `#F4F0EA`, gris de apoyo `#B4B1C2` y azul aclarado `#AEB8F6` (precio por unidad, enlaces, titulares y botón principal, con texto azul noche encima). Pie `#1B2257`. El verde pasa a un oliva apagado `#A9B56B`, solo en la insignia y el borde de la más barata. La web siempre abre en modo claro; el oscuro solo si la persona lo elige. Las ilustraciones van siempre sobre una base blanca para conservar su trazo. Las fotos de producto también van sobre blanco.
 - Contraste mínimo de 4,5:1 para texto en ambos modos. Claro: blanco sobre azul 9,3:1, azul sobre crema 8,2:1, gris sobre crema 4,6:1. Oscuro: azul aclarado sobre tarjeta 7,8:1, texto 13,1:1, gris 7,1:1.
-- Titulares en azul sobre crema o blanco. Fondo crema y tarjetas blancas; los bloques azules grandes ya no se usan: el resumen "Hallazgos del día" son tarjetas blancas con borde verde oliva e insignia.
+- Titulares en azul sobre crema o blanco. Fondo crema y tarjetas blancas; los bloques azules grandes ya no se usan: "Hallazgos del día" es un banner compacto blanco con borde oliva suave, insignia, tres miniaturas y un botón a hallazgos.html.
 
 ## Forma y estructura
 - Secciones separadas por ondas suaves; bajo cada titular, un trazo ondulado dibujado a mano.

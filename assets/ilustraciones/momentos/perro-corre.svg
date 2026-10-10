@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 160" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="perro corre">
+<style>.dot{fill:currentColor;stroke:none}</style>
+<defs><filter id="mano-perro-corre" x="-5%" y="-5%" width="110%" height="110%"><feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="7"/><feDisplacementMap in="SourceGraphic" scale="2.6" xChannelSelector="R" yChannelSelector="G"/></filter></defs>
+<g filter="url(#mano-perro-corre)"><path d="M70 90c0-14 20-20 42-20 18 0 28 8 28 20s-20 14-36 14c-18 0-34-2-34-14z"/><path d="M136 78c0-16 14-22 26-18 10 4 12 18 6 26-6 8-28 6-32-8z"/><path d="M146 62c-8-12-22-14-30-10M166 86c4 8-2 12-6 6"/><circle cx="160" cy="72" r="2" class="dot"/><path d="M132 98l24 14M128 100l22 20M80 98l-24 14M86 100l-24 22M72 84c-10-6-14-16-10-24"/><path d="M14 70h30M8 86h30M18 102h24"/><circle cx="48" cy="124" r="4"/><circle cx="38" cy="118" r="6"/><circle cx="30" cy="128" r="3"/></g>
+</svg>

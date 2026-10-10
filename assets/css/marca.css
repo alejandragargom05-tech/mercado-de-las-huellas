@@ -194,11 +194,8 @@ h1::after, h2::after {
 .pie a.boton--pie:focus-visible { outline-color: #fff; }
 .pie :focus-visible { outline-color: #fff; }
 
-/* Decoración con nuestras ilustraciones: sin cajas, discretas, sin clics. Claro: lo blanco se funde con el fondo. Oscuro: líneas aclaradas. */
-.deco-img, .ilus-linea { mix-blend-mode: multiply; pointer-events: none; user-select: none; }
-.deco-img { position: absolute; z-index: -1; height: auto; opacity: .6; }
-:root[data-tema="oscuro"] .deco-img, :root[data-tema="oscuro"] .ilus-linea { filter: invert(1) hue-rotate(180deg); mix-blend-mode: screen; }
-.pie .deco-img--pie { right: var(--e5); bottom: calc(100% + 30px); width: 104px; opacity: .7; }
+.ilus-linea { mix-blend-mode: multiply; pointer-events: none; user-select: none; }
+:root[data-tema="oscuro"] .ilus-linea { filter: invert(1) hue-rotate(180deg); mix-blend-mode: screen; }
 
 @media (min-width: 720px) {
   .pie__columnas { grid-template-columns: repeat(2, minmax(0, 1fr)); }

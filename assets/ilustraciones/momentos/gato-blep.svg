@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 160" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="gato blep">
+<style>.dot{fill:currentColor;stroke:none}</style>
+<defs><filter id="mano-gato-blep" x="-5%" y="-5%" width="110%" height="110%"><feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="7"/><feDisplacementMap in="SourceGraphic" scale="2.6" xChannelSelector="R" yChannelSelector="G"/></filter></defs>
+<g filter="url(#mano-gato-blep)"><path d="M64 92c0-30 18-44 36-44s36 14 36 44c0 26-18 38-36 38S64 118 64 92z"/><path d="M70 64l-4-30 22 16M112 50l22-16-4 30"/><path d="M84 86q5-5 10 0M106 86q5-5 10 0"/><path d="M96 98l4 4 4-4M100 102v4M92 106c4 4 12 4 16 0"/><path d="M98 108v6c0 3 4 3 4 0v-6"/><path d="M60 98h18M60 104l18-2M122 98h18M122 102l18 2"/><path d="M150 40c4-4 10-4 12 2"/><path d="M40 140h120"/></g>
+</svg>

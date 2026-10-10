@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 160" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="gato corre">
+<style>.dot{fill:currentColor;stroke:none}</style>
+<defs><filter id="mano-gato-corre" x="-5%" y="-5%" width="110%" height="110%"><feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="7"/><feDisplacementMap in="SourceGraphic" scale="2.6" xChannelSelector="R" yChannelSelector="G"/></filter></defs>
+<g filter="url(#mano-gato-corre)"><path d="M70 90c0-12 18-18 38-18 16 0 26 6 26 18s-18 13-32 13c-16 0-32-2-32-13z"/><path d="M132 80c-2-14 10-22 20-20 10 2 14 14 9 22-5 8-25 8-29-2z"/><path d="M138 64l-2-12 9 7M154 60l8-9 1 12"/><circle cx="151" cy="74" r="2" class="dot"/><path d="M163 80h10M162 84l10 2"/><path d="M128 96l22 12M124 98l18 18M78 96l-22 12M84 98l-20 18"/><path d="M72 86c-14-4-22-14-20-26" class="cola"/><path d="M20 72h26M14 88h28M22 104h20"/></g>
+</svg>

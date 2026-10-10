@@ -17,6 +17,7 @@ try { var t = localStorage.getItem('tema'); if (t === 'claro' || t === 'oscuro')
 <link rel="stylesheet" href="assets/css/app.css">
 </head>
 <body>
+<div class="fondo" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
   <symbol id="logo" viewBox="0 0 64 64"><path d="M9 60V30a23 23 0 0 1 46 0v30M5 60h54"/>
 <g stroke-width="2.2"><path d="M20 55C17 47 18 41 21 36L20 28l7 5q5-1.4 10 0l7-5-1 8c3 5 4 11 1 19-7 4-17 4-24 0Z"/><circle cx="25" cy="44" r="1.6" fill="currentColor" stroke="none"/><circle cx="39" cy="44" r="1.6" fill="currentColor" stroke="none"/><path d="M30 48.5h4l-2 2.2z" fill="currentColor" stroke-width="1.2"/><path d="M32 50.7v2M32 52.7q-2 1.6-4 .6M32 52.7q2 1.6 4 .6"/><path d="M20 49l-6 -1.5M20 52l-6 1.5M44 49l6-1.5M44 52l6 1.5" stroke-width="1.4"/></g></symbol>
@@ -99,7 +100,6 @@ try { var t = localStorage.getItem('tema'); if (t === 'claro' || t === 'oscuro')
 </main>
 
 <footer class="pie">
-  <img class="deco-img deco-img--pie" src="assets/ilustraciones/bolsos-transportadores.svg" alt="" aria-hidden="true" width="120" height="100">
   <div class="contenedor">
     <a class="pie__marca" href="index.html"><svg class="logo" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#logo"/></svg><b>Mercado de las Huellas</b></a>
     <p class="pie__frase">Mismo producto. Menos pesos.</p>

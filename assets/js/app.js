@@ -2,10 +2,10 @@
 (function () {
   'use strict';
   var H = Huellas;
+  var h = Tarjetas.h, porUnidad = Tarjetas.porUnidad, urlSegura = Tarjetas.urlSegura, tituloGrupo = Tarjetas.tituloGrupo, tarjeta = Tarjetas.tarjeta;
   var RUTA_IMG = 'assets/ilustraciones/';
   var GRUPOS_POR_PAGINA = 15;
   var TARJETAS_POR_GRUPO = 6;
-  var MAX_RESUMEN = 12;
 
   var estado = { texto: '', especie: '', categoria: '', subcategoria: '', marca: '', local: false, limite: GRUPOS_POR_PAGINA, estricto: false };
   var productos = [];
@@ -16,28 +16,10 @@
     resumen: $('resumen'), bloqueResumen: $('bloque-resumen'), verMas: $('ver-mas'), quitar: $('quitar'),
     buscar: $('buscar'), actualizacion: $('actualizacion'), pieFecha: $('pie-fecha'), avisos: $('avisos'), anuncio: $('anuncio') };
 
-  /* Crea nodos con textContent: nada del CSV se interpreta como HTML. */
-  function h(tag, attrs) {
-    var n = document.createElement(tag);
-    Object.keys(attrs || {}).forEach(function (k) {
-      if (k === 'texto') n.textContent = attrs[k]; else n.setAttribute(k, attrs[k]);
-    });
-    for (var i = 2; i < arguments.length; i++) {
-      var c = arguments[i];
-      [].concat(c).forEach(function (x) {
-        if (x != null) n.appendChild(typeof x === 'string' ? document.createTextNode(x) : x);
-      });
-    }
-    return n;
-  }
   function img(archivo, alt, w, hh) {
     return h('img', { src: RUTA_IMG + archivo, alt: alt, width: w, height: hh });
   }
-  /* «por kg», «por ml»… y, para piezas sueltas, «por tapete», «por pañal»… */
-  var POR_PIEZA = { 'tapete': 'por tapete', 'tapete atrapa arena': 'por tapete', 'pañal': 'por pañal', 'paño': 'por paño', 'bolsa recolectora': 'por bolsa' };
-  function porUnidad(p) { return (p.unidad === 'unidad' && POR_PIEZA[p.subcategoria]) || H.UNIDADES[p.unidad]; }
   var ICONO_MENSAJE = '<svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4.5h14a1.5 1.5 0 0 1 1.5 1.5v9a1.5 1.5 0 0 1-1.5 1.5h-8.5L6 20.5V16.5H5A1.5 1.5 0 0 1 3.5 15V6A1.5 1.5 0 0 1 5 4.5Z"/></svg>';
-  function urlSegura(u) { return /^https?:\/\//i.test(u) ? u : null; }
 
   var HUELLA = '<svg viewBox="0 0 36 44" aria-hidden="true"><ellipse cx="18" cy="32" rx="11" ry="9"/><ellipse cx="6" cy="19" rx="4.5" ry="6" transform="rotate(-18 6 19)"/><ellipse cx="14" cy="10" rx="4.5" ry="6.5"/><ellipse cx="23" cy="10" rx="4.5" ry="6.5"/><ellipse cx="31" cy="19" rx="4.5" ry="6" transform="rotate(18 31 19)"/></svg>';
 
@@ -180,13 +162,6 @@
     refrescar();
   }
 
-  /* Títulos de grupo */
-  function tituloGrupo(g) {
-    var base = H.categoria(g.categoria).etiqueta + (g.subcategoria ? ' · ' + g.subcategoria.charAt(0).toUpperCase() + g.subcategoria.slice(1) : '') + ' · ' + H.especie(g.especie).etiqueta;
-    if (g.tipo === 'caracteristica') return base + ' · ' + g.caracteristica;
-    if (g.tipo === 'producto') return base + ' · ' + g.nombre;
-    return base + ' · Sin equivalente';
-  }
   function subtituloGrupo(g) {
     var por = H.UNIDADES[g.unidad] ? 'Precio ' + H.UNIDADES[g.unidad] : 'Sin unidad de medida para comparar';
     if (g.tipo === 'producto') {
@@ -197,59 +172,6 @@
     return por;
   }
 
-  function filaDato(clave, valor, extra) {
-    return h('div', { 'class': 'fila' }, h('dt', { texto: clave }), h('dd', extra ? { 'class': extra, texto: valor } : { texto: valor }));
-  }
-
-  /* Foto enlazada desde la tienda, cuadrada y sin recortar; si no hay o falla, la ilustración de su categoría. */
-  function foto(p) {
-    var cat = H.categoria(p.categoria), ilus = RUTA_IMG + cat.img;
-    var altIlus = 'Ilustración de ' + cat.etiqueta.toLowerCase();
-    var f = h('img', { 'class': 'foto__img' + (p.imagen ? '' : ' foto__img--ilustracion'), src: p.imagen || ilus,
-      alt: p.imagen ? 'Foto de ' + p.producto : altIlus, width: 400, height: 400, loading: 'lazy', decoding: 'async', referrerpolicy: 'no-referrer' });
-    f.addEventListener('error', function () {
-      f.classList.add('foto__img--ilustracion'); f.alt = altIlus; f.src = ilus;
-    }, { once: true });
-    return h('div', { 'class': 'foto' }, f);
-  }
-
-  /* Tarjeta de producto: foto arriba; debajo insignia, tienda, nombre, precio real, precio por unidad, datos y botón. */
-  function tarjeta(g, o) {
-    var p = o.producto;
-    var ins = h('div', { 'class': 'insignias' });
-    if (p.emprendimiento) ins.appendChild(h('span', { 'class': 'insignia insignia--local', texto: 'Emprendimiento colombiano' }));
-    if (o.masBarata) ins.appendChild(h('span', { 'class': 'insignia insignia--barata', texto: 'La más barata ' + (porUnidad(p) || '') }));
-    if (o.advertencia) ins.appendChild(h('span', { 'class': 'insignia insignia--vieja',
-      texto: o.edad === null ? 'Precio de fecha desconocida' : 'Precio de hace ' + o.edad + ' días' }));
-
-    var porU = p.precioUnidad !== null
-      ? h('p', { 'class': 'precio-unidad cifra' }, H.formatoPesos(p.precioUnidad) + ' ', h('span', { texto: porUnidad(p) }))
-      : h('p', { 'class': 'precio-unidad sin-unidad', texto: 'Sin precio por unidad' });
-
-    var cantidad = H.textoCantidad(p) + (p.caracteristica ? ' · ' + p.caracteristica : '');
-    var fecha = (H.fechaLarga(p.fecha) || 'Fecha desconocida') + (o.edad === null ? '' : ' (' + H.textoEdad(o.edad) + ')');
-    var dl = h('dl', null,
-      p.marca ? filaDato('Marca', p.marca) : null,
-      filaDato('Cantidad', cantidad),
-      filaDato('Fecha', fecha, o.advertencia ? 'viejo' : ''));
-
-    var notas = [];
-    if (o.edad === null) notas.push(h('p', { 'class': 'nota nota--ambar', texto: 'No sabemos cuándo se tomó este precio, así que puede haber cambiado. Confírmalo en la tienda antes de comprar.' }));
-    else if (o.vencida) notas.push(h('p', { 'class': 'nota nota--ambar', texto: 'Este precio tiene ' + o.edad + ' días: puede haber cambiado y por eso no cuenta para la más barata. Confírmalo en la tienda.' }));
-    else if (o.advertencia) notas.push(h('p', { 'class': 'nota nota--ambar', texto: 'Este precio se tomó hace ' + o.edad + ' días y puede haber cambiado. Confírmalo en la tienda antes de comprar.' }));
-    if (p.precioUnidad === null) notas.push(h('p', { 'class': 'nota apoyo', texto: 'No podemos calcular el precio por unidad porque la tienda no informa la cantidad. Revisa el tamaño en la tienda para comparar.' }));
-
-    var url = urlSegura(p.url);
-    var acciones = h('div', { 'class': 'acciones' },
-      url ? h('a', { 'class': 'boton', href: url, target: '_blank', rel: 'noopener noreferrer' },
-        'Ir a ' + p.tienda + ' ', h('span', { 'aria-hidden': 'true', texto: '↗' }), h('span', { 'class': 'solo-lectores', texto: '(se abre en una pestaña nueva)' })) : null);
-    var cuerpo = h('div', { 'class': 'producto__cuerpo' }, ins,
-      h('p', { 'class': 'tienda', texto: p.tienda }),
-      h('p', { 'class': 'nombre', texto: p.producto }),
-      h('p', { 'class': 'precio cifra', texto: H.formatoPesos(p.precio) }),
-      porU, dl, notas, acciones);
-    return h('article', { 'class': 'tarjeta producto' + (o.masBarata ? ' producto--barata' : '') }, foto(p), cuerpo);
-  }
 
   function notaGrupo(g) {
     if (g.tipo === 'sin-equivalente') {
@@ -286,25 +208,14 @@
     return s;
   }
 
-  function dibujarResumen(grupos) {
+  /* Banner «Hallazgos del día»: tres miniaturas y un botón a hallazgos.html, con los mismos hallazgos de esa página. */
+  function dibujarBanner() {
+    var lista = Tarjetas.hallazgos(productos, hoy);
+    el.bloqueResumen.hidden = lista.length === 0;
     el.resumen.textContent = '';
-    var con = grupos.map(function (g, i) { return { g: g, i: i }; }).filter(function (x) { return x.g.barata; });
-    el.bloqueResumen.hidden = con.length === 0;
-    con.slice(0, MAX_RESUMEN).forEach(function (x) {
-      var p = x.g.barata.producto;
-      var enlace = h('a', { href: '#grupo-' + x.i, texto: 'Ver el grupo' });
-      enlace.addEventListener('click', function () { // el grupo puede no estar dibujado aún
-        if (x.i >= estado.limite) { estado.limite = x.i + 1; dibujar(); }
-      });
-      el.resumen.appendChild(h('div', { 'class': 'tarjeta' },
-        h('span', { 'class': 'insignia insignia--barata', texto: 'La más barata ' + (porUnidad(p) || '') }),
-        h('span', { 'class': 'etiqueta', texto: tituloGrupo(x.g) }),
-        h('p', { 'class': 'tienda', texto: p.tienda }),
-        h('p', { 'class': 'precio cifra', texto: H.formatoPesos(p.precio) }),
-        h('p', { 'class': 'precio-unidad cifra' }, H.formatoPesos(p.precioUnidad) + ' ', h('span', { texto: porUnidad(p) })),
-        h('p', { texto: p.producto }),
-        h('p', { 'class': 'apoyo', texto: H.textoCantidad(p) }),
-        h('p', null, enlace)));
+    $('t-hallazgos').textContent = 'Las ' + lista.length + ' opciones más baratas de hoy, por kg y por unidad';
+    lista.slice(0, 3).forEach(function (g) {
+      el.resumen.appendChild(h('span', { 'class': 'miniatura' }, Tarjetas.foto(g.barata.producto)));
     });
   }
 
@@ -343,7 +254,6 @@
     dibujarAvisos(r);
     el.conteo.textContent = 'Encontramos ' + String(lista.length).replace(/\B(?=(\d{3})+$)/g, '.') + (lista.length === 1 ? ' opción' : ' opciones') + ' para tu peludo';
     anunciar(lista.length + (lista.length === 1 ? ' opción' : ' opciones') + (r.ampliada ? ' en otras categorías' : ''));
-    dibujarResumen(grupos);
     el.grupos.textContent = '';
     grupos.slice(0, estado.limite).forEach(function (g, i) { el.grupos.appendChild(dibujarGrupo(g, i)); });
     el.verMas.hidden = grupos.length <= estado.limite;
@@ -392,6 +302,7 @@
         mostrarActualizacion(H.fechaMasReciente(productos), modificado);
         try { aplicarFiltroDeURL(new URLSearchParams(location.search)); } catch (e) { /* sin filtros en la URL */ }
         dibujarChips();
+        dibujarBanner();
         dibujar();
       })
       .catch(function () { mostrarEstado('error'); });
@@ -454,39 +365,6 @@
     refrescar();
     $('filtros').scrollIntoView({ behavior: 'smooth', block: 'start' });
   });
-
-  /* Onda: un gato persigue a un perro siguiendo la curva (6 s de carrera, 4 s de pausa). Con movimiento reducido quedan quietos en el centro. */
-  (function () {
-    var onda = document.querySelector('.onda--asoma'); if (!onda) return;
-    var perro = onda.querySelector('.onda__pj--perro'), gato = onda.querySelector('.onda__pj--gato');
-    var mq = window.matchMedia ? matchMedia('(prefers-reduced-motion: reduce)') : null;
-    function alto(x, w) { // y de la curva de 80 px de periodo, centrada en la onda
-      var p = (((x - (w - 80) / 2) % 80) + 80) % 80, t = (p % 40) / 40, u = 1 - t;
-      return p < 40 ? 12 * (u * u + t * t) : 12 * u * u + 48 * u * t + 12 * t * t;
-    }
-    function poner(el, x, w) {
-      var ang = Math.atan2(alto(x + 3, w) - alto(x - 3, w), 6) * 57.3;
-      el.style.transform = 'translate(' + x.toFixed(1) + 'px,' + alto(x, w).toFixed(1) + 'px) rotate(' + ang.toFixed(1) + 'deg)';
-    }
-    function quieto() {
-      var w = onda.clientWidth;
-      [perro, gato].forEach(function (e) { e.classList.remove('corre'); e.style.opacity = 1; });
-      poner(perro, w / 2 + 26, w); poner(gato, w / 2 - 26, w);
-    }
-    function cuadro(ahora) {
-      if (mq && mq.matches) { quieto(); return; }
-      var w = onda.clientWidth, t = ahora % 10000, vis = t < 6000, sep = w < 720 ? 52 : 90, margen = 60;
-      [perro, gato].forEach(function (e) { e.classList.toggle('corre', vis); e.style.opacity = vis ? 1 : 0; });
-      if (vis) {
-        var x = -margen - sep + (t / 6000) * (w + 2 * margen + sep);
-        poner(perro, x + sep, w); poner(gato, x, w);
-      }
-      requestAnimationFrame(cuadro);
-    }
-    if (mq && mq.addEventListener) mq.addEventListener('change', function () { if (!mq.matches) requestAnimationFrame(cuadro); });
-    window.addEventListener('resize', function () { if (mq && mq.matches) quieto(); });
-    requestAnimationFrame(cuadro);
-  })();
 
   cargar();
 })();

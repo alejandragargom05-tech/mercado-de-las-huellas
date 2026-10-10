@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 160" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="gato en su gimnasio">
+<style>.dot{fill:currentColor;stroke:none}</style>
+<defs><filter id="mano-gato-en-su-gimnasio" x="-5%" y="-5%" width="110%" height="110%"><feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="7"/><feDisplacementMap in="SourceGraphic" scale="2.6" xChannelSelector="R" yChannelSelector="G"/></filter></defs>
+<g filter="url(#mano-gato-en-su-gimnasio)"><path d="M58 40h56M64 40v100M76 40v100M64 54l12-4M64 68l12-4M64 82l12-4M64 96l12-4M64 110l12-4M64 124l12-4M40 140h100"/><path d="M60 40c0-14 52-14 52 0"/><path d="M84 32l2-9 6 6M98 29l6-6 2 9"/><path d="M110 40v26"/><circle cx="110" cy="72" r="7"/><path d="M104 76l-4 4M116 76l4 4M110 79v5"/><path d="M146 140c-10-18-8-40 0-48 10-8 20 0 20 14s-4 26-10 34"/><path d="M148 92c-8-8-16-14-26-16"/><circle cx="120" cy="76" r="3"/><path d="M150 88c-6-14 4-24 12-22 10 2 12 16 6 24-6 6-14 6-18-2z"/><path d="M152 70l-2-12 8 8M164 68l8-8v12"/><path d="M158 144c14 0 18-14 10-20" class="cola"/></g>
+</svg>

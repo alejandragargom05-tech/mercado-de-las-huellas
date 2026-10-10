@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 160" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="si quepo me siento">
+<style>.dot{fill:currentColor;stroke:none}</style>
+<defs><filter id="mano-si-quepo-me-siento" x="-5%" y="-5%" width="110%" height="110%"><feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="7"/><feDisplacementMap in="SourceGraphic" scale="2.6" xChannelSelector="R" yChannelSelector="G"/></filter></defs>
+<g filter="url(#mano-si-quepo-me-siento)"><path d="M50 96h100v44H50z"/><path d="M50 96L34 84h24l8 12M150 96l16-12h-24l-8 12"/><path d="M76 96c-2-26 12-38 24-38s26 12 24 38"/><path d="M80 70l-2-20 14 12M108 62l14-12-2 20"/><circle cx="90" cy="78" r="5"/><circle cx="110" cy="78" r="5"/><circle cx="91" cy="79" r="1.6" class="dot"/><circle cx="111" cy="79" r="1.6" class="dot"/><path d="M98 86l2 2 2-2M66 84h14M66 90l14-2M120 84h14M120 88l14 2"/><path d="M84 96c0-6 10-6 10 0M106 96c0-6 10-6 10 0"/><path d="M62 112v16M58 116l4-4 4 4M70 112v16M66 116l4-4 4 4"/></g>
+</svg>

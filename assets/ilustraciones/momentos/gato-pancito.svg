@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 160" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="gato pancito">
+<style>.dot{fill:currentColor;stroke:none}</style>
+<defs><filter id="mano-gato-pancito" x="-5%" y="-5%" width="110%" height="110%"><feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="7"/><feDisplacementMap in="SourceGraphic" scale="2.6" xChannelSelector="R" yChannelSelector="G"/></filter></defs>
+<g filter="url(#mano-gato-pancito)"><path d="M30 128c0-16 140-16 140 0 0 14-140 14-140 0z"/><path d="M30 128l-6 6M170 128l6 6"/><path d="M52 118c-2-32 22-48 48-48 34 0 50 18 48 48z"/><path d="M58 96c-2-16 8-26 22-26s22 12 20 26c-2 12-38 14-42 0z"/><path d="M62 78l-2-16 12 10M88 72l10-10v16"/><path d="M68 90q4 3 8 0M84 90q4 3 8 0M79 96l1 2 1-2"/><path d="M148 112c-8 12-38 12-52 6"/><path d="M118 74c2 6 2 10 0 14M130 78c2 6 2 10 0 14"/><path d="M152 58h10l-10 10h10M168 42h7l-7 7h7" class="zz"/></g>
+</svg>
