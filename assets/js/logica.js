@@ -413,6 +413,20 @@ var Huellas = (function () {
     return lista;
   }
 
+  /* «Mismo producto, más barato»: usa el grupo de equivalencia de agrupar() y su más barata (g.barata).
+     Devuelve { estado: 'ahorro' | 'ya-barata' | 'sin-comparar', mejor, ahorro, porcentaje, motivo }.
+     El ahorro es por la misma cantidad que trae este producto. */
+  function sugerirMasBarato(g, o) {
+    var p = o.producto;
+    if (g.tipo === 'sin-equivalente') return { estado: 'sin-comparar', motivo: 'Ninguna otra tienda vende un producto igual o equivalente.' };
+    if (p.precioUnidad === null || !(p.cantidad > 0)) return { estado: 'sin-comparar', motivo: 'La tienda no informa la cantidad de este producto, así que no podemos calcular su precio por unidad.' };
+    if (!g.barata) return { estado: 'sin-comparar', motivo: 'Hoy solo una tienda tiene precios al día de este producto o de sus equivalentes.' };
+    if (o.masBarata) return { estado: 'ya-barata' };
+    var mejor = g.barata, ahorro = (p.precioUnidad - mejor.producto.precioUnidad) * p.cantidad;
+    if (!(ahorro > 0)) return { estado: 'ya-barata' };
+    return { estado: 'ahorro', mejor: mejor, ahorro: ahorro, porcentaje: Math.round(100 * (1 - mejor.producto.precioUnidad / p.precioUnidad)) };
+  }
+
   /* Marcas de concentrado con su número de productos, de más a menos. */
   function marcasConcentrado(productos) {
     var c = {};
@@ -454,7 +468,7 @@ var Huellas = (function () {
     DIAS_ADVERTENCIA: DIAS_ADVERTENCIA, DIAS_MAXIMO: DIAS_MAXIMO,
     categoria: categoria, especie: especie, normalizar: normalizar, marcasConcentrado: marcasConcentrado, subcategorias: subcategorias, pideMicrochip: pideMicrochip,
     configurarSinonimos: configurarSinonimos, buscar: buscar,
-    parsearCSV: parsearCSV, leerProductos: leerProductos, filtrar: filtrar, agrupar: agrupar,
+    sugerirMasBarato: sugerirMasBarato, parsearCSV: parsearCSV, leerProductos: leerProductos, filtrar: filtrar, agrupar: agrupar,
     edadEnDias: edadEnDias, textoEdad: textoEdad,
     formatoPesos: formatoPesos, formatoNumero: formatoNumero, textoCantidad: textoCantidad,
     fechaLarga: fechaLarga, fechaMasReciente: fechaMasReciente

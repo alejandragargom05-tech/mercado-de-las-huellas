@@ -45,6 +45,27 @@ var Tarjetas = (function () {
     return h('div', { 'class': 'foto' }, f);
   }
 
+  /* Panel «Mismo producto, más barato»: foto, tienda, precio real, precio por unidad, ahorro y enlace. */
+  function panelMasBarato(g, o, desde) {
+    var s = H.sugerirMasBarato(g, o), p = o.producto;
+    var ref = s.estado === 'ahorro' ? s.mejor.producto : p;
+    var url = urlSegura(ref.url);
+    var nodos = [foto(ref), h('p', { 'class': 'tienda', texto: ref.tienda }), h('p', { 'class': 'nombre', texto: ref.producto }),
+      h('p', { 'class': 'precio cifra', texto: H.formatoPesos(ref.precio) + ' · ' + H.textoCantidad(ref) })];
+    if (ref.precioUnidad !== null) nodos.push(h('p', { 'class': 'precio-unidad cifra' }, H.formatoPesos(ref.precioUnidad) + ' ', h('span', { texto: porUnidad(ref) })));
+    if (s.estado === 'ahorro') {
+      nodos.push(h('p', { 'class': 'nota', role: 'status' }, h('b', { texto: 'Ahorras ' + H.formatoPesos(s.ahorro) + ' en ' + H.textoCantidad(p) + ', ' + s.porcentaje + ' % menos' }),
+        ' que en ' + p.tienda + ' (' + H.formatoPesos(p.precio) + ').'));
+    } else if (s.estado === 'ya-barata') {
+      nodos.push(h('p', { 'class': 'nota', role: 'status' }, h('b', { texto: 'Ya es el más barato: ' }), 'ninguna otra tienda lo tiene a menor precio por unidad.'));
+    } else {
+      nodos.push(h('p', { 'class': 'nota apoyo', role: 'status', texto: s.motivo }));
+    }
+    if (url) nodos.push(h('p', null, h('a', { 'class': 'boton', href: url, target: '_blank', rel: 'noopener noreferrer' },
+      'Ir a ' + ref.tienda + ' ', h('span', { 'aria-hidden': 'true', texto: '↗' }), h('span', { 'class': 'solo-lectores', texto: '(se abre en una pestaña nueva)' }))));
+    Comun.abrirPanel('Mismo producto, más barato', nodos, desde);
+  }
+
   /* Tarjeta de producto: foto arriba; debajo insignia, tienda, nombre, precio real, precio por unidad, datos y botón. */
   function tarjeta(g, o) {
     var p = o.producto;
@@ -72,7 +93,9 @@ var Tarjetas = (function () {
     if (p.precioUnidad === null) notas.push(h('p', { 'class': 'nota apoyo', texto: 'No podemos calcular el precio por unidad porque la tienda no informa la cantidad. Revisa el tamaño en la tienda para comparar.' }));
 
     var url = urlSegura(p.url);
-    var acciones = h('div', { 'class': 'acciones' },
+    var mas = h('button', { 'class': 'boton boton--suave', type: 'button', texto: 'Mismo producto, más barato' });
+    mas.addEventListener('click', function () { panelMasBarato(g, o, mas); });
+    var acciones = h('div', { 'class': 'acciones' }, mas,
       url ? h('a', { 'class': 'boton', href: url, target: '_blank', rel: 'noopener noreferrer' },
         'Ir a ' + p.tienda + ' ', h('span', { 'aria-hidden': 'true', texto: '↗' }), h('span', { 'class': 'solo-lectores', texto: '(se abre en una pestaña nueva)' })) : null);
     var cuerpo = h('div', { 'class': 'producto__cuerpo' }, ins,

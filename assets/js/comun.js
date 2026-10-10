@@ -191,6 +191,21 @@ var Comun = (function () {
     if (typeof dialogo.showModal === 'function') dialogo.showModal(); else dialogo.setAttribute('open', '');
   }
 
+  /* ---------- Panel genérico: el mismo diálogo accesible (clic en el fondo, Escape, foco de vuelta) ---------- */
+  var panel = null;
+  function abrirPanel(titulo, nodos, desde) {
+    if (panel) panel.remove();
+    var cerrar = h('button', { 'class': 'icono-boton sugerir__cerrar', type: 'button', 'aria-label': 'Cerrar' }, '×');
+    var abre = desde || document.activeElement;
+    var dlg = panel = h('dialog', { 'class': 'sugerir', 'aria-labelledby': 'panel-titulo' }, cerrar,
+      h('div', { 'class': 'sugerir__cuerpo' }, h('h2', { id: 'panel-titulo', texto: titulo }), nodos));
+    cerrar.addEventListener('click', function () { dlg.close(); });
+    dlg.addEventListener('click', function (e) { if (e.target === dlg) dlg.close(); });
+    dlg.addEventListener('close', function () { if (abre && abre.focus) abre.focus(); dlg.remove(); if (panel === dlg) panel = null; });
+    document.body.appendChild(dlg);
+    if (typeof dlg.showModal === 'function') dlg.showModal(); else dlg.setAttribute('open', '');
+  }
+
   document.addEventListener('click', function (e) {
     var a = e.target.closest ? e.target.closest('[data-sugerir]') : null;
     if (!a) return;
@@ -199,5 +214,5 @@ var Comun = (function () {
   });
   if (/[?&]sugerir=1\b/.test(location.search)) abrirSugerencia({ tipo: /[?&]tipo=sumar\b/.test(location.search) ? TIPO_SUMAR : '' }, document.body);
 
-  return { URL_INSTAGRAM: URL_INSTAGRAM, TIPOS: TIPOS, TIPO_SUMAR: TIPO_SUMAR, abrirSugerencia: abrirSugerencia };
+  return { URL_INSTAGRAM: URL_INSTAGRAM, TIPOS: TIPOS, TIPO_SUMAR: TIPO_SUMAR, abrirSugerencia: abrirSugerencia, abrirPanel: abrirPanel };
 })();

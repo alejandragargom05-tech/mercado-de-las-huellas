@@ -77,7 +77,7 @@
 .producto dl { margin: var(--e2) 0 0; }
 .producto dd.cifra { font-size: 1.0625rem; }
 .producto dd.viejo { color: var(--ambar); font-weight: 600; }
-.producto .acciones { display: flex; flex-direction: column; gap: var(--e3); margin-top: auto; padding-top: var(--e3); } /* aquí irá "Mismo producto, más barato" */
+.producto .acciones { display: flex; flex-direction: column; gap: var(--e3); margin-top: auto; padding-top: var(--e3); }
 .producto .acciones .boton { width: 100%; letter-spacing: 2px; text-align: center; }
 .producto .nota { margin: 0; font-size: .9375rem; }
 .producto .nota--ambar { color: var(--ambar); }
