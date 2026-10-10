@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 200" role="img" aria-labelledby="t d">
+<title id="t">Un gato y un perro dándose cariño</title><desc id="d">Un perro sentado y un gato apoyan la cabeza el uno contra el otro con los ojos cerrados; flotan unos corazones sobre ellos.</desc>
+<style>
+.l,.w,.v{stroke:#2B3CA0;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+.l{fill:none}.w{fill:#fff}.v{fill:#C8CBE8}
+.b{fill:#2B3CA0;stroke:none}
+.n{fill:none;stroke:#C8CBE8;stroke-width:2.5;stroke-linecap:round}
+.d{stroke-dasharray:1;stroke-dashoffset:1;animation:dibuja .9s ease-out forwards}
+@keyframes dibuja{to{stroke-dashoffset:0}}
+.cola{transform-box:fill-box;transform-origin:100% 100%;animation:cola 2.4s ease-in-out 1s infinite}
+@keyframes cola{0%,40%,100%{transform:rotate(0)}10%{transform:rotate(-14deg)}20%{transform:rotate(8deg)}30%{transform:rotate(-8deg)}}
+.cola-g{transform-box:fill-box;transform-origin:0 100%;animation:cola-g 3.4s ease-in-out 1s infinite}
+@keyframes cola-g{0%,50%,100%{transform:rotate(0)}15%{transform:rotate(10deg)}30%{transform:rotate(-6deg)}}
+.cora{transform-box:fill-box;transform-origin:50% 100%;animation:cora 2.8s ease-out infinite}
+.cora:nth-of-type(2){animation-delay:1.1s}
+@keyframes cora{0%{transform:translateY(8px) scale(.6);opacity:0}20%{opacity:1}70%,100%{transform:translateY(-10px) scale(1);opacity:0}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important}.d{stroke-dasharray:none;stroke-dashoffset:0}.cora{opacity:1}}
+</style>
+<path class="n" d="M16 186 H224"/>
+<g class="cola"><path class="l d" pathLength="1" d="M44 176 Q18 172 24 146"/></g>
+<path class="w d" pathLength="1" d="M40 186 Q28 142 62 120 Q84 108 106 120 Q124 142 118 186Z"/>
+<path class="l" d="M70 186 V164 M94 186 V164 M64 187 H78 M88 187 H102" style="stroke-width:2.4"/>
+<path class="w d" pathLength="1" d="M60 86 Q60 58 88 58 Q116 58 116 86 Q116 112 88 114 Q60 112 60 86Z"/>
+<path class="v d" pathLength="1" d="M64 68 Q42 72 44 100 Q58 104 68 86Z"/>
+<path class="l" d="M72 86 q6 5 12 0 M96 86 q6 5 12 0" style="stroke-width:2.4"/>
+<ellipse class="b" cx="90" cy="100" rx="5" ry="4"/>
+<path class="l" d="M90 104 v3 M90 107 q-5 4 -9 1 M90 107 q5 4 9 1" style="stroke-width:2.2"/>
+<g class="cola-g"><path class="l d" pathLength="1" d="M194 178 Q226 178 222 150 Q220 138 208 142"/></g>
+<path class="w d" pathLength="1" d="M122 186 Q116 152 142 136 Q168 126 188 142 Q202 162 196 186Z"/>
+<path class="l" d="M148 186 V170 M172 186 V170" style="stroke-width:2.4"/>
+<path class="w d" pathLength="1" d="M126 102 L126 72 L142 84 Q150 82 158 84 L174 72 L174 102 Q174 128 150 128 Q126 128 126 102Z" transform="rotate(-6 150 100)"/>
+<path class="l" d="M134 102 q5 4 10 0 M156 102 q5 4 10 0" style="stroke-width:2.4" transform="rotate(-6 150 100)"/>
+<path class="b" d="M147 109 h6 l-3 3.4z" transform="rotate(-6 150 100)"/>
+<path class="l" d="M176 108 l12 -3 M176 113 l12 2" style="stroke-width:1.6" transform="rotate(-6 150 100)"/>
+<path class="v cora" d="M118 56 C100 42 104 28 114 31 Q118 33 118 37 Q118 33 122 31 C132 28 136 42 118 56Z" style="stroke-width:2"/>
+<path class="v cora" d="M160 40 C148 30 150 20 157 22 Q160 23 160 26 Q160 23 163 22 C170 20 172 30 160 40Z" style="stroke-width:2"/>
+</svg>

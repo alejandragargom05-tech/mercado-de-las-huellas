@@ -33,6 +33,10 @@
   function img(archivo, alt, w, hh) {
     return h('img', { src: RUTA_IMG + archivo, alt: alt, width: w, height: hh });
   }
+  /* «por kg», «por ml»… y, para piezas sueltas, «por tapete», «por pañal»… */
+  var POR_PIEZA = { 'tapete': 'por tapete', 'tapete atrapa arena': 'por tapete', 'pañal': 'por pañal', 'paño': 'por paño', 'bolsa recolectora': 'por bolsa' };
+  function porUnidad(p) { return (p.unidad === 'unidad' && POR_PIEZA[p.subcategoria]) || H.UNIDADES[p.unidad]; }
+  var ICONO_MENSAJE = '<svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4.5h14a1.5 1.5 0 0 1 1.5 1.5v9a1.5 1.5 0 0 1-1.5 1.5h-8.5L6 20.5V16.5H5A1.5 1.5 0 0 1 3.5 15V6A1.5 1.5 0 0 1 5 4.5Z"/></svg>';
   function urlSegura(u) { return /^https?:\/\//i.test(u) ? u : null; }
 
   var HUELLA = '<svg viewBox="0 0 36 44" aria-hidden="true"><ellipse cx="18" cy="32" rx="11" ry="9"/><ellipse cx="6" cy="19" rx="4.5" ry="6" transform="rotate(-18 6 19)"/><ellipse cx="14" cy="10" rx="4.5" ry="6.5"/><ellipse cx="23" cy="10" rx="4.5" ry="6.5"/><ellipse cx="31" cy="19" rx="4.5" ry="6" transform="rotate(18 31 19)"/></svg>';
@@ -45,6 +49,13 @@
   }
   function botonAccion(texto, alClick) {
     var b = h('button', { 'class': 'boton', type: 'button', texto: texto });
+    b.addEventListener('click', alClick);
+    return b;
+  }
+  function botonSugerir(alClick) {
+    var b = h('button', { 'class': 'boton boton--icono', type: 'button' });
+    b.innerHTML = ICONO_MENSAJE;
+    b.appendChild(h('span', { texto: 'Sugiere un producto' }));
     b.addEventListener('click', alClick);
     return b;
   }
@@ -78,7 +89,7 @@
       if (estado.estricto && q) botones.appendChild(botonAccion('Ver en todas las categorías', function () { estado.estricto = false; refrescar(); }));
       botones.appendChild(botonAccion('Quitar filtros', quitarFiltros));
       var sugerir = h('div', { 'class': 'estado__sugerir' }, h('p', { texto: '¿No encuentras lo que buscas? Cuéntanos' }),
-        botonAccion('Sugiere un producto', function () { Comun.abrirSugerencia({ tipo: Comun.TIPOS[0], detalle: q }, this); }));
+        botonSugerir(function () { Comun.abrirSugerencia({ tipo: Comun.TIPOS[0], detalle: q }, this); }));
       t = h('div', { 'class': 'tarjeta estado', role: 'status' },
         img('camas.svg', 'Gato durmiendo en su cama', 160, 133),
         h('p', { 'class': 'titulo-estado', texto: que }),
@@ -190,40 +201,36 @@
     return h('div', { 'class': 'fila' }, h('dt', { texto: clave }), h('dd', extra ? { 'class': extra, texto: valor } : { texto: valor }));
   }
 
-  /* Foto enlazada desde la tienda; si no hay o falla, la ilustración de su categoría. */
-  function miniatura(p) {
+  /* Foto enlazada desde la tienda, cuadrada y sin recortar; si no hay o falla, la ilustración de su categoría. */
+  function foto(p) {
     var cat = H.categoria(p.categoria), ilus = RUTA_IMG + cat.img;
     var altIlus = 'Ilustración de ' + cat.etiqueta.toLowerCase();
-    var f = h('img', { 'class': 'miniatura' + (p.imagen ? '' : ' miniatura--ilustracion'), src: p.imagen || ilus,
-      alt: p.imagen ? 'Foto de ' + p.producto : altIlus, width: 88, height: 88, loading: 'lazy', decoding: 'async', referrerpolicy: 'no-referrer' });
+    var f = h('img', { 'class': 'foto__img' + (p.imagen ? '' : ' foto__img--ilustracion'), src: p.imagen || ilus,
+      alt: p.imagen ? 'Foto de ' + p.producto : altIlus, width: 400, height: 400, loading: 'lazy', decoding: 'async', referrerpolicy: 'no-referrer' });
     f.addEventListener('error', function () {
-      f.classList.add('miniatura--ilustracion'); f.alt = altIlus; f.src = ilus;
+      f.classList.add('foto__img--ilustracion'); f.alt = altIlus; f.src = ilus;
     }, { once: true });
-    return f;
+    return h('div', { 'class': 'foto' }, f);
   }
 
-  /* Tarjeta de producto: insignia, tienda, precio por unidad, nombre y foto, datos y botón. */
+  /* Tarjeta de producto: foto arriba; debajo insignia, tienda, nombre, precio real, precio por unidad, datos y botón. */
   function tarjeta(g, o) {
     var p = o.producto;
     var ins = h('div', { 'class': 'insignias' });
     if (p.emprendimiento) ins.appendChild(h('span', { 'class': 'insignia insignia--local', texto: 'Emprendimiento colombiano' }));
-    if (o.masBarata) ins.appendChild(h('span', { 'class': 'insignia insignia--barata', texto: 'La más barata' }));
+    if (o.masBarata) ins.appendChild(h('span', { 'class': 'insignia insignia--barata', texto: 'La más barata ' + (porUnidad(p) || '') }));
     if (o.advertencia) ins.appendChild(h('span', { 'class': 'insignia insignia--vieja',
       texto: o.edad === null ? 'Precio de fecha desconocida' : 'Precio de hace ' + o.edad + ' días' }));
 
-    var unidad = p.precioUnidad !== null
-      ? h('div', { 'class': 'unidad cifra' }, H.formatoPesos(p.precioUnidad), h('small', { texto: H.UNIDADES[p.unidad] }))
-      : h('div', { 'class': 'unidad sin-unidad' }, h('small', { texto: 'Sin precio por unidad' }));
-    var cabeza = h('div', { 'class': 'cabeza' },
-      h('div', null, h('p', { 'class': 'tienda', texto: p.tienda }), unidad, h('p', { 'class': 'nombre', texto: p.producto })),
-      miniatura(p));
+    var porU = p.precioUnidad !== null
+      ? h('p', { 'class': 'precio-unidad cifra' }, H.formatoPesos(p.precioUnidad) + ' ', h('span', { texto: porUnidad(p) }))
+      : h('p', { 'class': 'precio-unidad sin-unidad', texto: 'Sin precio por unidad' });
 
     var cantidad = H.textoCantidad(p) + (p.caracteristica ? ' · ' + p.caracteristica : '');
     var fecha = (H.fechaLarga(p.fecha) || 'Fecha desconocida') + (o.edad === null ? '' : ' (' + H.textoEdad(o.edad) + ')');
     var dl = h('dl', null,
       p.marca ? filaDato('Marca', p.marca) : null,
       filaDato('Cantidad', cantidad),
-      filaDato('Precio total', H.formatoPesos(p.precio), 'cifra'),
       filaDato('Fecha', fecha, o.advertencia ? 'viejo' : ''));
 
     var notas = [];
@@ -236,7 +243,12 @@
     var acciones = h('div', { 'class': 'acciones' },
       url ? h('a', { 'class': 'boton', href: url, target: '_blank', rel: 'noopener noreferrer' },
         'Ir a ' + p.tienda + ' ', h('span', { 'aria-hidden': 'true', texto: '↗' }), h('span', { 'class': 'solo-lectores', texto: '(se abre en una pestaña nueva)' })) : null);
-    return h('article', { 'class': 'tarjeta producto' + (o.masBarata ? ' producto--barata' : '') }, ins, cabeza, dl, notas, acciones);
+    var cuerpo = h('div', { 'class': 'producto__cuerpo' }, ins,
+      h('p', { 'class': 'tienda', texto: p.tienda }),
+      h('p', { 'class': 'nombre', texto: p.producto }),
+      h('p', { 'class': 'precio cifra', texto: H.formatoPesos(p.precio) }),
+      porU, dl, notas, acciones);
+    return h('article', { 'class': 'tarjeta producto' + (o.masBarata ? ' producto--barata' : '') }, foto(p), cuerpo);
   }
 
   function notaGrupo(g) {
@@ -285,10 +297,11 @@
         if (x.i >= estado.limite) { estado.limite = x.i + 1; dibujar(); }
       });
       el.resumen.appendChild(h('div', { 'class': 'tarjeta' },
-        h('span', { 'class': 'insignia insignia--barata', texto: 'La más barata' }),
+        h('span', { 'class': 'insignia insignia--barata', texto: 'La más barata ' + (porUnidad(p) || '') }),
         h('span', { 'class': 'etiqueta', texto: tituloGrupo(x.g) }),
         h('p', { 'class': 'tienda', texto: p.tienda }),
-        h('div', { 'class': 'cifra' }, H.formatoPesos(p.precioUnidad) + ' ', h('small', { texto: H.UNIDADES[p.unidad] })),
+        h('p', { 'class': 'precio cifra', texto: H.formatoPesos(p.precio) }),
+        h('p', { 'class': 'precio-unidad cifra' }, H.formatoPesos(p.precioUnidad) + ' ', h('span', { texto: porUnidad(p) })),
         h('p', { texto: p.producto }),
         h('p', { 'class': 'apoyo', texto: H.textoCantidad(p) }),
         h('p', null, enlace)));
@@ -441,6 +454,18 @@
     refrescar();
     $('filtros').scrollIntoView({ behavior: 'smooth', block: 'start' });
   });
+
+  /* Escena con historia: se reproduce una vez al cargar y otra vez al tocarla. Con movimiento reducido queda la escena final, quieta. */
+  var escena = $('historia'), reducido = window.matchMedia ? matchMedia('(prefers-reduced-motion: reduce)') : null;
+  function reproducirEscena() {
+    var svg = escena.querySelector('svg');
+    if (reducido && reducido.matches) return;
+    svg.classList.remove('anima');
+    void svg.getBoundingClientRect(); // reinicia la animación
+    svg.classList.add('anima');
+  }
+  escena.addEventListener('click', reproducirEscena);
+  reproducirEscena();
 
   cargar();
 })();

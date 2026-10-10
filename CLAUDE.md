@@ -8,10 +8,10 @@ Web que compara precios de productos y accesorios para gatos y perros entre tien
 - Todo el texto en español de Colombia. Precios en pesos colombianos con formato `$ 45.900`.
 - Diseño primero para celular (mobile first).
 - Los datos viven en `data/precios.csv` y se leen en el navegador. Nunca inventes ni edites precios a mano.
-- Cada precio muestra tienda y fecha.
+- Cada precio muestra tienda y fecha. El número grande de la tarjeta es el precio real del producto como se vende; el precio por unidad de medida va debajo, más pequeño.
 - Las fotos se enlazan desde la tienda (columna `imagen` del CSV, URL tal como la publica la tienda); nunca se descargan ni se copian al repositorio. La tarjeta siempre lleva a esa tienda.
 - Los precios deben estar siempre al día: se actualizan solos cada día, tienda por tienda, y la web muestra la fecha y hora de la última actualización.
-- Catálogo, una categoría por chip (cada una con su ilustración en `assets/ilustraciones/`):
+- Catálogo, una categoría por chip (cada una con su ilustración en `assets/ilustraciones/`; los chips y los resultados van en orden de demanda: Concentrado, Arena, Higiene, Paseo, Juguetes, Comederos, Camas, Rascadores, Transporte, Ropa, Rastreo). Ninguna categoría visible puede quedar vacía; el color o estampado del nombre nunca decide la categoría:
   - Concentrado: alimento seco para perros y gatos (croquetas).
   - Arena y areneras: arena, areneras, palas y bolsas para arenero.
   - Rascadores y gimnasios.

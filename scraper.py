@@ -376,7 +376,7 @@ RE_COMIDA = re.compile(r"alimento|concentrado|croqueta|comida")  # no aplica a c
 RE_OTROS = re.compile(r"\bkit\b|combo|talco|amarre")
 RE_OTRA_ESPECIE = re.compile(  # solo si el nombre no menciona perro ni gato
     r"hamster|pajaro|\bloro|acuario|pecera|conejo|roedor|\bcuy|huron|reptil|tortuga|canario|periquito|cobaya|"
-    r"\bpeces\b|\baves\b|caballo|equino|bovino|porcino"
+    r"\bpercha|jaula para (?:ave|loro|pajaro)|\bpeces\b|\baves\b|caballo|equino|bovino|porcino"
 )
 
 # Concentrado (alimento seco). Solo entra si el nombre lo dice o es de una marca conocida con peso en kg/lb.
@@ -489,12 +489,13 @@ REGLAS = [
     R("paseo", "bolsa recolectora", r"\bbolsas?\b.*(?:recolector|recogedor|popo|heces|excremento|caca|paseo|desecho|biodegradable)|"
       r"(?:recolector|popo|heces|excremento)\w*.*\bbolsas?\b|\bbolsitas?\b|\bbolsas? (?:para|de) mascotas?"),
     R("paseo", "recogedor", r"recogedor|(?:pala|palita).*(?:popo|heces|excremento|caca)|(?:popo|heces|excremento|caca).*(?:pala|palita)|pooper", r"\barena\b|arener|\bbolsas?\b"),
+    # Eliminadores de olores: aunque digan «para arenera», son higiene
+    R("higiene", "eliminador", r"eliminador|removedor|neutralizador|destructor de olores|quita ?manchas", r"^arena\b"),
     # Arena y areneras
     R("arena", "bolsa para arenero", r"\bbolsas?\s+(?:para|de)\s+(?:el\s+)?(?:arener[oa]|caja)|\bliners?\b"),
     R("arena", "pala", r"\bpalas?\b|scooper"),
     R("arena", "arenera", r"arener[oa]s?|caja (?:de )?(?:arena|sanitaria)|baul sanitario|bandeja sanitaria|litter ?box|inodoro"),
     # Higiene y aseo
-    R("higiene", "eliminador", r"eliminador|removedor|neutralizador|destructor de olores|quita ?manchas", r"^arena\b"),
     R("higiene", "paño", r"\bpan(?:o|ito)s?\b.*humed|humed.*\bpan(?:o|ito)s?\b|toallitas|\bwipes?\b"),
     R("higiene", "shampoo", r"shampoo|champu"),
     R("higiene", "limpieza dental", r"cepillo.*(?:dient|dental)|(?:dient|dental).*cepillo|pasta dental|crema dental|gel dental|"
@@ -503,7 +504,7 @@ REGLAS = [
     R("higiene", "cepillo", r"cepillo|furminator|rastrillo|\bcarda\b|deslanador|guante.*(?:cepill|aseo|bano)", r"juguete"),
     R("higiene", "peine", r"peine|peinilla|peinador"),
     R("higiene", "colonia", r"colonia|perfume|locion|fragancia|splash|desodorante|body mist", r"\barenas?\b"),
-    R("higiene", "tapete", r"tapete|empapador|\bpads?\b", r"juguete|petstages|scratch|lick|lamid|comedero|plato|rasc|cama|termic|refresc|yoga"),
+    R("higiene", "tapete", r"tapete|empapador|\bpads?\b", r"juguete|petstages|scratch|lick|lamid|comedero|plato|rasc|cama|termic|refresc|yoga|cobija|manta|colchon|descanso"),
     R("higiene", "pañal", r"\bpanal\w*"),
     R("arena", "arena", r"\barenas?\b"),
     # Transporte y seguridad
@@ -516,7 +517,7 @@ REGLAS = [
     R("transporte", "morral", r"morral|\btula\b"),
     R("transporte", "guacal", r"guacal|kennel|jaula|transportador|carrier"),
     # Rascadores
-    R("rascadores", "gimnasio", r"gimnasio|\bgym\b|torre para gato|arbol para gato|cat tower"),
+    R("rascadores", "gimnasio", r"gimnasio|\bgym\b|torre para gato|arbol para gato|cat tower", r"^juguete"),
     R("rascadores", "rascador", r"rascador|scratch"),
     R("rascadores", "poste", r"\bpostes?\b"),
     # Comederos y bebederos
@@ -588,9 +589,22 @@ def buscar_regla(n):
     return None, None
 
 
+COLORES = (r"azul|verde|gris|rosa|rosado|rojo|negro|blanco|amarillo|naranja|morado|lila|beige|cafe|marron|crema|"
+           r"vino|mostaza|turquesa|celeste|claro|oscuro|tierra|dorado|plateado|camel|taupe|caqui|khaki")
+RE_COLOR = re.compile(
+    r"\bcolor(?:es)?\s+\w+(?:\s+(?:y|con)\s+\w+)?|"                      # «color arena», «color hueso y gris»
+    r"\b(?:%s)\s+(?:arena|hueso)\b|\b(?:arena|hueso)\s+(?:%s)\b|"         # «verde arena», «arena claro»
+    r"(?:^|\s)[-/]\s*(?:arena|hueso)\s*(?:[-/]|$)" % (COLORES, COLORES))     # variante final: «… - Arena»
+
+
+def sin_color(n):
+    """Quita del nombre los colores que chocan con palabras de categoría (arena, hueso): el color nunca decide la categoría."""
+    return re.sub(r"\s+", " ", RE_COLOR.sub(" ", n)).strip()
+
+
 def clasificar(nombre, extra, marca=""):
     """Devuelve (categoría, subcategoría, especie, marca de concentrado); todo None si el producto no entra."""
-    n, e = norm(nombre).replace("la casa del granjero", " "), norm(extra)  # algunas tiendas añaden su nombre al título
+    n, e = sin_color(norm(nombre).replace("la casa del granjero", " ")), norm(extra)  # algunas tiendas añaden su nombre al título
     conc, marca_c, esp_fija = es_concentrado(n, marca)
     sub = ""
     if conc:

@@ -51,5 +51,5 @@ Pet Outlet,tienda,https://petoutlet.com.co,woocommerce,aprobada,WooCommerce resp
 Mascotas Pet Shop,tienda,https://mascotaspetshop.com.co,woocommerce,aprobada,WooCommerce responde JSON y robots.txt lo permite,2026-10-09
 Petopet,tienda,https://petopet.com.co,,bloqueada por términos de uso,"los términos de uso prohíben la lectura automática: «phish, pharm, pretexto, araña»",2026-10-09
 Petentrega,tienda,https://www.petentrega.com.co,,sin catálogo público,no se pudo leer robots.txt (sin conexión),2026-10-09
-Eco Vet,tienda,https://www.ecovet.com.co,,sin catálogo público,"ni VTEX, Shopify ni WooCommerce responden JSON, y las páginas de producto no traen datos estructurados con precio",2026-10-09
+Eco Vet,tienda,https://www.ecovet.com.co,woocommerce,aprobada,WooCommerce responde JSON y robots.txt lo permite,2026-10-09
 Primepet,tienda,https://www.primepet.com.co,jsonld,aprobada,sitemap con datos estructurados de producto (JSON-LD) y robots.txt lo permite,2026-10-09

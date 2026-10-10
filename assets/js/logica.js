@@ -6,17 +6,18 @@ var Huellas = (function () {
   var DIAS_ADVERTENCIA = 7;
   var DIAS_MAXIMO = 30;
 
+  /* Orden por demanda: de lo que más se compra a lo que menos. Los chips y los resultados lo siguen. */
   var CATEGORIAS = [
     { id: 'concentrado', etiqueta: 'Concentrado', img: 'concentrado.svg' },
     { id: 'arena', etiqueta: 'Arena y areneras', img: 'arena-sanitaria.svg' },
-    { id: 'rascadores', etiqueta: 'Rascadores y gimnasios', img: 'gimnasios-rascadores.svg' },
-    { id: 'comederos', etiqueta: 'Comederos y bebederos', img: 'fuentes-comederos.svg' },
-    { id: 'paseo', etiqueta: 'Paseo', img: 'arneses-correas.svg' },
-    { id: 'camas', etiqueta: 'Camas y descanso', img: 'camas.svg' },
-    { id: 'juguetes', etiqueta: 'Juguetes', img: 'juguetes-interactivos.svg' },
     { id: 'higiene', etiqueta: 'Higiene y aseo', img: 'shampoo-panos.svg' },
-    { id: 'ropa', etiqueta: 'Ropa', img: 'ropa.svg' },
+    { id: 'paseo', etiqueta: 'Paseo', img: 'arneses-correas.svg' },
+    { id: 'juguetes', etiqueta: 'Juguetes', img: 'juguetes-interactivos.svg' },
+    { id: 'comederos', etiqueta: 'Comederos y bebederos', img: 'fuentes-comederos.svg' },
+    { id: 'camas', etiqueta: 'Camas y descanso', img: 'camas.svg' },
+    { id: 'rascadores', etiqueta: 'Rascadores y gimnasios', img: 'gimnasios-rascadores.svg' },
     { id: 'transporte', etiqueta: 'Transporte y seguridad', img: 'bolsos-transportadores.svg' },
+    { id: 'ropa', etiqueta: 'Ropa', img: 'ropa.svg' },
     { id: 'rastreo', etiqueta: 'Rastreo e identificación', img: 'rastreo.svg' }
   ];
   var ESPECIES = [

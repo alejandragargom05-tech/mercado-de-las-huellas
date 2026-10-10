@@ -39,7 +39,7 @@ Reglas:
 
 ## Forma y estructura
 - Secciones separadas por ondas suaves; bajo cada titular, un trazo ondulado dibujado a mano.
-- El fondo crema puede llevar ramas de olivo en lavanda muy tenue.
+- Sin ramas de olivo ni casitas de fondo: la decoración son nuestras ilustraciones de mascotas (ver Filtros y decoración).
 - Pie de página azul con una onda de entrada. Siempre lleva el aviso: "Mercado de las Huellas compara precios; no reemplaza la recomendación de tu veterinario".
 - Menú con etiquetas en mayúsculas espaciadas; la sección activa se subraya con un trazo ondulado azul.
 - Botones principales: píldoras azules, texto blanco en mayúsculas espaciadas.
@@ -102,7 +102,7 @@ Cada categoría del catálogo tiene su ilustración en `assets/ilustraciones/`, 
 - Buscador fijo arriba. Chips de especie y de categoría (con su ilustración), desplazables, de al menos 44 px.
 - Arriba de los resultados, un resumen con la opción más barata de cada grupo.
 - Barra superior fija y delgada: a la izquierda el logo (ilustración de 56 px y el nombre en la letra rotulada); a la derecha el interruptor de modo claro u oscuro y el enlace a Instagram (ícono, texto accesible, pestaña nueva). El enlace vive en una sola constante (`URL_INSTAGRAM` en `assets/js/comun.js`, que usan todas las páginas).
-- Tarjeta con orden de lectura fijo: insignia "La más barata" (solo si aplica), tienda en negrita, precio por unidad grande con su unidad, nombre del producto, foto cuadrada de 88 px al lado (fondo blanco, `object-fit: contain`, carga diferida; si falta o falla, la ilustración de su categoría), lista corta de datos (marca, cantidad, precio total, fecha; cifras a la derecha) y botón "IR A [TIENDA] ↗" en pestaña nueva. Queda espacio para el botón "Mismo producto, más barato".
+- Tarjeta con orden de lectura fijo: foto arriba a todo el ancho (cuadrada, fondo blanco, `object-fit: contain`, carga diferida, tamaño reservado; si falta o falla, la ilustración de su categoría), insignia "La más barata por kg" (o por ml, por unidad, por tapete…; solo si aplica), tienda en negrita, nombre, **precio real del paquete o artículo** en grande (p. ej. $ 65.900), debajo y más pequeño el precio por unidad de medida (p. ej. "$ 3.295 por kg"), lista corta de datos (marca, cantidad, fecha; cifras a la derecha) y botón "IR A [TIENDA] ↗" en pestaña nueva. «Hallazgos del día» sigue la misma jerarquía de precios. Queda espacio para el botón "Mismo producto, más barato".
 - La tarjeta más barata lleva borde verde oliva.
 - Búsqueda: entiende sinónimos colombianos (`data/sinonimos.json`), singular y plural, tildes y errores de una o dos letras, y lo dice arriba de los resultados. Si el filtro activo no da resultados, muestra los de otras categorías con un aviso y un botón para volver al filtro; el filtro activo siempre se ve marcado (borde, relleno suave y ✓).
 - Insignias "La más barata" y "Precio de hace X días".
@@ -111,12 +111,14 @@ Cada categoría del catálogo tiene su ilustración en `assets/ilustraciones/`, 
 
 ## Filtros
 - Chip activo: azul de la marca con check, nunca verde. Cada filtro va con su título en una tarjeta suave. En escritorio los chips se ven todos (varias filas); en celular se desplazan con scroll-snap, degradado en el borde y flechas.
-- Decoración (olivo, casitas, mascota sobre la onda): lavanda tenue, `aria-hidden`, sin clics, quieta con `prefers-reduced-motion`; menos y más pequeña en celular.
+- Decoración: nuestras ilustraciones de mascotas asoman entre secciones, junto a los títulos y en los bordes; sin cajas blancas (en claro se funden con el fondo; en oscuro, líneas aclaradas), discretas, `aria-hidden`, sin clics, menos y más pequeñas en celular.
+- Encabezado: el titular va en una sola línea desde tablet; a su lado, `gato-y-perro-carino.svg`. Bajo el buscador, una escena animada (≈4 s, SVG y CSS) en que un perro persigue a un gato, el gato frena, se eriza y le da un manotazo, y el perro se sienta sorprendido; suena una vez al cargar, se repite al tocarla y con `prefers-reduced-motion` queda la escena final quieta.
+- Una sola escala de espacios (`--e1` a `--e7`, de 4 a 48 px). Ningún elemento se sale de su tarjeta ni de la pantalla; las filas de chips se acomodan en varias líneas desde tablet.
 - Logo: mascota dentro de un arco cicládico en línea azul (`assets/ilustraciones/logo.svg`, también favicon), sin caja blanca.
 
 ## Pie, formulario y páginas de texto
-- **Pie** (azul de la marca, con onda de entrada): logo arriba y cuatro columnas con título: «Explora» (cada categoría; activa su filtro), «Para quién» (Gatos, Perros, Para los dos), «Ayuda» (botón «Sugiere un producto» y «Cómo comparamos los precios») y «Síguenos» (Instagram). Abajo: «© 2026 Mercado de las Huellas», el aviso del veterinario y «Cómo funciona y privacidad». En celular las columnas se apilan.
+- **Pie** (azul de la marca, con onda de entrada): logo arriba y cuatro columnas con título: «Explora» (cada categoría; activa su filtro), «Para quién» (Gatos, Perros, Para los dos), «Ayuda» (botón blanco con texto azul, ícono de mensaje y «Sugiere un producto»; «¿Tienes una tienda? Súmate» y «Cómo comparamos los precios», cada uno con su ícono) y «Síguenos» (Instagram). Abajo: «© 2026 Mercado de las Huellas», el aviso del veterinario y «Cómo funciona y privacidad». En celular las columnas se apilan.
 - **Sugerencias:** formulario corto dentro de la página (`<dialog>`), sin pedir correo, nombre ni cuenta. Tipo (Un producto que no encontré, Una tienda que falta, Un precio que no cuadra, Otra idea), detalle (máx. 500 caracteres), para quién (opcional) y enlace (opcional). Va a un Google Form (constantes `URL_FORMULARIO` y `ENTRADAS` en `assets/js/comun.js`) con un campo trampa oculto contra spam, mensaje de gracias y mensaje claro si falla.
 - **`como-funciona.html`:** corta y con la misma marca: de dónde salen los precios, cómo comparamos, que enlazamos a cada tienda y que las sugerencias son anónimas.
-- **Categorías y chips:** Concentrado, Arena y areneras, Rascadores y gimnasios, Comederos y bebederos, Paseo, Camas y descanso, Juguetes, Higiene y aseo, Ropa, Transporte y seguridad y Rastreo e identificación; cada chip lleva su ilustración (`ropa.svg`: perro con su saco de lana junto a un abrigo colgado). Al elegir una categoría con más de una subcategoría aparece debajo la fila «¿Qué tipo?» con chips solo de texto.
+- **Categorías y chips** (en orden de demanda, y los resultados de «Todas las categorías» siguen el mismo orden): Concentrado, Arena y areneras, Higiene y aseo, Paseo, Juguetes, Comederos y bebederos, Camas y descanso, Rascadores y gimnasios, Transporte y seguridad, Ropa y Rastreo e identificación; cada chip lleva su ilustración (`ropa.svg`: perro con su saco de lana junto a un abrigo colgado). Al elegir una categoría con más de una subcategoría aparece debajo la fila «¿Qué tipo?» con chips solo de texto.
 - **Concentrado y Rastreo** tienen su ilustración (`concentrado.svg`: perro y gato junto a su plato; `rastreo.svg`: perro con su placa y su GPS).
