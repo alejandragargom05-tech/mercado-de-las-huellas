@@ -303,10 +303,10 @@ body { background: transparent; }
 .fondo { position: fixed; inset: 0; z-index: -1; overflow: hidden; pointer-events: none; user-select: none; }
 .fondo i {
   position: absolute; left: var(--x); top: var(--y); width: clamp(110px, 15vw, 210px); aspect-ratio: 5 / 4;
-  background: #C8CBE8; opacity: .07; transform: rotate(var(--r));
+  background: #2B3CA0; opacity: .01; transform: rotate(var(--r));
   -webkit-mask: var(--m) center / contain no-repeat; mask: var(--m) center / contain no-repeat;
 }
-:root[data-tema="oscuro"] .fondo i { opacity: .1; }
+:root[data-tema="oscuro"] .fondo i { background: #C8CBE8; opacity: .1; }
 @media (max-width: 719px) { .fondo i { width: clamp(90px, 28vw, 130px); } }
 .fondo i:nth-child(1) { --m: url("../ilustraciones/momentos/gato-pancito.svg"); --x: 4%; --y: 5%; --r: -8deg; }
 .fondo i:nth-child(2) { --m: url("../ilustraciones/momentos/si-quepo-me-siento.svg"); --x: 32%; --y: 2%; --r: 6deg; }
