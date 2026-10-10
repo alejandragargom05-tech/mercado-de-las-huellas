@@ -92,7 +92,7 @@ var Huellas = (function () {
       var carac = normalizar(r.caracteristica) === 'sin especificar' ? '' : r.caracteristica;
       var nombreN = normalizar(r.producto);
       out.push({
-        fecha: r.fecha, tienda: r.tienda, categoria: cat.id, especie: r.especie,
+        fecha: r.fecha, tienda: r.tienda, emprendimiento: r.tipo_tienda === 'emprendimiento', categoria: cat.id, especie: r.especie,
         producto: r.producto, marca: r.marca, linea: r.linea || '', caracteristica: carac, subcategoria: r.subcategoria || '',
         cantidad: cantidad, unidad: unidad, precio: precio, precioUnidad: pu, url: r.url,
         imagen: /^https?:\/\//i.test(r.imagen || '') ? r.imagen : '',
@@ -263,7 +263,7 @@ var Huellas = (function () {
     return mejor;
   }
 
-  function coincidencias(productos, interpretacion, especieId, categoriaId, marcaId, subId) {
+  function coincidencias(productos, interpretacion, especieId, categoriaId, marcaId, subId, soloLocal) {
     var cond = interpretacion.condiciones, frase = interpretacion.frase;
     var lista = [];
     productos.forEach(function (p) {
@@ -271,6 +271,7 @@ var Huellas = (function () {
       if (categoriaId && p.categoria !== categoriaId) return;
       if (marcaId && p.marca !== marcaId) return;
       if (subId && p.subcategoria !== subId) return;
+      if (soloLocal && !p.emprendimiento) return;
       var total = 0;
       for (var i = 0; i < cond.length; i++) {
         var s = puntajeDe(p, cond[i]);
@@ -291,11 +292,11 @@ var Huellas = (function () {
     var texto = f.texto || '';
     var inter = texto.trim() ? interpretar(productos, texto) : { condiciones: [], avisos: { sinonimos: [], correcciones: [], dijo: '' } };
     inter.frase = inter.condiciones.length > 1 ? normalizar(texto) : '';
-    var lista = coincidencias(productos, inter, f.especie, f.categoria, f.marca, f.subcategoria), ampliada = null;
+    var lista = coincidencias(productos, inter, f.especie, f.categoria, f.marca, f.subcategoria, f.local), ampliada = null;
     if (!lista.length && inter.condiciones.length && (f.especie || f.categoria) && !f.estricto) {
-      var otra = f.categoria ? coincidencias(productos, inter, f.especie, '', '') : [];
+      var otra = f.categoria ? coincidencias(productos, inter, f.especie, '', '', '', f.local) : [];
       var quitoEspecie = false;
-      if (!otra.length) { otra = coincidencias(productos, inter, '', '', ''); quitoEspecie = !!f.especie; }
+      if (!otra.length) { otra = coincidencias(productos, inter, '', '', '', '', f.local); quitoEspecie = !!f.especie; }
       if (otra.length) {
         lista = otra;
         var dentro = [];

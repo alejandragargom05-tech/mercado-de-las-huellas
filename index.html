@@ -77,6 +77,10 @@ try { var t = localStorage.getItem('tema'); if (t === 'claro' || t === 'oscuro')
           <h2 class="filtro__titulo" id="t-especie">¿Para quién es?</h2>
           <div class="chips-envoltorio"><div class="chips" id="chips-especie"></div></div>
         </div>
+        <div class="filtro" role="group" aria-labelledby="t-local">
+          <h2 class="filtro__titulo" id="t-local">Apoya lo local</h2>
+          <div class="chips-envoltorio"><div class="chips" id="chips-local"></div></div>
+        </div>
         <div class="filtro" role="group" aria-labelledby="t-categoria">
           <h2 class="filtro__titulo" id="t-categoria">¿Qué necesita hoy?</h2>
           <div class="chips-envoltorio" id="envoltorio-categoria">
@@ -138,6 +142,7 @@ try { var t = localStorage.getItem('tema'); if (t === 'claro' || t === 'oscuro')
         <li><a href="./?especie=ambos#filtros" data-especie="ambos">Para los dos</a></li></ul></nav>
       <nav aria-labelledby="pie-ayuda"><h2 class="pie__titulo" id="pie-ayuda">Ayuda</h2><ul>
         <li><a class="boton boton--pie" href="./?sugerir=1" data-sugerir>Sugiere un producto</a></li>
+        <li><a href="./?sugerir=1&amp;tipo=sumar" data-sugerir data-tipo="sumar">¿Tienes una tienda? Súmate</a></li>
         <li><a href="como-funciona.html#como-comparamos">Cómo comparamos los precios</a></li></ul></nav>
       <nav aria-labelledby="pie-sigue"><h2 class="pie__titulo" id="pie-sigue">Síguenos</h2><ul>
         <li><a data-instagram target="_blank" rel="noopener">Instagram<span class="solo-lectores"> (se abre en una pestaña nueva)</span></a></li></ul></nav>

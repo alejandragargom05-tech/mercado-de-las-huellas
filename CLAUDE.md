@@ -37,8 +37,11 @@ Web que compara precios de productos y accesorios para gatos y perros entre tien
 - Filtros por especie (Gatos, Perros, Ambos) y por categoría.
 - La búsqueda usa `data/sinonimos.json` (palabras que se usan en Colombia, por categoría o por grupo de subcategorías); amplíalo cuando aparezcan variantes nuevas.
 - Siempre visible: "Mercado de las Huellas compara precios; no reemplaza la recomendación de tu veterinario".
+- Cómo se leen los catálogos (`scraper.py`), solo si `robots.txt` y los términos de uso lo permiten: VTEX, Shopify, WooCommerce (`/wp-json/wc/store/v1/products`) y, si no hay ninguno, el sitemap con los datos estructurados de producto (JSON-LD de schema.org). Sin navegadores ni simular personas; 1,5 s entre consultas. Si `robots.txt` cierra la API de una tienda, no se rodea leyendo sus páginas. Productos con variantes de distinto precio que la fuente no separa se omiten.
+- Cada tienda tiene un `tipo` en `data/tiendas.csv` (cadena, tienda o emprendimiento; sale del encabezado de su sección en `TIENDAS.md`) y `precios.csv` lo trae como `tipo_tienda`. Las de tipo emprendimiento llevan la insignia «Emprendimiento colombiano» y el filtro «Apoya lo local»; la insignia nunca cambia el orden por precio.
+- Crecimiento automático: `scripts/descubrir_tiendas.py` prueba las tiendas de `data/tiendas-candidatas.csv` y las respuestas «Quiero sumar mi tienda» de la hoja del formulario; deja cada una aprobada, bloqueada (robots.txt o términos de uso) o sin catálogo público, con su motivo. Se programa cada semana.
 - La lista de tiendas no es cerrada: el proyecto debe seguir buscando tiendas de mascotas de Colombia competitivas en precio que no estén en la lista.
 - Tiendas, distribuidores y marcas a buscar (Trixie, Chuckit): ver `TIENDAS.md`.
 - Identidad visual y de voz: ver `BRAND.md`. Toda pantalla debe seguirlo (colores, tipografía, ilustraciones, voz y movimiento). La referencia visual es `brand.html`.
 
-- Sugerencias de la gente: formulario anónimo (sin correo, nombre ni cuenta) que envía a un Google Form; sus constantes están en `assets/js/comun.js`.
+- Sugerencias de la gente: formulario anónimo (sin correo, nombre ni cuenta) que envía a un Google Form; sus constantes están en `assets/js/comun.js`. Los campos cuyo `entry.*` aún no está conectado no se muestran ni se envían; «Quiero sumar mi tienda» pide el enlace de la tienda cuando esa pregunta exista.

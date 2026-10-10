@@ -1,0 +1,14 @@
+tienda,url,tipo,origen,estado,motivo,fecha_revision
+Welpe,https://welpeshop.com,emprendimiento,búsqueda web 2026-10-09,aprobada,Shopify responde JSON y robots.txt lo permite,2026-10-09
+WUFTREK,https://wuftrek.com,emprendimiento,búsqueda web 2026-10-09,aprobada,Shopify responde JSON y robots.txt lo permite,2026-10-09
+Animal Store Mascotas,https://animalstoremascotas.com,emprendimiento,búsqueda web 2026-10-09,aprobada,Shopify responde JSON y robots.txt lo permite,2026-10-09
+Avisalpets,https://avisalpets.com.co,emprendimiento,búsqueda web 2026-10-09,bloqueada por términos de uso,"los términos de uso prohíben la lectura automática: «no intentará interferir de ninguna manera con el funcionamiento del sitio web, que no transmitir ningún virus, que no utilizará ninguna araña»",2026-10-09
+Pelusas Pet,https://pelusas-pet.com,emprendimiento,búsqueda web 2026-10-09,sin catálogo público,"ni VTEX, Shopify ni WooCommerce responden JSON, y las páginas de producto no traen datos estructurados con precio",2026-10-09
+MariaCe Posada Pets,https://mariaceposada.com,emprendimiento,búsqueda web 2026-10-09,aprobada,Shopify responde JSON y robots.txt lo permite,2026-10-09
+Cuore Pets,https://cuorepets.com,tienda,búsqueda web 2026-10-09,aprobada,Shopify responde JSON y robots.txt lo permite,2026-10-09
+Pet Outlet,https://petoutlet.com.co,tienda,búsqueda web 2026-10-09,aprobada,WooCommerce responde JSON y robots.txt lo permite,2026-10-09
+Mascotas Pet Shop,https://mascotaspetshop.com.co,tienda,búsqueda web 2026-10-09,aprobada,WooCommerce responde JSON y robots.txt lo permite,2026-10-09
+Petopet,https://petopet.com.co,tienda,búsqueda web 2026-10-09,bloqueada por términos de uso,"los términos de uso prohíben la lectura automática: «phish, pharm, pretexto, araña»",2026-10-09
+Petentrega,https://www.petentrega.com.co,tienda,búsqueda web 2026-10-09,sin catálogo público,no se pudo leer robots.txt (sin conexión),2026-10-09
+Eco Vet,https://www.ecovet.com.co,tienda,búsqueda web 2026-10-09,aprobada,WooCommerce responde JSON y robots.txt lo permite,2026-10-09
+Primepet,https://www.primepet.com.co,tienda,búsqueda web 2026-10-09,aprobada,sitemap con datos estructurados de producto (JSON-LD) y robots.txt lo permite,2026-10-09

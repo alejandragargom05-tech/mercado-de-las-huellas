@@ -8,15 +8,19 @@ var Comun = (function () {
   /* Google Form que guarda las respuestas en Google Sheets.
      1) Pega el enlace de tu formulario (el de «Enviar», termina en /viewform): se convierte solo en /formResponse.
      2) En el formulario, menú ⋮ → «Obtener enlace prellenado», llena cada pregunta y copia los entry.NNNN del enlace. */
-  var URL_FORMULARIO = 'ENLACE_DE_MI_FORMULARIO';
+  var URL_FORMULARIO = 'https://docs.google.com/forms/d/e/1FAIpQLScjicuuNAHEEPl5_-L0TamOyBi__HKEH4uZdsufDy19V2tuPA/viewform';
+  /* Hoy el formulario solo tiene «Tipo de sugerencia». Cuando agregues las otras preguntas, reemplaza el
+     texto entry.DETALLE, entry.ESPECIE o entry.ENLACE por el número de su entry.* (por ejemplo 'entry.123456789');
+     mientras no estén conectadas, esos campos no se muestran ni se envían. */
   var ENTRADAS = {            // pregunta -> identificador entry.* del formulario
-    tipo: 'entry.TIPO',
+    tipo: 'entry.1233074832',
     detalle: 'entry.DETALLE',
     especie: 'entry.ESPECIE',
     enlace: 'entry.ENLACE'
   };
   var MAX_DETALLE = 500;
-  var TIPOS = ['Un producto que no encontré', 'Una tienda que falta', 'Un precio que no cuadra', 'Otra idea'];
+  var TIPO_SUMAR = 'Quiero sumar mi tienda';
+  var TIPOS = ['Un producto que no encontré', 'Una tienda que falta', 'Un precio que no cuadra', TIPO_SUMAR, 'Otra idea'];
   var ESPECIES = ['Gatos', 'Perros', 'Para los dos'];
 
   function urlEnvio() {
@@ -24,9 +28,8 @@ var Comun = (function () {
     if (!m) return null;
     return 'https://docs.google.com/forms/d/' + (/\/d\/e\//.test(URL_FORMULARIO) ? 'e/' : '') + m[1] + '/formResponse';
   }
-  function formularioListo() {
-    return !!urlEnvio() && Object.keys(ENTRADAS).every(function (k) { return /^entry\.\d+$/.test(ENTRADAS[k]); });
-  }
+  function conectada(k) { return /^entry\.\d+$/.test(ENTRADAS[k]); }
+  function formularioListo() { return !!urlEnvio() && conectada('tipo'); }
 
   var $ = function (id) { return document.getElementById(id); };
   function h(tag, attrs) {
@@ -89,15 +92,18 @@ var Comun = (function () {
     var cancelar = h('button', { 'class': 'boton boton--suave', type: 'button', texto: 'Cancelar' });
     cancelar.addEventListener('click', cerrarDialogo);
 
+    var cDetalle = h('div', { 'class': 'campo', id: 'sug-c-detalle' }, h('label', { 'for': 'sug-detalle', id: 'sug-l-detalle', texto: 'Cuéntanos con detalle' }), detalle, cuenta);
+    var cEspecie = h('div', { 'class': 'campo', id: 'sug-c-especie' }, h('label', { 'for': 'sug-especie', texto: '¿Para quién es? (opcional)' }), selEspecie);
+    var cEnlace = h('div', { 'class': 'campo', id: 'sug-c-enlace' }, h('label', { 'for': 'sug-enlace', id: 'sug-l-enlace', texto: 'Enlace al producto o la tienda (opcional)' }), enlace);
+    cDetalle.hidden = !conectada('detalle'); cEspecie.hidden = !conectada('especie'); cEnlace.hidden = !conectada('enlace');
     formulario = h('form', { 'class': 'sugerir__form', novalidate: 'novalidate' },
       h('fieldset', null, h('legend', { texto: '¿Qué quieres contarnos?' }), h('div', { 'class': 'opciones' }, radiosTipo)),
-      h('div', { 'class': 'campo' }, h('label', { 'for': 'sug-detalle', texto: 'Cuéntanos con detalle' }), detalle, cuenta),
-      h('div', { 'class': 'campo' }, h('label', { 'for': 'sug-especie', texto: '¿Para quién es? (opcional)' }), selEspecie),
-      h('div', { 'class': 'campo' }, h('label', { 'for': 'sug-enlace', texto: 'Enlace al producto o la tienda (opcional)' }), enlace),
+      cDetalle, cEspecie, cEnlace,
       trampa, estado,
       h('div', { 'class': 'botones' }, enviar, cancelar),
       h('p', { 'class': 'apoyo' }, 'Es anónimo: no te pedimos correo, nombre ni cuenta. ', h('a', { href: 'como-funciona.html#privacidad', texto: 'Cómo usamos lo que nos cuentas' }), '.'));
     formulario.addEventListener('submit', alEnviar);
+    formulario.addEventListener('change', ajustarCampos);
 
     cuerpo = h('div', { 'class': 'sugerir__cuerpo' },
       h('h2', { id: 'sug-titulo', texto: 'Sugiere un producto' }),
@@ -106,6 +112,14 @@ var Comun = (function () {
     dialogo.addEventListener('click', function (e) { if (e.target === dialogo) cerrarDialogo(); }); // clic en el fondo
     dialogo.addEventListener('close', function () { if (abridor && abridor.focus) abridor.focus(); });
     document.body.appendChild(dialogo);
+  }
+
+  /* «Quiero sumar mi tienda» pide el enlace de la tienda; el detalle pasa a ser opcional. */
+  function ajustarCampos() {
+    var tipo = formulario.querySelector('input[name="tipo"]:checked'), sumar = !!tipo && tipo.value === TIPO_SUMAR;
+    $('sug-l-enlace').textContent = sumar ? 'Enlace de tu tienda' : 'Enlace al producto o la tienda (opcional)';
+    $('sug-l-detalle').textContent = sumar ? 'Cuéntanos de tu tienda (opcional)' : 'Cuéntanos con detalle';
+    formulario.enlace.required = sumar; formulario.detalle.required = !sumar;
   }
 
   function cerrarDialogo() { if (dialogo && dialogo.open) dialogo.close(); }
@@ -121,7 +135,9 @@ var Comun = (function () {
     var f = formulario, estado = $('sug-estado');
     var tipo = f.querySelector('input[name="tipo"]:checked'), detalle = f.detalle.value.trim(), enlace = f.enlace.value.trim();
     if (!tipo) return marcarError(f.querySelector('input[name="tipo"]'), 'Elige qué tipo de sugerencia es.');
-    if (!detalle) return marcarError(f.detalle, 'Cuéntanos el detalle en unas palabras (máximo ' + MAX_DETALLE + ' caracteres).');
+    var sumar = tipo.value === TIPO_SUMAR;
+    if (conectada('detalle') && !sumar && !detalle) return marcarError(f.detalle, 'Cuéntanos el detalle en unas palabras (máximo ' + MAX_DETALLE + ' caracteres).');
+    if (conectada('enlace') && sumar && !enlace) return marcarError(f.enlace, 'Pega el enlace de tu tienda (empieza por https://).');
     if (enlace && !/^https?:\/\/\S+\.\S+/i.test(enlace)) return marcarError(f.enlace, 'El enlace debe empezar por https:// . Si no lo tienes, déjalo vacío.');
     if (f.sitio_web.value) return gracias(); // campo trampa lleno: es un bot; parece que funcionó, pero no se envía nada
 
@@ -133,9 +149,9 @@ var Comun = (function () {
     }
     var datos = new URLSearchParams();
     datos.set(ENTRADAS.tipo, tipo.value);
-    datos.set(ENTRADAS.detalle, detalle.slice(0, MAX_DETALLE));
-    if (f.especie.value) datos.set(ENTRADAS.especie, f.especie.value);
-    if (enlace) datos.set(ENTRADAS.enlace, enlace);
+    if (conectada('detalle') && detalle) datos.set(ENTRADAS.detalle, detalle.slice(0, MAX_DETALLE));
+    if (conectada('especie') && f.especie.value) datos.set(ENTRADAS.especie, f.especie.value);
+    if (conectada('enlace') && enlace) datos.set(ENTRADAS.enlace, enlace);
 
     var boton = f.querySelector('button[type="submit"]');
     boton.disabled = true; boton.textContent = 'Enviando…';
@@ -170,6 +186,7 @@ var Comun = (function () {
     $('sug-estado').textContent = '';
     $('sug-cuenta').textContent = '0 de ' + MAX_DETALLE + ' caracteres';
     if (opciones.tipo) { var r = formulario.querySelector('input[value="' + opciones.tipo + '"]'); if (r) r.checked = true; }
+    ajustarCampos();
     if (opciones.detalle) { formulario.detalle.value = opciones.detalle.slice(0, MAX_DETALLE); $('sug-cuenta').textContent = formulario.detalle.value.length + ' de ' + MAX_DETALLE + ' caracteres'; }
     if (typeof dialogo.showModal === 'function') dialogo.showModal(); else dialogo.setAttribute('open', '');
   }
@@ -178,9 +195,9 @@ var Comun = (function () {
     var a = e.target.closest ? e.target.closest('[data-sugerir]') : null;
     if (!a) return;
     e.preventDefault();
-    abrirSugerencia({}, a);
+    abrirSugerencia({ tipo: a.dataset.tipo === 'sumar' ? TIPO_SUMAR : '' }, a);
   });
-  if (/[?&]sugerir=1\b/.test(location.search)) abrirSugerencia({}, document.body);
+  if (/[?&]sugerir=1\b/.test(location.search)) abrirSugerencia({ tipo: /[?&]tipo=sumar\b/.test(location.search) ? TIPO_SUMAR : '' }, document.body);
 
-  return { URL_INSTAGRAM: URL_INSTAGRAM, TIPOS: TIPOS, abrirSugerencia: abrirSugerencia };
+  return { URL_INSTAGRAM: URL_INSTAGRAM, TIPOS: TIPOS, TIPO_SUMAR: TIPO_SUMAR, abrirSugerencia: abrirSugerencia };
 })();

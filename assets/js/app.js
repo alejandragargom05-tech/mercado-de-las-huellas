@@ -7,7 +7,7 @@
   var TARJETAS_POR_GRUPO = 6;
   var MAX_RESUMEN = 12;
 
-  var estado = { texto: '', especie: '', categoria: '', subcategoria: '', marca: '', limite: GRUPOS_POR_PAGINA, estricto: false };
+  var estado = { texto: '', especie: '', categoria: '', subcategoria: '', marca: '', local: false, limite: GRUPOS_POR_PAGINA, estricto: false };
   var productos = [];
   var hoy = new Date();
 
@@ -53,6 +53,7 @@
     if (estado.marca) d.push('de ' + estado.marca);
     if (estado.categoria) d.push('en ' + H.categoria(estado.categoria).etiqueta + (estado.subcategoria ? ' (' + estado.subcategoria + ')' : ''));
     if (estado.especie) d.push('para ' + H.especie(estado.especie).etiqueta);
+    if (estado.local) d.push('solo en emprendimientos colombianos');
     return d.join(' ');
   }
   var AVISO_MICROCHIP = 'Los microchips los implanta tu veterinario, por eso no los comparamos. Pregúntale por él en tu próxima visita; aquí sí puedes comparar placas de identificación y collares con GPS.';
@@ -103,7 +104,7 @@
     b.addEventListener('click', function () { estado.estricto = false; alAlternar(); });
     return b;
   }
-  var chipsEspecie = [], chipsCategoria = [];
+  var chipsEspecie = [], chipsCategoria = [], chipLocal = null;
   function dibujarChips() {
     var e = $('chips-especie'), c = $('chips-categoria');
     e.textContent = ''; c.textContent = '';
@@ -111,6 +112,9 @@
       var b = chip(x.id === 'ambos' ? 'Para los dos' : x.etiqueta, function () { estado.especie = estado.especie === x.id ? '' : x.id; refrescar(); });
       b.dataset.id = x.id; e.appendChild(b); return b;
     });
+    // «Apoya lo local»: solo tiendas tipo emprendimiento. Filtra, no reordena: el orden sigue siendo por precio.
+    chipLocal = chip('Emprendimientos colombianos', function () { estado.local = !estado.local; refrescar(); });
+    $('chips-local').textContent = ''; $('chips-local').appendChild(chipLocal);
     var todas = chip('Todas las categorías', function () { estado.categoria = ''; estado.subcategoria = ''; estado.marca = ''; refrescar(); });
     todas.dataset.id = ''; c.appendChild(todas);
     chipsCategoria = [todas].concat(H.CATEGORIAS.map(function (x) {
@@ -155,11 +159,12 @@
     flechas.forEach(function (f) { f(); });
     chipsEspecie.forEach(function (b) { b.setAttribute('aria-pressed', String(estado.especie === b.dataset.id)); });
     chipsCategoria.forEach(function (b) { b.setAttribute('aria-pressed', String(estado.categoria === b.dataset.id)); });
-    el.quitar.hidden = !(estado.texto || estado.especie || estado.categoria || estado.subcategoria || estado.marca);
+    chipLocal.setAttribute('aria-pressed', String(estado.local));
+    el.quitar.hidden = !(estado.texto || estado.especie || estado.categoria || estado.subcategoria || estado.marca || estado.local);
   }
 
   function quitarFiltros() {
-    estado.texto = ''; estado.especie = ''; estado.categoria = ''; estado.subcategoria = ''; estado.marca = ''; estado.estricto = false;
+    estado.texto = ''; estado.especie = ''; estado.categoria = ''; estado.subcategoria = ''; estado.marca = ''; estado.local = false; estado.estricto = false;
     el.buscar.value = '';
     refrescar();
   }
@@ -201,6 +206,7 @@
   function tarjeta(g, o) {
     var p = o.producto;
     var ins = h('div', { 'class': 'insignias' });
+    if (p.emprendimiento) ins.appendChild(h('span', { 'class': 'insignia insignia--local', texto: 'Emprendimiento colombiano' }));
     if (o.masBarata) ins.appendChild(h('span', { 'class': 'insignia insignia--barata', texto: 'La más barata' }));
     if (o.advertencia) ins.appendChild(h('span', { 'class': 'insignia insignia--vieja',
       texto: o.edad === null ? 'Precio de fecha desconocida' : 'Precio de hace ' + o.edad + ' días' }));
@@ -422,6 +428,7 @@
   /* Enlaces del pie y de la URL (?categoria=, ?especie=) que activan un filtro */
   function aplicarFiltroDeURL(params) {
     var c = params.get('categoria'), e = params.get('especie');
+    if (params.get('local') === '1') estado.local = true;
     if (c && H.categoria(c)) { estado.categoria = c; estado.subcategoria = ''; estado.marca = ''; }
     if (e && H.especie(e)) estado.especie = e;
   }

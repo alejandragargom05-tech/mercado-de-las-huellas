@@ -122,6 +122,7 @@ h1::after, h2::after {
   text-transform: uppercase; letter-spacing: 2px;
 }
 .insignia--barata { background: var(--oliva); color: var(--crema); }
+.insignia--local { background: transparent; color: var(--oliva); border: 1px solid var(--oliva); letter-spacing: 1px; text-transform: none; font-size: .8125rem; padding: 2px 10px; }
 .insignia--vieja { background: var(--ambar-fondo); color: var(--ambar); border: 1px solid var(--ambar); }
 
 /* Tarjeta de producto */

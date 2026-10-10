@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-"""Consulta catálogos públicos (VTEX y Shopify) de tiendas de mascotas de Colombia.
+"""Consulta catálogos públicos de tiendas de mascotas de Colombia: VTEX, Shopify, WooCommerce y, si no hay ninguno,
+sitemap + datos estructurados de producto (JSON-LD de schema.org). Sin navegadores ni simular personas.
 
 Solo usa la biblioteca estándar. Genera:
   data/tiendas.csv          estado de cada tienda (aprobada, bloqueada por robots.txt, sin catálogo público)
@@ -9,6 +10,7 @@ Solo usa la biblioteca estándar. Genera:
 Respeta robots.txt (se revisa cada URL antes de pedirla) y espera 1,5 s entre consultas.
 """
 import csv
+import html
 import json
 import re
 import sys
@@ -34,23 +36,36 @@ USER_AGENT = (
 ESPERA = 1.5
 TIMEOUT = 20
 MAX_PAGINAS_SHOPIFY = 30
+MAX_PAGINAS_WOO = 30
+MAX_PAGINAS_JSONLD = 250  # páginas de producto por tienda y corrida (1,5 s entre cada una)
+CANDIDATAS = RAIZ / "data" / "tiendas-candidatas.csv"
 
 # Tiendas encontradas en la web que no están en TIENDAS.md (máximo 5).
 # Fuente: búsqueda web del 2026-10-09. La competitividad en precio aún no está verificada.
 TIENDAS_EXTRA = [
-    ("Mascolandia", "https://www.mascolandia.com.co"),
-    ("Abyapet", "https://abyapet.com"),
-    ("KeikoPets", "https://www.keikopets.com"),
-    ("La Casa del Granjero", "https://lacasadelgranjero.com"),
-    ("La Res", "https://lares.com.co"),
+    ("Mascolandia", "https://www.mascolandia.com.co", "tienda"),
+    ("Abyapet", "https://abyapet.com", "tienda"),
+    ("KeikoPets", "https://www.keikopets.com", "tienda"),
+    ("La Casa del Granjero", "https://lacasadelgranjero.com", "tienda"),
+    ("La Res", "https://lares.com.co", "tienda"),
 ]
+TIPOS_TIENDA = ("cadena", "tienda", "emprendimiento")
+
+# Tiendas cuyos términos de uso prohíben leer el sitio con herramientas automáticas (revisión manual del 2026-10-09).
+# Las candidatas bloqueadas por scripts/descubrir_tiendas.py se suman a esta lista al cargar el CSV.
+BLOQUEO_TERMINOS = {
+    "lares.com.co": "los términos de uso prohíben usar herramientas automatizadas («bots», «spiders») para acceder o copiar el contenido",
+}
+ESTADO_TERMINOS = "bloqueada por términos de uso"
 
 VTEX_SONDA = "/api/catalog_system/pub/products/search?ft=arena&_from=0&_to=0"
 SHOPIFY_SONDA = "/products.json?limit=1"
+WOO_SONDA = "/wp-json/wc/store/v1/products?per_page=1"
 # Rutas que se usan de verdad al consultar; robots.txt debe permitirlas también.
 RECORRIDO = {
     "vtex": "/api/catalog_system/pub/products/search?ft=arena&_from=0&_to=49",
     "shopify": "/products.json?limit=250&page=1",
+    "woocommerce": "/wp-json/wc/store/v1/products?per_page=100&page=1",
 }
 
 TERMINOS = [
@@ -118,11 +133,11 @@ def esperar():
     _ultima[0] = time.monotonic()
 
 
-def pedir(url):
+def pedir(url, acepta="application/json, text/plain, */*"):
     """GET con espera previa. Devuelve (estado_http, texto); estado 0 si falla la conexión."""
     esperar()
-    req = urllib.request.Request(url, headers={"User-Agent": USER_AGENT, "Accept": "application/json, text/plain, */*"})
     try:
+        req = urllib.request.Request(url, headers={"User-Agent": USER_AGENT, "Accept": acepta})
         with urllib.request.urlopen(req, timeout=TIMEOUT) as r:
             return r.status, r.read().decode("utf-8", errors="replace")
     except urllib.error.HTTPError as e:
@@ -146,6 +161,7 @@ class Robots:
 
     def __init__(self, texto):
         self.reglas = []
+        self.sitemaps = []
         grupos, agentes, reglas, en_reglas = [], [], [], False
         for linea in texto.splitlines():
             linea = linea.split("#", 1)[0].strip()
@@ -158,6 +174,8 @@ class Robots:
                     grupos.append((agentes, reglas))
                     agentes, reglas, en_reglas = [], [], False
                 agentes.append(valor.lower())
+            elif clave == "sitemap" and valor.startswith("http"):
+                self.sitemaps.append(valor)
             elif clave in ("allow", "disallow"):
                 en_reglas = True
                 reglas.append((clave == "allow", valor))
@@ -205,55 +223,131 @@ def ruta_de(url):
 
 # ---------------------------------------------------------------- tiendas
 
+def dominio(url):
+    return urlsplit(url).netloc.lower().replace("www.", "")
+
+
+def cargar_candidatas():
+    if not CANDIDATAS.exists():
+        return []
+    with CANDIDATAS.open(newline="", encoding="utf-8") as f:
+        return list(csv.DictReader(f))
+
+
 def cargar_tiendas():
-    tiendas = []
+    """(nombre, url, tipo). El tipo sale del encabezado de TIENDAS.md (cadenas, emprendimientos o tienda)."""
+    tiendas, tipo, candidatas = [], "tienda", False
     for linea in TIENDAS_MD.read_text(encoding="utf-8").splitlines():
+        if linea.startswith("#"):
+            t = norm(linea)
+            candidatas = "candidatas" in t  # las prueba scripts/descubrir_tiendas.py; su tipo vive en el CSV
+            tipo = "cadena" if "cadena" in t else "emprendimiento" if "emprendimiento" in t else "tienda"
+            continue
+        if candidatas:
+            continue
         m = re.match(r"^- (.+?):\s*(https?://\S+)", linea)
         if m:
             nombre = re.sub(r"\s*\(.*?\)", "", m.group(1)).strip()
-            tiendas.append((nombre, m.group(2).rstrip("/")))
+            tiendas.append((nombre, m.group(2).rstrip("/"), tipo))
         elif linea.startswith("- Jarapets"):
-            tiendas.append(("Jarapets", ""))
-    conocidas = {urlsplit(u).netloc.replace("www.", "") for _, u in tiendas}
-    for nombre, url in TIENDAS_EXTRA[:5]:
-        if urlsplit(url).netloc.replace("www.", "") not in conocidas:
-            tiendas.append((nombre, url))
+            tiendas.append(("Jarapets", "", "tienda"))
+    for c in cargar_candidatas():
+        if c.get("estado") == ESTADO_TERMINOS and c.get("url"):
+            BLOQUEO_TERMINOS[dominio(c["url"])] = c.get("motivo") or "los términos de uso prohíben la lectura automática"
+    conocidas = {dominio(u) for _, u, _ in tiendas}
+    extras = list(TIENDAS_EXTRA[:5]) + [(c["tienda"], c["url"], c.get("tipo") or "tienda") for c in cargar_candidatas()
+                                         if c.get("url")]
+    for nombre, url, tipo in extras:
+        if dominio(url) not in conocidas:
+            conocidas.add(dominio(url))
+            tiendas.append((nombre, url.rstrip("/"), tipo if tipo in TIPOS_TIENDA else "tienda"))
     return tiendas
 
 
-def revisar_tienda(nombre, url):
-    fila = {"tienda": nombre, "url": url, "plataforma": "", "estado": "", "motivo": "", "fecha_revision": HOY}
+def probar_plataforma(plataforma, base, robots):
+    """None si la ruta está prohibida por robots.txt; True/False según responda o no el catálogo."""
+    sonda = {"vtex": VTEX_SONDA, "shopify": SHOPIFY_SONDA, "woocommerce": WOO_SONDA}[plataforma]
+    if not robots.permitido(ruta_de(sonda)):
+        return None
+    _, datos = pedir_json(base + sonda)
+    if plataforma == "vtex":
+        valido = isinstance(datos, list)
+    elif plataforma == "shopify":
+        valido = isinstance(datos, dict) and "products" in datos
+    else:
+        valido = isinstance(datos, list) and bool(datos) and isinstance(datos[0], dict) and "prices" in datos[0]
+    if valido and not robots.permitido(ruta_de(base + RECORRIDO[plataforma])):
+        return None
+    return valido
+
+
+NOMBRE_PLATAFORMA = {"vtex": "VTEX", "shopify": "Shopify", "woocommerce": "WooCommerce"}
+RUTA_PLATAFORMA = {"vtex": "/api/catalog_system/", "shopify": "/products.json", "woocommerce": "/wp-json/wc/store/v1/products"}
+
+
+RE_PROHIBE = re.compile(
+    r"(?:no\s+(?:utiliz|usar|emple|intent)\w*|queda\s+prohibid\w*|prohib\w+|proh[ií]be)[^.]{0,200}?"
+    r"(?:ara[nñ]a|\brob[oó]ts?\b|\bbots\b|\bspiders?\b|scrap\w*|raspado|rastreo|crawl\w*|automatizad\w*|extracci[oó]n\s+(?:de\s+datos|masiva))"
+    r"|phish\w*,[^.]{0,60}?(?:ara[nñ]a|spider\w*|crawl\w*|scrap\w*|raspado)"  # plantilla de Shopify: «spam, phishing, ..., scraping»
+    r"|(?:ara[nñ]a|\brob[oó]ts?\b|\bbots\b|\bspiders?\b|scraping|raspado|crawling)[^.]{0,120}?prohibid", re.I)
+
+
+def terminos_prohiben(base):
+    """Motivo si los términos de uso prohíben leer el sitio con herramientas automáticas; '' si no (o no hay página de términos).
+    Prueba rutas comunes y, si no, los enlaces de «términos» de la portada. No es infalible: la revisión final es humana."""
+    rutas = ["/policies/terms-of-service", "/terminos-y-condiciones", "/terminos-condiciones", "/terminos"]
+    candidatas, probadas = [base + r for r in rutas], set()
+    while candidatas and len(probadas) < 8:
+        u = candidatas.pop(0)
+        if u in probadas:
+            continue
+        probadas.add(u)
+        estado, texto = pedir(u, "text/html, */*")
+        if estado != 200 or len(texto) < 2000:
+            if len(probadas) == len(rutas):  # ninguna ruta común: se buscan los enlaces de la portada
+                _, portada = pedir(base, "text/html, */*")
+                candidatas += [urljoin(base + "/", m) for m in re.findall(r"href=[\"']([^\"']*(?:termino|terms|condiciones)[^\"']*)[\"']", portada, re.I)[:3]]
+            continue
+        limpio = re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", re.sub(r"(?is)<(?:script|style)[^>]*>.*?</(?:script|style)>", " ", texto)))
+        m = RE_PROHIBE.search(limpio)
+        if m:
+            return "los términos de uso prohíben la lectura automática: «%s»" % limpio[max(0, m.start()):m.end()][:160].strip()
+        return ""
+    return ""
+
+
+def revisar_tienda(nombre, url, tipo="tienda"):
+    fila = {"tienda": nombre, "tipo": tipo, "url": url, "plataforma": "", "estado": "", "motivo": "", "fecha_revision": HOY}
     if not url:
         fila.update(estado="sin catálogo público", motivo="TIENDAS.md no trae sitio web verificado")
         return fila, None
     base = "{0.scheme}://{0.netloc}".format(urlsplit(url))
     fila["url"] = base
+    if dominio(base) in BLOQUEO_TERMINOS:
+        fila.update(estado=ESTADO_TERMINOS, motivo=BLOQUEO_TERMINOS[dominio(base)])
+        return fila, None
     robots, error = leer_robots(base)
     if error:
         fila.update(estado="sin catálogo público", motivo=error)
         return fila, None
     prohibidas = []
-    for plataforma, sonda in (("vtex", VTEX_SONDA), ("shopify", SHOPIFY_SONDA)):
-        if not robots.permitido(ruta_de(sonda)):
+    for plataforma in ("vtex", "shopify", "woocommerce"):
+        r = probar_plataforma(plataforma, base, robots)
+        if r is None:
             prohibidas.append(plataforma)
-            continue
-        estado, datos = pedir_json(base + sonda)
-        valido = isinstance(datos, list) if plataforma == "vtex" else isinstance(datos, dict) and "products" in datos
-        if valido and not robots.permitido(ruta_de(base + RECORRIDO[plataforma])):
-            prohibidas.append(plataforma + " (recorrido)")
-            continue
-        if valido:
+        elif r:
             fila.update(plataforma=plataforma, estado="aprobada",
-                        motivo="%s responde JSON y robots.txt lo permite" % ("VTEX" if plataforma == "vtex" else "Shopify"))
+                        motivo="%s responde JSON y robots.txt lo permite" % NOMBRE_PLATAFORMA[plataforma])
             return fila, robots
-    if prohibidas:
-        rutas = {"vtex": "/api/catalog_system/", "shopify": "/products.json",
-                 "vtex (recorrido)": "la consulta de productos de /api/catalog_system/",
-                 "shopify (recorrido)": "el recorrido paginado de /products.json"}
+    if prohibidas:  # si robots.txt cierra una API, no se rodea leyendo las páginas
         fila.update(estado="bloqueada por robots.txt",
-                    motivo="robots.txt prohíbe " + " y ".join(rutas[p] for p in prohibidas))
-    else:
-        fila.update(estado="sin catálogo público", motivo="ni la API de VTEX ni /products.json responden JSON")
+                    motivo="robots.txt prohíbe " + " y ".join(RUTA_PLATAFORMA[p] for p in prohibidas))
+        return fila, None
+    ok, motivo = probar_jsonld(base, robots)
+    if ok:
+        fila.update(plataforma="jsonld", estado="aprobada", motivo=motivo)
+        return fila, robots
+    fila.update(estado="sin catálogo público", motivo=motivo)
     return fila, None
 
 
@@ -852,6 +946,212 @@ def consultar_shopify(fila_tienda, robots, filas, terminos=None):
                     agregar(filas, fila)
 
 
+def paginas_woo(base, robots):
+    if base in _CATALOGO_WOO:
+        yield _CATALOGO_WOO[base]
+        return
+    acumulado = _CATALOGO_WOO[base] = []
+    for pagina in range(1, MAX_PAGINAS_WOO + 1):
+        url = base + "/wp-json/wc/store/v1/products?per_page=100&page=%d" % pagina
+        if not robots.permitido(ruta_de(url)):
+            print("  robots.txt no permite %s; se detiene" % ruta_de(url))
+            return
+        _, datos = pedir_json(url)
+        if not isinstance(datos, list) or not datos:
+            return
+        acumulado.extend(datos)
+        yield datos
+        if len(datos) < 100:
+            return
+
+
+_CATALOGO_WOO = {}
+
+
+def consultar_woo(fila_tienda, robots, filas, terminos=None):
+    """Recorre la API pública de WooCommerce (una sola vez por tienda) y filtra localmente por los términos."""
+    base = fila_tienda["url"]
+    claves = claves_de(terminos)
+    for productos in paginas_woo(base, robots):
+        for p in productos:
+            nombre = html.unescape(p.get("name") or "").strip()
+            cats = " ".join(html.unescape(c.get("name") or "") for c in (p.get("categories") or []) + (p.get("tags") or []))
+            marca = html.unescape(((p.get("brands") or [{}])[0] or {}).get("name") or "")
+            if not any(c in norm(" ".join([nombre, marca, cats])) for c in claves):
+                continue
+            precios = p.get("prices") or {}
+            rango = precios.get("price_range") or {}
+            if rango and rango.get("min_amount") != rango.get("max_amount"):
+                continue  # producto con variantes de distinto precio: la API no dice cuál es cuál
+            if p.get("is_in_stock") is False:
+                continue
+            dec = 10 ** int(precios.get("currency_minor_unit") or 0)
+            try:
+                precio = float(precios.get("price") or 0) / dec
+                lista = float(precios.get("regular_price") or 0) / dec
+            except ValueError:
+                continue
+            if precio <= 0:
+                continue
+            imgs = p.get("images") or []
+            fila = armar_fila(fila_tienda["tienda"], nombre, marca, cats, p.get("permalink") or "", precio, lista,
+                              imagen=(imgs[0].get("src") if imgs else "") or "")
+            if fila:
+                agregar(filas, fila)
+
+
+def claves_de(terminos):
+    claves = {norm(t.split()[0]).rstrip("s") for t in (terminos or TERMINOS)}
+    if not terminos:
+        claves.update(CLAVES_SHOPIFY_EXTRA)
+    return claves
+
+
+# --- sitemap + JSON-LD (schema.org Product)
+
+RE_LOC = re.compile(r"<loc>\s*(?:<!\[CDATA\[)?\s*(.*?)\s*(?:\]\]>)?\s*</loc>", re.S | re.I)
+RE_JSONLD = re.compile(r"<script[^>]+type=[\"']application/ld\+json[\"'][^>]*>(.*?)</script>", re.S | re.I)
+RE_RUTA_PRODUCTO = re.compile(r"/(?:productos?|products?|p|tienda|shop|item)/", re.I)
+_PAGINAS_JSONLD = {}  # url -> productos JSON-LD ya leídos
+_SITEMAP = {}         # base -> urls de producto
+
+
+def urls_de_sitemap(base, robots, limite_indices=8):
+    """URLs de producto declaradas en el sitemap (robots.txt o /sitemap.xml). (urls, motivo_si_no_hay)"""
+    if base in _SITEMAP:
+        return _SITEMAP[base], ""
+    pendientes = list(robots.sitemaps) or [base + "/sitemap.xml"]
+    urls, vistos, leidos = [], set(), 0
+    while pendientes and leidos < limite_indices:
+        sm = pendientes.pop(0)
+        if sm in vistos or urlsplit(sm).netloc.lower().replace("www.", "") != dominio(base):
+            continue
+        vistos.add(sm)
+        if not robots.permitido(ruta_de(sm)):
+            return [], "robots.txt prohíbe el sitemap"
+        estado, texto = pedir(sm, "application/xml, text/xml, */*")
+        leidos += 1
+        if estado != 200:
+            continue
+        locs = [urljoin(base + "/", html.unescape(x)) for x in RE_LOC.findall(texto)]
+        if "<sitemapindex" in texto.lower():
+            prod = [x for x in locs if re.search(r"product|producto", x, re.I)]
+            pendientes = (prod or locs[:limite_indices]) + pendientes
+        else:
+            es_de_producto = bool(re.search(r"product|producto", sm, re.I))
+            urls.extend(x for x in locs if es_de_producto or RE_RUTA_PRODUCTO.search(urlsplit(x).path))
+    _SITEMAP[base] = urls
+    return urls, ("" if urls else "el sitemap no lista páginas de producto")
+
+
+def precio_jsonld(valor):
+    if valor in (None, ""):
+        return None
+    t = str(valor).strip().replace("$", "").replace(" ", "")
+    if re.fullmatch(r"\d{1,3}(\.\d{3})+(,\d+)?", t):
+        t = t.replace(".", "").replace(",", ".")
+    elif re.fullmatch(r"\d{1,3}(,\d{3})+(\.\d+)?", t):
+        t = t.replace(",", "")
+    try:
+        return float(t)
+    except ValueError:
+        return None
+
+
+def nodos_producto(dato):
+    if isinstance(dato, list):
+        for x in dato:
+            yield from nodos_producto(x)
+    elif isinstance(dato, dict):
+        tipos = dato.get("@type")
+        tipos = [tipos] if isinstance(tipos, str) else (tipos or [])
+        if "Product" in tipos:
+            yield dato
+        if "ProductGroup" in tipos:
+            yield from nodos_producto(dato.get("hasVariant") or [])
+        if "@graph" in dato:
+            yield from nodos_producto(dato["@graph"])
+
+
+def leer_producto_jsonld(nodo, url):
+    """(nombre, marca, precio, precio_lista, imagen, categoria) si hay precio vigente y disponible; si no, None."""
+    ofertas = nodo.get("offers")
+    ofertas = ofertas if isinstance(ofertas, list) else [ofertas or {}]
+    precios, listas = [], []
+    for o in ofertas:
+        if not isinstance(o, dict):
+            continue
+        if "lowPrice" in o and o.get("highPrice") not in (None, o.get("lowPrice")):
+            return None  # rango de precios entre variantes: no se sabe cuál es cuál
+        if "InStock" not in str(o.get("availability") or "") and "LimitedAvailability" not in str(o.get("availability") or ""):
+            continue
+        if o.get("priceCurrency") not in (None, "", "COP"):
+            continue
+        spec = o.get("priceSpecification") or {}
+        spec = spec[0] if isinstance(spec, list) and spec else spec
+        precio = precio_jsonld(o.get("price", o.get("lowPrice", spec.get("price") if isinstance(spec, dict) else None)))
+        if precio and precio >= 100:
+            precios.append(precio)
+    if not precios:
+        return None
+    marca = nodo.get("brand")
+    marca = marca.get("name") if isinstance(marca, dict) else marca
+    img = nodo.get("image")
+    img = img[0] if isinstance(img, list) and img else img
+    img = img.get("url") if isinstance(img, dict) else img
+    nombre = html.unescape(str(nodo.get("name") or "")).strip()
+    if not nombre:
+        return None
+    return nombre, html.unescape(str(marca or "")), min(precios), 0.0, str(img or ""), html.unescape(str(nodo.get("category") or ""))
+
+
+def productos_de_pagina(url, robots):
+    if url in _PAGINAS_JSONLD:
+        return _PAGINAS_JSONLD[url]
+    out = []
+    if robots.permitido(ruta_de(url)):
+        estado, texto = pedir(url, "text/html, */*")
+        if estado == 200:
+            for bloque in RE_JSONLD.findall(texto):
+                try:
+                    datos = json.loads(html.unescape(bloque) if "&quot;" in bloque else bloque)
+                except ValueError:
+                    continue
+                for nodo in nodos_producto(datos):
+                    r = leer_producto_jsonld(nodo, url)
+                    if r:
+                        out.append(r)
+    _PAGINAS_JSONLD[url] = out
+    return out
+
+
+def probar_jsonld(base, robots):
+    urls, motivo = urls_de_sitemap(base, robots)
+    if not urls:
+        return False, "ni VTEX, Shopify ni WooCommerce responden JSON, y " + (motivo or "no hay sitemap")
+    for u in urls[:3]:
+        if productos_de_pagina(u, robots):
+            return True, "sitemap con datos estructurados de producto (JSON-LD) y robots.txt lo permite"
+    return False, "ni VTEX, Shopify ni WooCommerce responden JSON, y las páginas de producto no traen datos estructurados con precio"
+
+
+def consultar_jsonld(fila_tienda, robots, filas, terminos=None):
+    base = fila_tienda["url"]
+    claves = claves_de(terminos)
+    urls, _ = urls_de_sitemap(base, robots)
+    elegidas = [u for u in urls if any(c in norm(urlsplit(u).path.replace("-", " ")) for c in claves)]
+    for u in sorted(set(elegidas))[:MAX_PAGINAS_JSONLD]:
+        for nombre, marca, precio, lista, img, cat in productos_de_pagina(u, robots):
+            fila = armar_fila(fila_tienda["tienda"], nombre, marca, cat, u, precio, lista, imagen=img)
+            if fila:
+                agregar(filas, fila)
+
+
+def consultar(fila_tienda, robots, filas, terminos=None):
+    {"vtex": consultar_vtex, "shopify": consultar_shopify, "woocommerce": consultar_woo,
+     "jsonld": consultar_jsonld}[fila_tienda["plataforma"]](fila_tienda, robots, filas, terminos)
+
+
 # ---------------------------------------------------------------- salida
 
 def escribir_csv(ruta, columnas, filas):
@@ -872,9 +1172,9 @@ def imprimir_tabla(columnas, filas, anchos=None):
         print(" | ".join(corte(f, c) for c in columnas))
 
 
-COL_TIENDAS = ["tienda", "url", "plataforma", "estado", "motivo", "fecha_revision"]
+COL_TIENDAS = ["tienda", "tipo", "url", "plataforma", "estado", "motivo", "fecha_revision"]
 COL_PRODUCTOS = ["fecha", "tienda", "categoria", "especie", "producto", "marca", "linea", "caracteristica",
-                 "cantidad", "unidad", "precio", "precio_lista", "precio_unidad", "url", "imagen", "subcategoria"]
+                 "cantidad", "unidad", "precio", "precio_lista", "precio_unidad", "url", "imagen", "subcategoria", "tipo_tienda"]
 
 
 def unificar_marcas(filas):
@@ -906,9 +1206,9 @@ def tiendas_nombres(revisadas):
 
 def main():
     revisadas = []
-    for nombre, url in cargar_tiendas():
+    for nombre, url, tipo in cargar_tiendas():
         print("Revisando %s ..." % nombre, flush=True)
-        fila, robots = revisar_tienda(nombre, url)
+        fila, robots = revisar_tienda(nombre, url, tipo)
         revisadas.append((fila, robots))
     escribir_csv(SALIDA_TIENDAS, COL_TIENDAS, [f for f, _ in revisadas])
     print("\nTIENDAS (guardado en %s)\n" % SALIDA_TIENDAS.relative_to(RAIZ))
@@ -920,10 +1220,7 @@ def main():
             continue
         print("\nConsultando %s (%s) ..." % (fila_tienda["tienda"], fila_tienda["plataforma"]), flush=True)
         antes = len(filas)
-        if fila_tienda["plataforma"] == "vtex":
-            consultar_vtex(fila_tienda, robots, filas)
-        else:
-            consultar_shopify(fila_tienda, robots, filas)
+        consultar(fila_tienda, robots, filas)
         print("  %d filas nuevas" % (len(filas) - antes), flush=True)
     # Segunda pasada: marcas de concentrado con más productos en las tiendas aprobadas que no estaban en la lista.
     conocidas = {norm(m) for m in MARCAS_CONCENTRADO}
@@ -942,10 +1239,10 @@ def main():
         for fila_tienda, robots in revisadas:
             if fila_tienda["estado"] != "aprobada":
                 continue
-            if fila_tienda["plataforma"] == "vtex":
-                consultar_vtex(fila_tienda, robots, filas, terminos=nuevas)
-            else:
-                consultar_shopify(fila_tienda, robots, filas, terminos=nuevas)
+            consultar(fila_tienda, robots, filas, terminos=nuevas)
+    tipos = {f["tienda"]: f["tipo"] for f, _ in revisadas}
+    for f in filas.values():
+        f["tipo_tienda"] = tipos.get(f["tienda"], "tienda")
     unificar_marcas(filas.values())
     resultado = sorted(filas.values(), key=lambda f: (f["categoria"], f["subcategoria"], f["especie"], f["tienda"], f["producto"]))
     escribir_csv(SALIDA_PRODUCTOS, COL_PRODUCTOS, resultado)
