@@ -113,8 +113,8 @@ h1::after, h2::after {
 .chip img { width: 40px; height: 40px; border-radius: 50%; background: #fff; object-fit: cover; }
 .chip--solo { padding-left: 20px; }
 .chip { color: var(--texto); }
-.chip[aria-pressed="true"] { border-color: var(--texto); background: var(--oliva-fondo); font-weight: 600; }
-.chip[aria-pressed="true"]::after { content: "\2713"; color: var(--oliva); font-weight: 600; margin-left: 2px; }
+.chip[aria-pressed="true"] { border-color: var(--azul); background: var(--azul); color: var(--sobre-azul); font-weight: 600; }
+.chip[aria-pressed="true"]::after { content: "\2713"; color: var(--sobre-azul); font-weight: 600; margin-left: 2px; }
 
 /* Insignias */
 .insignia {

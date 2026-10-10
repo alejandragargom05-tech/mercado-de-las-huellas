@@ -2,7 +2,7 @@
 (function () {
   'use strict';
   var H = Huellas;
-  var URL_INSTAGRAM = 'https://www.instagram.com/'; // cambia aquí el enlace de Instagram
+  var URL_INSTAGRAM = 'https://www.instagram.com/boliitattoo/'; // cambia aquí el enlace de Instagram
   var RUTA_IMG = 'assets/ilustraciones/';
   var GRUPOS_POR_PAGINA = 15;
   var TARJETAS_POR_GRUPO = 6;
@@ -104,7 +104,7 @@
     var e = $('chips-especie'), c = $('chips-categoria');
     e.textContent = ''; c.textContent = '';
     chipsEspecie = H.ESPECIES.map(function (x) {
-      var b = chip(x.etiqueta, function () { estado.especie = estado.especie === x.id ? '' : x.id; refrescar(); });
+      var b = chip(x.id === 'ambos' ? 'Para los dos' : x.etiqueta, function () { estado.especie = estado.especie === x.id ? '' : x.id; refrescar(); });
       b.dataset.id = x.id; e.appendChild(b); return b;
     });
     var todas = chip('Todas las categorías', function () { estado.categoria = ''; refrescar(); });
@@ -219,12 +219,12 @@
       h('p', { 'class': 'apoyo', texto: subtituloGrupo(g) }), notaGrupo(g), rejilla);
     var resto = g.ofertas.length - TARJETAS_POR_GRUPO;
     if (resto > 0) {
-      var b = h('button', { 'class': 'boton', type: 'button', 'aria-expanded': 'false', texto: 'Ver las ' + resto + ' restantes' });
+      var b = h('button', { 'class': 'boton', type: 'button', 'aria-expanded': 'false', texto: 'Ver las ' + resto + ' opciones que faltan' });
       b.addEventListener('click', function () {
         var abierto = b.getAttribute('aria-expanded') === 'true';
         tarjetas.forEach(function (t, i) { if (i >= TARJETAS_POR_GRUPO) t.hidden = abierto; });
         b.setAttribute('aria-expanded', String(!abierto));
-        b.textContent = abierto ? 'Ver las ' + resto + ' restantes' : 'Ver menos';
+        b.textContent = abierto ? 'Ver las ' + resto + ' opciones que faltan' : 'Ver menos';
       });
       s.appendChild(h('p', null, b));
     }
@@ -284,9 +284,8 @@
     el.estado.textContent = '';
     el.resultados.hidden = false;
     dibujarAvisos(r);
-    var n = lista.length + (lista.length === 1 ? ' producto' : ' productos') + ' en ' + grupos.length + (grupos.length === 1 ? ' grupo' : ' grupos');
-    el.conteo.textContent = n;
-    anunciar(lista.length + (lista.length === 1 ? ' resultado' : ' resultados') + (r.ampliada ? ' en otras categorías' : ''));
+    el.conteo.textContent = 'Encontramos ' + String(lista.length).replace(/\B(?=(\d{3})+$)/g, '.') + (lista.length === 1 ? ' opción' : ' opciones') + ' para tu peludo';
+    anunciar(lista.length + (lista.length === 1 ? ' opción' : ' opciones') + (r.ampliada ? ' en otras categorías' : ''));
     dibujarResumen(grupos);
     el.grupos.textContent = '';
     grupos.slice(0, estado.limite).forEach(function (g, i) { el.grupos.appendChild(dibujarGrupo(g, i)); });
@@ -374,6 +373,23 @@
   });
   el.quitar.addEventListener('click', quitarFiltros);
   el.verMas.addEventListener('click', function () { estado.limite += GRUPOS_POR_PAGINA; dibujar(); });
+
+  /* Chips de categoría en celular: flechas y degradado según haya más a cada lado */
+  var env = $('envoltorio-categoria'), tira = $('chips-categoria');
+  var flechaAnt = env.querySelector('.flecha--ant'), flechaSig = env.querySelector('.flecha--sig');
+  function actualizarFlechas() {
+    var max = tira.scrollWidth - tira.clientWidth - 2;
+    var hay = max > 0;
+    flechaAnt.hidden = !hay || tira.scrollLeft <= 2;
+    flechaSig.hidden = !hay || tira.scrollLeft >= max;
+    env.classList.toggle('hay-ant', !flechaAnt.hidden);
+    env.classList.toggle('hay-sig', !flechaSig.hidden);
+  }
+  flechaAnt.addEventListener('click', function () { tira.scrollBy({ left: -tira.clientWidth * .7, behavior: 'smooth' }); });
+  flechaSig.addEventListener('click', function () { tira.scrollBy({ left: tira.clientWidth * .7, behavior: 'smooth' }); });
+  tira.addEventListener('scroll', actualizarFlechas, { passive: true });
+  window.addEventListener('resize', actualizarFlechas);
+  new MutationObserver(actualizarFlechas).observe(tira, { childList: true });
 
   cargar();
 })();

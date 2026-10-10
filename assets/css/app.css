@@ -10,8 +10,8 @@
 .nav { position: sticky; top: 0; z-index: 20; height: var(--alto-nav); background: var(--crema); border-bottom: 1px solid var(--linea); }
 .nav__fila { height: 100%; display: flex; align-items: center; justify-content: space-between; gap: 8px; }
 .marca { display: flex; align-items: center; gap: 10px; min-width: 0; min-height: 44px; text-decoration: none; }
-.marca img { flex: none; width: 56px; height: 56px; padding: 3px; border-radius: 16px; background: #fff; object-fit: contain; }
-.marca b { font: 400 1.0625rem/1.15 var(--f-titulo); text-transform: uppercase; letter-spacing: .06em; color: var(--azul); }
+.marca .logo { flex: none; width: 48px; height: 48px; color: var(--azul); }
+.marca b { font: 400 1.1875rem/1.1 var(--f-titulo); text-transform: uppercase; letter-spacing: .06em; color: var(--azul); }
 .nav__acciones { display: flex; flex: none; gap: 4px; }
 .icono-boton {
   display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; padding: 0;
@@ -37,7 +37,6 @@
 }
 .buscador input::placeholder { color: var(--gris); opacity: 1; }
 
-.seccion--rama { padding-bottom: 8px; }
 .etiqueta { margin: 0 0 4px; }
 .chip { font-size: 1rem; }
 .pie__nombre { color: #fff; }
@@ -110,14 +109,100 @@
 
 @media (min-width: 720px) {
   :root { --alto-buscador: 76px; }
-  .marca b { font-size: 1.375rem; letter-spacing: .1em; }
+  .marca b { font-size: 1.625rem; letter-spacing: .1em; }
+  .marca .logo { width: 64px; height: 64px; }
+  :root { --alto-nav: 76px; }
   .buscador form { grid-template-columns: minmax(0, 1fr) auto; }
   .grupo .rejilla { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 @media (min-width: 960px) {
   .grupo .rejilla { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 }
-@media (max-width: 380px) { .marca b { font-size: .9375rem; } .marca { gap: 8px; } }
+@media (max-width: 380px) { .marca b { font-size: 1rem; } .marca { gap: 8px; } }
 
 /* La barra y el buscador fijos no deben tapar los destinos de los enlaces */
 .grupo, #bloque-resumen, #conteo { scroll-margin-top: calc(var(--alto-nav) + var(--alto-buscador) + 12px); }
+
+
+/* Portada con ilustración principal */
+.portada { position: relative; overflow: hidden; padding: 24px 0 24px; }
+.portada__fila { position: relative; display: grid; gap: 8px; align-items: center; }
+.portada__ilus { width: min(60%, 200px); height: auto; margin: 0 auto; padding: 8px; border-radius: 24px; background: #fff; pointer-events: none; }
+@media (min-width: 720px) {
+  .portada { padding: 40px 0 32px; }
+  .portada__fila { grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: 32px; }
+  .portada__ilus { width: min(100%, 300px); }
+}
+
+/* Decoración: detrás del contenido, sin clics, lavanda tenue */
+.deco { position: absolute; z-index: 0; color: var(--lavanda); opacity: .55; pointer-events: none; }
+.contenedor { position: relative; z-index: 1; }
+.deco--olivo { width: 70px; height: 117px; top: 12px; }
+.deco--izq { left: -14px; transform: scaleX(-1) rotate(8deg); }
+.deco--der { right: -14px; transform: rotate(8deg); }
+.deco--casitas { width: 150px; height: 68px; right: 0; bottom: 0; opacity: .4; display: none; }
+.seccion--filtros { padding: 32px 0 24px; }
+.seccion--resultados { padding-top: 24px; overflow: hidden; }
+.seccion--filtros .deco--olivo, .seccion--resultados .deco--olivo { display: none; }
+@media (min-width: 720px) {
+  .deco--olivo { width: 110px; height: 183px; }
+  .deco--casitas { display: block; width: 260px; height: 117px; right: 4%; }
+  .seccion--filtros .deco--olivo, .seccion--resultados .deco--olivo { display: block; }
+  .seccion--resultados .deco--olivo { top: 40px; }
+}
+@media (min-width: 1200px) { .deco--izq { left: 2%; } .deco--der { right: 2%; } }
+
+/* Onda con mascota que camina */
+.onda { position: relative; margin: 8px 0; overflow: hidden; }
+.onda__gato { position: absolute; left: 0; bottom: 6px; width: 40px; height: 25px; color: var(--lavanda); opacity: .9; animation: pasea 40s linear infinite; }
+@keyframes pasea { from { transform: translateX(-60px); } to { transform: translateX(100vw); } }
+@media (min-width: 720px) { .onda__gato { width: 56px; height: 35px; } }
+
+/* Filtros: una tarjeta suave; cada título pegado a sus chips */
+.filtros { display: grid; gap: 28px; padding: 24px 20px; }
+.filtro { display: grid; gap: 6px; }
+.filtro__titulo { font-size: 1.25rem; margin: 0; }
+.filtro__titulo::after { display: none; }
+.filtros__quitar { margin: -8px 0 0; }
+.chips-envoltorio { position: relative; }
+.chips-envoltorio .chips { padding: 4px 2px 8px; scroll-snap-type: x mandatory; }
+.chips-envoltorio::before, .chips-envoltorio::after {
+  content: ""; position: absolute; top: 0; bottom: 8px; width: 36px; pointer-events: none; z-index: 1; opacity: 0; transition: opacity .2s;
+}
+.chips-envoltorio::before { left: 0; background: linear-gradient(to right, var(--blanco), transparent); }
+.chips-envoltorio::after { right: 0; background: linear-gradient(to left, var(--blanco), transparent); }
+.chips-envoltorio.hay-ant::before, .chips-envoltorio.hay-sig::after { opacity: 1; }
+.flecha {
+  position: absolute; top: 50%; z-index: 2; width: 36px; height: 36px; margin-top: -22px; padding: 0 0 3px;
+  border: 0; border-radius: 50%; background: var(--azul); color: var(--sobre-azul); font: 400 1.5rem/1 var(--f-texto); cursor: pointer;
+  box-shadow: var(--sombra);
+}
+.flecha--ant { left: -4px; } .flecha--sig { right: -4px; }
+.chip { box-shadow: none; border-color: var(--linea); }
+.chip:hover { border-color: var(--azul); }
+.chip[aria-pressed="true"] { background: var(--azul); border-color: var(--azul); color: var(--sobre-azul); font-weight: 600; }
+.chip[aria-pressed="true"]::after { color: var(--sobre-azul); }
+@media (min-width: 720px) {
+  .filtros { padding: 28px 32px; gap: 32px; }
+  #chips-especie, #chips-categoria { flex-wrap: wrap; overflow: visible; }
+  .flecha { display: none; }
+  .chips-envoltorio::before, .chips-envoltorio::after { display: none; }
+}
+
+/* Separación entre filtros, hallazgos y resultados */
+#bloque-resumen { padding: 8px 0 32px; margin-bottom: 8px; border-bottom: 1px solid var(--linea); }
+#conteo { margin: 0 0 24px; font-size: 1.0625rem; color: var(--texto); }
+.grupo { padding-top: 40px; }
+.grupo h3 { margin-bottom: 4px; }
+
+/* Tarjetas de producto: sombra suave que crece al apuntar o enfocar */
+.producto { transition: box-shadow .2s, transform .2s; box-shadow: 0 2px 8px rgba(43, 60, 160, .08); }
+.producto:hover, .producto:focus-within { box-shadow: 0 12px 32px rgba(43, 60, 160, .22); transform: translateY(-2px); }
+:root[data-tema="oscuro"] .producto { box-shadow: 0 2px 8px rgba(0, 0, 0, .35); }
+:root[data-tema="oscuro"] .producto:hover, :root[data-tema="oscuro"] .producto:focus-within { box-shadow: 0 12px 32px rgba(0, 0, 0, .6); }
+
+@media (prefers-reduced-motion: reduce) {
+  .onda__gato { animation: none; left: 12%; }
+  .producto, .chips-envoltorio::before, .chips-envoltorio::after { transition: none; }
+  .producto:hover, .producto:focus-within { transform: none; }
+}

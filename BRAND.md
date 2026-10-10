@@ -24,7 +24,7 @@ Se usan con moderación, siempre acompañados de texto (nunca solo el color) y c
 
 | Significado | Modo claro (texto / fondo) | Modo oscuro (texto / fondo) | Uso |
 |---|---|---|---|
-| Verde oliva: "La más barata" y el ahorro | `#4F5B17` / `#EEF2DC` | `#BCCE6C` / `#2A3114` | Insignia, borde de la tarjeta más barata, chip activo |
+| Verde oliva: "La más barata" y el ahorro | `#4F5B17` / `#EEF2DC` | `#BCCE6C` / `#2A3114` | Insignia y borde de la tarjeta más barata |
 | Ámbar: precio de más de 7 días | `#7A4700` / `#FFF1D1` | `#F2B84B` / `#3A2A0A` | Insignia "Precio de hace X días", fecha y avisos de precios viejos |
 | Terracota: errores | `#A23D24` / `#FBE9E4` | `#F4A08A` / `#3E1D17` | Error de carga y fallos |
 
@@ -35,7 +35,7 @@ Reglas:
 - **Dos modos: claro y oscuro** (`color-scheme: light dark`). Por defecto sigue la preferencia del sistema; un interruptor accesible en la barra superior permite cambiarlo y recuerda la elección (`localStorage`, protegido con `try/catch`). El modo claro es el de la paleta de arriba.
 - **Modo oscuro:** fondo azul noche `#0F1330`, tarjetas un poco más claras `#1A2052`, texto `#ECEBF2`, gris de apoyo `#B4B1C2` y azul aclarado `#A9B6FF` (precio por unidad, enlaces, titulares y botón principal, con texto azul noche encima). Pie `#1F2766`. Las ilustraciones van siempre sobre una base blanca para conservar su trazo. Las fotos de producto también van sobre blanco.
 - Contraste mínimo de 4,5:1 para texto en ambos modos. Claro: blanco sobre azul 9,3:1, azul sobre crema 8,2:1, gris sobre crema 4,6:1. Oscuro: azul aclarado sobre tarjeta 7,9:1, texto 12,9:1, gris 7,3:1.
-- Titulares en azul sobre crema o blanco. Fondo crema y tarjetas blancas; los bloques azules grandes ya no se usan: el resumen "Las más baratas" son tarjetas blancas con borde verde oliva e insignia.
+- Titulares en azul sobre crema o blanco. Fondo crema y tarjetas blancas; los bloques azules grandes ya no se usan: el resumen "Hallazgos del día" son tarjetas blancas con borde verde oliva e insignia.
 
 ## Forma y estructura
 - Secciones separadas por ondas suaves; bajo cada titular, un trazo ondulado dibujado a mano.
@@ -59,8 +59,11 @@ Cálida, serena y segura. Español de Colombia, tuteando. Frases cortas. Sin exc
 | Botón principal | VER LA MÁS BARATA |
 | Botón a la tienda | IR A [TIENDA] ↗ |
 | Botón limpiar | QUITAR FILTROS |
-| Filtro de especie | Gatos · Perros · Ambos |
-| Filtro de categoría | Todas las categorías |
+| Filtro de especie | Gatos · Perros · Para los dos |
+| Título de especie | ¿Para quién es? |
+| Título de categoría | ¿Qué necesita hoy? · Todas las categorías |
+| Resumen | Hallazgos del día |
+| Conteo | Encontramos 1.063 opciones para tu peludo |
 | Insignia | LA MÁS BARATA |
 | Insignia de fecha | Precio de hace X días |
 | Frase de marca | Mismo producto. Menos pesos. |
@@ -102,3 +105,8 @@ Cada categoría del catálogo tiene su ilustración en `assets/ilustraciones/`, 
 - Insignias "La más barata" y "Precio de hace X días".
 - Teclado completo, foco visible, botones y chips de al menos 44 px, aviso `aria-live` con el número de resultados, `prefers-reduced-motion`, textos alternativos en toda ilustración y foto, aviso del veterinario siempre visible en el pie.
 - Muestras y maquetas usan marcadores (`$ 00.000`), nunca precios inventados.
+
+## Filtros
+- Chip activo: azul de la marca con check, nunca verde. Cada filtro va con su título en una tarjeta suave. En escritorio los chips se ven todos (varias filas); en celular se desplazan con scroll-snap, degradado en el borde y flechas.
+- Decoración (olivo, casitas, mascota sobre la onda): lavanda tenue, `aria-hidden`, sin clics, quieta con `prefers-reduced-motion`; menos y más pequeña en celular.
+- Logo: mascota dentro de un arco cicládico en línea azul (`assets/ilustraciones/logo.svg`, también favicon), sin caja blanca.
