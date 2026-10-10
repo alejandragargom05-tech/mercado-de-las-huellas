@@ -336,6 +336,12 @@ def revisar_tienda(nombre, url, tipo="tienda"):
         if r is None:
             prohibidas.append(plataforma)
         elif r:
+            if plataforma == "shopify":  # /products.json no trae la moneda: se lee de la portada
+                _, portada = pedir(base, "text/html, */*")
+                m = re.search(r'Shopify\.currency\s*=\s*\{"active":"([A-Z]{3})"', portada)
+                if m and m.group(1) != "COP":
+                    fila.update(estado="sin catálogo público", motivo="los precios están en %s, no en pesos colombianos" % m.group(1))
+                    return fila, None
             fila.update(plataforma=plataforma, estado="aprobada",
                         motivo="%s responde JSON y robots.txt lo permite" % NOMBRE_PLATAFORMA[plataforma])
             return fila, robots
@@ -983,6 +989,8 @@ def consultar_woo(fila_tienda, robots, filas, terminos=None):
             rango = precios.get("price_range") or {}
             if rango and rango.get("min_amount") != rango.get("max_amount"):
                 continue  # producto con variantes de distinto precio: la API no dice cuál es cuál
+            if precios.get("currency_code") not in (None, "", "COP"):
+                continue
             if p.get("is_in_stock") is False:
                 continue
             dec = 10 ** int(precios.get("currency_minor_unit") or 0)

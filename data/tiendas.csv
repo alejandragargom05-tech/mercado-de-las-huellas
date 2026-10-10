@@ -40,7 +40,7 @@ Abyapet,tienda,https://abyapet.com,woocommerce,aprobada,WooCommerce responde JSO
 KeikoPets,tienda,https://www.keikopets.com,,bloqueada por robots.txt,robots.txt prohíbe /api/catalog_system/ y /wp-json/wc/store/v1/products,2026-10-09
 La Casa del Granjero,tienda,https://lacasadelgranjero.com,shopify,aprobada,Shopify responde JSON y robots.txt lo permite,2026-10-09
 La Res,tienda,https://lares.com.co,,bloqueada por términos de uso,"los términos de uso prohíben usar herramientas automatizadas («bots», «spiders») para acceder o copiar el contenido",2026-10-09
-Welpe,emprendimiento,https://welpeshop.com,shopify,aprobada,Shopify responde JSON y robots.txt lo permite,2026-10-09
+Welpe,emprendimiento,https://welpeshop.com,,sin catálogo público,"los precios están en EUR, no en pesos colombianos",2026-10-09
 WUFTREK,emprendimiento,https://wuftrek.com,shopify,aprobada,Shopify responde JSON y robots.txt lo permite,2026-10-09
 Animal Store Mascotas,emprendimiento,https://animalstoremascotas.com,shopify,aprobada,Shopify responde JSON y robots.txt lo permite,2026-10-09
 Avisalpets,emprendimiento,https://avisalpets.com.co,,bloqueada por términos de uso,"los términos de uso prohíben la lectura automática: «no intentará interferir de ninguna manera con el funcionamiento del sitio web, que no transmitir ningún virus, que no utilizará ninguna araña»",2026-10-09
@@ -51,5 +51,5 @@ Pet Outlet,tienda,https://petoutlet.com.co,woocommerce,aprobada,WooCommerce resp
 Mascotas Pet Shop,tienda,https://mascotaspetshop.com.co,woocommerce,aprobada,WooCommerce responde JSON y robots.txt lo permite,2026-10-09
 Petopet,tienda,https://petopet.com.co,,bloqueada por términos de uso,"los términos de uso prohíben la lectura automática: «phish, pharm, pretexto, araña»",2026-10-09
 Petentrega,tienda,https://www.petentrega.com.co,,sin catálogo público,no se pudo leer robots.txt (sin conexión),2026-10-09
-Eco Vet,tienda,https://www.ecovet.com.co,woocommerce,aprobada,WooCommerce responde JSON y robots.txt lo permite,2026-10-09
+Eco Vet,tienda,https://www.ecovet.com.co,,sin catálogo público,"ni VTEX, Shopify ni WooCommerce responden JSON, y las páginas de producto no traen datos estructurados con precio",2026-10-09
 Primepet,tienda,https://www.primepet.com.co,jsonld,aprobada,sitemap con datos estructurados de producto (JSON-LD) y robots.txt lo permite,2026-10-09
