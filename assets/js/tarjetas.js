@@ -82,8 +82,7 @@ var Tarjetas = (function () {
       : h('p', { 'class': 'precio-unidad sin-unidad', texto: 'Sin precio por unidad' });
 
     var cantidad = H.textoCantidad(p) + (p.caracteristica ? ' · ' + p.caracteristica : '');
-    var hora = H.horaDe(p.fechaHora);
-    var fecha = (H.fechaLarga(p.fecha) || 'Fecha desconocida') + (hora ? ', ' + hora : '') + (o.edad === null ? '' : ' (' + H.textoEdad(o.edad) + ')');
+    var fecha = (H.fechaLarga(p.fecha) || 'Fecha desconocida') +(o.edad === null ? '' : ' (' + H.textoEdad(o.edad) + ')');
     var dl = h('dl', null,
       p.marca ? filaDato('Marca', p.marca) : null,
       filaDato('Cantidad', cantidad),
