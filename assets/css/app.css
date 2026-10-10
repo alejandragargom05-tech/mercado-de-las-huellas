@@ -146,9 +146,18 @@
 /* Onda con mascota que camina */
 .onda { position: relative; margin: 8px 0; overflow: hidden; }
 .onda--asoma { margin-top: 72px; overflow-x: clip; overflow-y: visible; }
-.onda__gato { position: absolute; left: 0; bottom: 6px; width: 40px; height: 25px; color: var(--lavanda); opacity: .9; animation: pasea 40s linear infinite; }
-@keyframes pasea { from { transform: translateX(-60px); } to { transform: translateX(100vw); } }
-@media (min-width: 720px) { .onda__gato { width: 56px; height: 35px; } }
+.onda__pj { position: absolute; left: 0; top: 0; width: 0; height: 0; pointer-events: none; opacity: 0; --w: 44px; }
+.onda__pj--gato { --w: 38px; }
+.onda__pj svg { position: absolute; left: calc(var(--w) / -2); bottom: 0; width: var(--w); height: auto; overflow: visible; pointer-events: none; }
+.onda__pj .h-l, .onda__pj .h-w, .onda__pj .h-v { stroke: var(--azul); stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+.onda__pj .h-l { fill: none; }
+.onda__pj .h-w { fill: var(--crema); }
+.onda__pj .h-v { fill: var(--lavanda); }
+.onda__pj .h-b { fill: var(--azul); stroke: none; }
+.onda__pj.corre .h-pata { animation: h-trote .28s linear infinite alternate; }
+.onda__pj.corre .h-p2 { animation-delay: -.14s; }
+.onda__pj.corre .h-cola { animation: h-cola .3s ease-in-out infinite alternate; }
+@media (min-width: 720px) { .onda__pj { --w: 76px; } .onda__pj--gato { --w: 66px; } }
 .onda--asoma { overflow: visible; }
 @supports (overflow: clip) { .onda--asoma { overflow-x: clip; overflow-y: visible; } }
 
@@ -200,7 +209,6 @@
 :root[data-tema="oscuro"] .producto:hover, :root[data-tema="oscuro"] .producto:focus-within { box-shadow: 0 12px 32px rgba(0, 0, 0, .6); }
 
 @media (prefers-reduced-motion: reduce) {
-  .onda__gato { animation: none; left: 12%; }
   .producto, .chips-envoltorio::before, .chips-envoltorio::after { transition: none; }
   .producto:hover, .producto:focus-within { transform: none; }
 }
@@ -251,49 +259,7 @@
 .seccion--texto p { max-width: 62ch; }
 @media (min-width: 720px) { .portada--texto .portada__fila { grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); } }
 
-/* Escena con historia: un perro persigue a un gato (≈4 s, una vez al cargar; al tocarla se repite) */
-.historia { padding: var(--e2) 0 0; }
-.historia__boton { display: block; width: 100%; max-width: 520px; margin-inline: auto; padding: 0; border: 0; border-radius: var(--radio); background: transparent; cursor: pointer; }
-.historia__svg { display: block; width: 100%; height: auto; overflow: hidden; }
-.h-l, .h-w, .h-v { stroke: var(--azul); stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
-.h-l { fill: none; }
-.h-w { fill: var(--crema); }
-.h-v { fill: var(--lavanda); }
-.h-b { fill: var(--azul); stroke: none; }
-.h-fino { stroke-width: 1.6; }
-.h-grueso { stroke-width: 5; }
-.h-suelo, .h-polvo path, .h-golpe path, .h-ray { fill: none; stroke: var(--lavanda); stroke-width: 2.5; stroke-linecap: round; }
-/* Estado por defecto = escena final, quieta (sin JS o con movimiento reducido) */
-.h-perro-corre, .h-gato-corre, .h-polvo, .h-golpe { opacity: 0; }
-.h-perro-sienta { transform: translateX(165px); }
-.h-gato-def { transform: translateX(290px); }
-.h-giro { transform: scaleX(-1); }
-.h-pata-ataque { transform: rotate(-40deg); }
-.anima .h-perro-corre { animation: h-pc 4s linear both; }
-.anima .h-gato-corre { animation: h-gc 4s linear both; }
-.anima .h-gato-def { animation: h-gd 4s step-end both; }
-.anima .h-giro { animation: h-giro 4s ease-in-out both; }
-.anima .h-pelo { animation: h-pelo 4s ease-out both; }
-.anima .h-pata-ataque { animation: h-ataque 4s ease-in-out both; }
-.anima .h-perro-sienta { animation: h-ps 4s step-end both; }
-.anima .h-hop { animation: h-hop 4s ease-out both; }
-.anima .h-signo { animation: h-signo 4s ease-out both; }
-.anima .h-polvo { animation: h-polvo 4s ease-out both; }
-.anima .h-golpe { animation: h-golpe 4s ease-out both; }
-.anima .h-pata { animation: h-trote .28s linear infinite alternate; }
-.anima .h-p2 { animation-delay: -.14s; }
-.anima .h-cola { animation: h-cola .3s ease-in-out infinite alternate; }
-@keyframes h-pc { 0% { transform: translateX(50px); opacity: 1; } 42% { transform: translateX(165px); opacity: 1; } 57% { transform: translateX(165px); opacity: 1; } 57.1%, 100% { transform: translateX(165px); opacity: 0; } }
-@keyframes h-gc { 0% { transform: translateX(160px); opacity: 1; } 28% { transform: translateX(290px); opacity: 1; } 28.1%, 100% { transform: translateX(290px); opacity: 0; } }
-@keyframes h-gd { 0% { opacity: 0; } 28% { opacity: 1; } }
-@keyframes h-giro { 0%, 34% { transform: scaleX(1); } 44%, 100% { transform: scaleX(-1); } }
-@keyframes h-pelo { 0%, 44% { opacity: 0; } 50%, 100% { opacity: 1; } }
-@keyframes h-ataque { 0%, 52% { transform: rotate(0); } 56%, 62% { transform: rotate(-85deg); } 72%, 100% { transform: rotate(-40deg); } }
-@keyframes h-ps { 0% { opacity: 0; } 57% { opacity: 1; } }
-@keyframes h-hop { 0%, 57% { transform: translateY(0); } 62% { transform: translateY(-14px); } 67%, 100% { transform: translateY(0); } }
-@keyframes h-signo { 0%, 62% { opacity: 0; transform: translateY(6px); } 68%, 100% { opacity: 1; transform: translateY(0); } }
-@keyframes h-polvo { 0%, 28% { opacity: 0; } 31% { opacity: 1; } 40%, 100% { opacity: 0; } }
-@keyframes h-golpe { 0%, 56% { opacity: 0; } 58% { opacity: 1; } 66%, 100% { opacity: 0; } }
+
 @keyframes h-trote { from { transform: rotate(-24deg); } to { transform: rotate(24deg); } }
 @keyframes h-cola { from { transform: rotate(-10deg); } to { transform: rotate(14deg); } }
-@media (prefers-reduced-motion: reduce) { .anima * { animation: none !important; } }
+

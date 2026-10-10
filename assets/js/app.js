@@ -455,17 +455,38 @@
     $('filtros').scrollIntoView({ behavior: 'smooth', block: 'start' });
   });
 
-  /* Escena con historia: se reproduce una vez al cargar y otra vez al tocarla. Con movimiento reducido queda la escena final, quieta. */
-  var escena = $('historia'), reducido = window.matchMedia ? matchMedia('(prefers-reduced-motion: reduce)') : null;
-  function reproducirEscena() {
-    var svg = escena.querySelector('svg');
-    if (reducido && reducido.matches) return;
-    svg.classList.remove('anima');
-    void svg.getBoundingClientRect(); // reinicia la animación
-    svg.classList.add('anima');
-  }
-  escena.addEventListener('click', reproducirEscena);
-  reproducirEscena();
+  /* Onda: un gato persigue a un perro siguiendo la curva (6 s de carrera, 4 s de pausa). Con movimiento reducido quedan quietos en el centro. */
+  (function () {
+    var onda = document.querySelector('.onda--asoma'); if (!onda) return;
+    var perro = onda.querySelector('.onda__pj--perro'), gato = onda.querySelector('.onda__pj--gato');
+    var mq = window.matchMedia ? matchMedia('(prefers-reduced-motion: reduce)') : null;
+    function alto(x, w) { // y de la curva de 80 px de periodo, centrada en la onda
+      var p = (((x - (w - 80) / 2) % 80) + 80) % 80, t = (p % 40) / 40, u = 1 - t;
+      return p < 40 ? 12 * (u * u + t * t) : 12 * u * u + 48 * u * t + 12 * t * t;
+    }
+    function poner(el, x, w) {
+      var ang = Math.atan2(alto(x + 3, w) - alto(x - 3, w), 6) * 57.3;
+      el.style.transform = 'translate(' + x.toFixed(1) + 'px,' + alto(x, w).toFixed(1) + 'px) rotate(' + ang.toFixed(1) + 'deg)';
+    }
+    function quieto() {
+      var w = onda.clientWidth;
+      [perro, gato].forEach(function (e) { e.classList.remove('corre'); e.style.opacity = 1; });
+      poner(perro, w / 2 + 26, w); poner(gato, w / 2 - 26, w);
+    }
+    function cuadro(ahora) {
+      if (mq && mq.matches) { quieto(); return; }
+      var w = onda.clientWidth, t = ahora % 10000, vis = t < 6000, sep = w < 720 ? 52 : 90, margen = 60;
+      [perro, gato].forEach(function (e) { e.classList.toggle('corre', vis); e.style.opacity = vis ? 1 : 0; });
+      if (vis) {
+        var x = -margen - sep + (t / 6000) * (w + 2 * margen + sep);
+        poner(perro, x + sep, w); poner(gato, x, w);
+      }
+      requestAnimationFrame(cuadro);
+    }
+    if (mq && mq.addEventListener) mq.addEventListener('change', function () { if (!mq.matches) requestAnimationFrame(cuadro); });
+    window.addEventListener('resize', function () { if (mq && mq.matches) quieto(); });
+    requestAnimationFrame(cuadro);
+  })();
 
   cargar();
 })();

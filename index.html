@@ -21,7 +21,6 @@ try { var t = localStorage.getItem('tema'); if (t === 'claro' || t === 'oscuro')
 <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
   <symbol id="logo" viewBox="0 0 64 64"><path d="M9 60V30a23 23 0 0 1 46 0v30M5 60h54"/>
 <g stroke-width="2.2"><path d="M20 55C17 47 18 41 21 36L20 28l7 5q5-1.4 10 0l7-5-1 8c3 5 4 11 1 19-7 4-17 4-24 0Z"/><circle cx="25" cy="44" r="1.6" fill="currentColor" stroke="none"/><circle cx="39" cy="44" r="1.6" fill="currentColor" stroke="none"/><path d="M30 48.5h4l-2 2.2z" fill="currentColor" stroke-width="1.2"/><path d="M32 50.7v2M32 52.7q-2 1.6-4 .6M32 52.7q2 1.6 4 .6"/><path d="M20 49l-6 -1.5M20 52l-6 1.5M44 49l6-1.5M44 52l6 1.5" stroke-width="1.4"/></g></symbol>
-  <symbol id="gato-camina" viewBox="0 0 64 40"><g fill="currentColor"><path d="M10 28c0-9 6-14 16-14h16c8 0 14 4 14 12v4H10z"/><path d="M48 14l2-9 6 7z"/><path d="M42 14l-2-9-6 7z" transform="translate(6 0)"/><path d="M10 28C4 26 2 20 5 15" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><rect x="14" y="30" width="5" height="9" rx="2.5"/><rect x="24" y="30" width="5" height="9" rx="2.5"/><rect x="40" y="30" width="5" height="9" rx="2.5"/><rect x="50" y="30" width="5" height="9" rx="2.5"/></g></symbol>
 </svg>
 
 
@@ -61,65 +60,6 @@ try { var t = localStorage.getItem('tema'); if (t === 'claro' || t === 'oscuro')
     </form>
   </div>
 </div>
-
-<section class="historia" aria-label="Una escena de un perro y un gato">
-  <div class="contenedor">
-    <button class="historia__boton" id="historia" type="button" aria-label="Ver otra vez la escena: un perro persigue a un gato, el gato frena, se eriza y le da un manotazo, y el perro se sienta sorprendido">
-      <svg class="historia__svg" viewBox="0 0 400 150" aria-hidden="true" focusable="false">
-        <path class="h-suelo" d="M6 136H394"/>
-        <g transform="translate(0 132)">
-          <g class="h-perro-corre">
-            <g class="h-cola" style="transform-origin:-34px -42px"><path class="h-l" d="M-34 -42Q-48 -52 -44 -66"/></g>
-            <path class="h-l h-pata h-p1" style="transform-origin:-22px -26px" d="M-22 -26L-30 -2"/>
-            <path class="h-l h-pata h-p2" style="transform-origin:-12px -26px" d="M-12 -26L-6 -2"/>
-            <path class="h-w" d="M-34 -30Q-34 -50 -12 -50H14Q30 -50 32 -36Q32 -22 14 -22H-12Q-34 -22 -34 -30Z"/>
-            <path class="h-l h-pata h-p2" style="transform-origin:10px -26px" d="M10 -26L16 -2"/>
-            <path class="h-l h-pata h-p1" style="transform-origin:20px -26px" d="M20 -26L30 -2"/>
-            <path class="h-w" d="M22 -56Q22 -72 38 -72Q54 -70 56 -58L68 -54Q70 -48 62 -46L52 -46Q46 -38 34 -42Q22 -44 22 -56Z"/>
-            <path class="h-v" d="M30 -68Q20 -64 22 -50Q32 -50 36 -62Z"/>
-            <circle class="h-b" cx="43" cy="-61" r="2"/><ellipse class="h-b" cx="66" cy="-52" rx="3.6" ry="3"/>
-          </g>
-          <g class="h-gato-corre">
-            <path class="h-l" d="M-24 -28Q-42 -30 -40 -52"/>
-            <path class="h-l h-pata h-p2" style="transform-origin:-14px -16px" d="M-14 -16L-24 -2"/>
-            <path class="h-l h-pata h-p1" style="transform-origin:-6px -16px" d="M-6 -16L-8 -2"/>
-            <path class="h-w" d="M-24 -20Q-24 -38 -6 -38H12Q24 -38 24 -26Q24 -14 12 -14H-6Q-24 -14 -24 -20Z"/>
-            <path class="h-l h-pata h-p1" style="transform-origin:6px -16px" d="M6 -16L8 -2"/>
-            <path class="h-l h-pata h-p2" style="transform-origin:14px -16px" d="M14 -16L24 -2"/>
-            <path class="h-w" d="M18 -40Q18 -56 32 -56Q46 -56 46 -42Q46 -32 32 -32Q18 -32 18 -40Z"/>
-            <path class="h-w" d="M21 -52L21 -64L30 -56ZM38 -56L45 -63L44 -49Z"/>
-            <circle class="h-b" cx="36" cy="-45" r="1.8"/><path class="h-b" d="M45 -42l3 1-3 2z"/>
-          </g>
-          <g class="h-gato-def">
-            <g class="h-polvo"><path d="M-6 -4H-22M-2 -12H-16M-8 -20H-20"/></g>
-            <g class="h-giro">
-              <path class="h-v" d="M-22 -30Q-46 -34 -44 -62Q-38 -68 -32 -60Q-34 -46 -18 -40Z"/>
-              <path class="h-l" d="M-12 -14L-14 0M-4 -14L-4 0M8 -14L8 0"/>
-              <path class="h-w" d="M-22 -12Q-26 -50 0 -54Q26 -50 24 -12Z"/>
-              <path class="h-l h-pelo" d="M-20 -40L-27 -44L-19 -47L-23 -54L-13 -52L-12 -61L-4 -55L2 -63L6 -55L14 -60L14 -51L23 -53L19 -44L26 -42"/>
-              <path class="h-w" d="M20 -38Q20 -54 34 -54Q50 -54 50 -40Q50 -28 34 -28Q20 -28 20 -38Z"/>
-              <path class="h-w" d="M23 -50L23 -63L32 -53ZM40 -53L48 -62L47 -47Z"/>
-              <path class="h-l" d="M29 -46l7 3M43 -35l4 -3M43 -33l4 2"/>
-              <circle class="h-b" cx="35" cy="-42" r="1.8"/>
-              <g class="h-pata-ataque" style="transform-origin:16px -22px"><path class="h-l h-grueso" d="M16 -22L18 4"/><circle class="h-v" cx="18" cy="6" r="4.2"/></g>
-            </g>
-          </g>
-          <g class="h-perro-sienta"><g class="h-hop">
-            <path class="h-l" d="M-20 -6Q-34 -6 -32 -20"/>
-            <path class="h-w" d="M-20 0Q-26 -30 -8 -44Q8 -50 20 -38Q26 -20 22 0Z"/>
-            <path class="h-l" d="M10 0V-22M20 0V-20"/>
-            <path class="h-w" d="M2 -50Q2 -66 18 -66Q36 -66 38 -52L50 -48Q52 -42 44 -40L36 -40Q30 -32 18 -36Q2 -38 2 -50Z"/>
-            <path class="h-v" d="M10 -62Q-2 -58 0 -44Q10 -44 14 -56Z"/>
-            <circle class="h-w h-fino" cx="24" cy="-56" r="3.8"/><circle class="h-b" cx="25" cy="-56" r="1.4"/><ellipse class="h-b" cx="50" cy="-46" rx="3" ry="2.5"/>
-            <g class="h-signo"><path class="h-l" d="M30 -96v11"/><circle class="h-b" cx="30" cy="-78" r="1.8"/><path class="h-ray" d="M44 -78l7 -5M46 -70l9 0M18 -84l-6 -5"/></g>
-          </g></g>
-          <g class="h-golpe"><path d="M236 -66l8 -6M240 -56h10M236 -46l8 6"/></g>
-        </g>
-      </svg>
-    </button>
-  </div>
-</section>
-
 <p class="solo-lectores" id="anuncio" role="status" aria-live="polite"></p>
 
 <main>
@@ -164,7 +104,27 @@ try { var t = localStorage.getItem('tema'); if (t === 'claro' || t === 'oscuro')
     </div>
   </section>
 
-  <div class="onda onda--asoma" aria-hidden="true"><img class="deco-img deco-img--onda" src="assets/ilustraciones/juguetes-interactivos.svg" alt="" aria-hidden="true" width="120" height="100"><svg class="onda__gato"><use href="#gato-camina"/></svg></div>
+  <div class="onda onda--asoma" aria-hidden="true"><img class="deco-img deco-img--onda" src="assets/ilustraciones/juguetes-interactivos.svg" alt="" aria-hidden="true" width="120" height="100"><div class="onda__pj onda__pj--perro"><svg viewBox="-46 -76 120 78" aria-hidden="true" focusable="false">
+            <g class="h-cola" style="transform-origin:-34px -42px"><path class="h-l" d="M-34 -42Q-48 -52 -44 -66"/></g>
+            <path class="h-l h-pata h-p1" style="transform-origin:-22px -26px" d="M-22 -26L-30 -2"/>
+            <path class="h-l h-pata h-p2" style="transform-origin:-12px -26px" d="M-12 -26L-6 -2"/>
+            <path class="h-w" d="M-34 -30Q-34 -50 -12 -50H14Q30 -50 32 -36Q32 -22 14 -22H-12Q-34 -22 -34 -30Z"/>
+            <path class="h-l h-pata h-p2" style="transform-origin:10px -26px" d="M10 -26L16 -2"/>
+            <path class="h-l h-pata h-p1" style="transform-origin:20px -26px" d="M20 -26L30 -2"/>
+            <path class="h-w" d="M22 -56Q22 -72 38 -72Q54 -70 56 -58L68 -54Q70 -48 62 -46L52 -46Q46 -38 34 -42Q22 -44 22 -56Z"/>
+            <path class="h-v" d="M30 -68Q20 -64 22 -50Q32 -50 36 -62Z"/>
+            <circle class="h-b" cx="43" cy="-61" r="2"/><ellipse class="h-b" cx="66" cy="-52" rx="3.6" ry="3"/>
+          </svg></div><div class="onda__pj onda__pj--gato"><svg viewBox="-46 -68 96 70" aria-hidden="true" focusable="false">
+            <path class="h-l" d="M-24 -28Q-42 -30 -40 -52"/>
+            <path class="h-l h-pata h-p2" style="transform-origin:-14px -16px" d="M-14 -16L-24 -2"/>
+            <path class="h-l h-pata h-p1" style="transform-origin:-6px -16px" d="M-6 -16L-8 -2"/>
+            <path class="h-w" d="M-24 -20Q-24 -38 -6 -38H12Q24 -38 24 -26Q24 -14 12 -14H-6Q-24 -14 -24 -20Z"/>
+            <path class="h-l h-pata h-p1" style="transform-origin:6px -16px" d="M6 -16L8 -2"/>
+            <path class="h-l h-pata h-p2" style="transform-origin:14px -16px" d="M14 -16L24 -2"/>
+            <path class="h-w" d="M18 -40Q18 -56 32 -56Q46 -56 46 -42Q46 -32 32 -32Q18 -32 18 -40Z"/>
+            <path class="h-w" d="M21 -52L21 -64L30 -56ZM38 -56L45 -63L44 -49Z"/>
+            <circle class="h-b" cx="36" cy="-45" r="1.8"/><path class="h-b" d="M45 -42l3 1-3 2z"/>
+          </svg></div></div>
 
   <section class="seccion seccion--resultados" aria-label="Resultados">
     <img class="deco-img deco-img--borde" src="assets/ilustraciones/gimnasios-rascadores.svg" alt="" aria-hidden="true" width="110" height="92">
