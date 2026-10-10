@@ -53,4 +53,21 @@ for (var n = 0; n < 2; n++) {
 /* Sanidad: precio por unidad del CSV vs precio / cantidad en todas las filas */
 var malas = todas.filter(function (p) { return p.cantidad > 0 && Math.abs(p.precioUnidad - p.precio / p.cantidad) > 0.01 * p.precioUnidad; });
 print('\nFilas con precio por unidad a más de 1 % de precio/cantidad (cantidad redondeada en el CSV): ' + malas.length);
+/* Hora de la última actualización (data/estado.json) y categorías del panel */
+print('\n== Actualización y panel');
+var ahora = new Date('2026-10-10T20:00:00Z'); // 3:00 p. m. en Colombia
+var t = Huellas.textoActualizacion({ actualizado: '2026-10-10T06:03:11-05:00', tiendas_consultadas: 38, productos_actualizados: 9120, tiendas_con_problemas: [] }, ahora);
+print('  ' + (t && t.titulo) + ' | ' + (t && t.detalle));
+ok(t && /^Precios actualizados hoy a las 6:03/.test(t.titulo), 'el título debe decir «hoy a las 6:03»');
+ok(t && /38 tiendas/.test(t.detalle) && /9\.120 productos/.test(t.detalle), 'tiendas y productos en el detalle');
+var ayer = Huellas.textoActualizacion({ actualizado: '2026-10-09T23:00:00Z', tiendas_consultadas: 1, productos_actualizados: 1, tiendas_con_problemas: ['X'] }, ahora);
+ok(ayer && /el 9 de octubre de 2026 a las 6:00/.test(ayer.titulo) && /1 tienda y/.test(ayer.detalle) && /No actualizado/.test(ayer.detalle), 'fecha de ayer y tiendas con problemas: ' + (ayer && ayer.titulo));
+ok(Huellas.textoActualizacion({ actualizado: 'basura' }, ahora) === null && Huellas.textoActualizacion(null, ahora) === null, 'estado inválido -> null');
+var cat0 = Huellas.CATEGORIAS.map(function (c) { return c.id; });
+ok(!Huellas.configurarCategorias({ categorias: [{ id: 'inventada', orden: 1, visible: true }] }), 'categoría inexistente se rechaza');
+ok(Huellas.CATEGORIAS.length === cat0.length, 'un archivo inválido no cambia nada');
+ok(Huellas.configurarCategorias({ categorias: [{ id: 'ropa', orden: 1, visible: true }, { id: 'concentrado', orden: 2, visible: true }, { id: 'rastreo', orden: 3, visible: false }] }), 'archivo válido');
+var ids = Huellas.CATEGORIAS.map(function (c) { return c.id; });
+ok(ids[0] === 'ropa' && ids[1] === 'concentrado' && ids.indexOf('rastreo') === -1, 'orden y categoría oculta: ' + ids.join(','));
+ok(Huellas.leerProductos(texto).every(function (p) { return p.categoria !== 'rastreo'; }), 'los productos de una categoría oculta no entran');
 print(fallas ? '\n' + fallas + ' FALLAS' : '\nTodo en orden');

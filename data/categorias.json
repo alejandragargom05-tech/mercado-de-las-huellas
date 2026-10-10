@@ -1,0 +1,59 @@
+{
+  "categorias": [
+    {
+      "id": "concentrado",
+      "orden": 1,
+      "visible": true
+    },
+    {
+      "id": "arena",
+      "orden": 2,
+      "visible": true
+    },
+    {
+      "id": "higiene",
+      "orden": 3,
+      "visible": true
+    },
+    {
+      "id": "paseo",
+      "orden": 4,
+      "visible": true
+    },
+    {
+      "id": "juguetes",
+      "orden": 5,
+      "visible": true
+    },
+    {
+      "id": "comederos",
+      "orden": 6,
+      "visible": true
+    },
+    {
+      "id": "camas",
+      "orden": 7,
+      "visible": true
+    },
+    {
+      "id": "rascadores",
+      "orden": 8,
+      "visible": true
+    },
+    {
+      "id": "transporte",
+      "orden": 9,
+      "visible": true
+    },
+    {
+      "id": "ropa",
+      "orden": 10,
+      "visible": true
+    },
+    {
+      "id": "rastreo",
+      "orden": 11,
+      "visible": true
+    }
+  ]
+}

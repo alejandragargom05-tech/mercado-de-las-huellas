@@ -45,8 +45,29 @@ var Comun = (function () {
     return n;
   }
 
-  /* ---------- Instagram ---------- */
-  [].forEach.call(document.querySelectorAll('[data-instagram]'), function (a) { a.href = URL_INSTAGRAM; });
+  /* ---------- Textos del panel (data/textos.json) ----------
+     Aviso superior, enlace de Instagram y enlace del formulario. Todo es opcional: si el archivo falta o un valor no
+     es válido, se queda lo de las constantes de arriba. Los textos se ponen con textContent (nunca como HTML). */
+  function pintarInstagram() {
+    [].forEach.call(document.querySelectorAll('[data-instagram]'), function (a) { a.href = URL_INSTAGRAM; });
+  }
+  pintarInstagram();
+  var textos = fetch('data/textos.json', { cache: 'no-cache' })
+    .then(function (r) { return r.ok ? r.json() : {}; }).catch(function () { return {}; })
+    .then(function (t) {
+      t = t && typeof t === 'object' ? t : {};
+      if (typeof t.enlace_instagram === 'string' && /^https:\/\/(?:www\.)?instagram\.com\/[\w./-]+\/?$/.test(t.enlace_instagram)) {
+        URL_INSTAGRAM = t.enlace_instagram; pintarInstagram();
+      }
+      if (typeof t.enlace_formulario === 'string' && /^https:\/\/docs\.google\.com\/forms\/d\/(?:e\/)?[\w-]+\/viewform\S*$/.test(t.enlace_formulario)) {
+        URL_FORMULARIO = t.enlace_formulario;
+      }
+      if (typeof t.aviso_superior === 'string' && t.aviso_superior.trim() && t.aviso_superior.length <= 200 && document.body) {
+        var aviso = h('p', { 'class': 'aviso-superior', role: 'note', texto: t.aviso_superior.trim() });
+        document.body.insertBefore(aviso, document.body.firstChild);
+      }
+      return t;
+    });
 
   /* ---------- Modo claro / oscuro: abre en claro; si la persona elige oscuro, se recuerda ---------- */
   var interruptor = $('tema');
@@ -214,5 +235,5 @@ var Comun = (function () {
   });
   if (/[?&]sugerir=1\b/.test(location.search)) abrirSugerencia({ tipo: /[?&]tipo=sumar\b/.test(location.search) ? TIPO_SUMAR : '' }, document.body);
 
-  return { URL_INSTAGRAM: URL_INSTAGRAM, TIPOS: TIPOS, TIPO_SUMAR: TIPO_SUMAR, abrirSugerencia: abrirSugerencia, abrirPanel: abrirPanel };
+  return { textos: textos, TIPOS: TIPOS, TIPO_SUMAR: TIPO_SUMAR, abrirSugerencia: abrirSugerencia, abrirPanel: abrirPanel };
 })();

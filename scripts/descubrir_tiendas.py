@@ -6,7 +6,10 @@ prueba cada tienda nueva con las mismas reglas del scraper (robots.txt y catálo
 WooCommerce o sitemap con JSON-LD), lee sus términos de uso y deja en el CSV su estado: aprobada, bloqueada por robots.txt,
 bloqueada por términos de uso o sin catálogo público, con el motivo. El scraper diario lee las aprobadas desde ese CSV.
 
-Uso: python3 scripts/descubrir_tiendas.py   (en el proyecto final se programa cada semana)
+Uso: python3 scripts/descubrir_tiendas.py                 (el flujo de GitHub lo corre cada semana: revisa todo de nuevo)
+     python3 scripts/descubrir_tiendas.py --solo-nuevas   (corrida diaria: solo prueba las tiendas que aún no tienen estado)
+
+Las tiendas que el panel dejó «pausada por el panel» o «bloqueada por el panel» no se tocan: solo la acción «sumar» las reactiva.
 """
 import csv
 import ipaddress
@@ -82,7 +85,8 @@ def enlaces_de_respuesta(fila):
     return [u for u in (url_publica(c) for c in celdas if c and ("." in c)) if u]
 
 
-def main():
+def main(argv=None):
+    solo_nuevas = "--solo-nuevas" in (sys.argv[1:] if argv is None else argv)
     existentes = scraper.cargar_candidatas()
     conocidos = {scraper.dominio(c["url"]) for c in existentes if c.get("url")}
     conocidos |= {scraper.dominio(u) for _, u, _ in scraper.cargar_tiendas() if u}
@@ -115,11 +119,15 @@ def main():
     for c in existentes:
         revisada = c.get("fecha_revision")
         vieja = False
+        if c.get("estado") in scraper.ESTADOS_PANEL:
+            continue  # decisión del panel
         if revisada and c.get("estado") != "aprobada":
             try:
                 vieja = (hoy - datetime.strptime(revisada, "%Y-%m-%d").date()).days >= REVISAR_DE_NUEVO_DIAS
             except ValueError:
                 vieja = True
+        if solo_nuevas and c.get("estado"):
+            continue
         if c.get("estado") == "aprobada":  # las aprobadas se vuelven a mirar solo en sus términos de uso
             motivo = scraper.terminos_prohiben(c["url"])
             if motivo:

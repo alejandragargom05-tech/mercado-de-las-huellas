@@ -14,12 +14,13 @@
       h('p', { texto: 'No pudimos traer los precios. Se cortó la conexión o el archivo de precios no está disponible por ahora. Revisa tu conexión e inténtalo otra vez; si sigue igual, vuelve en unos minutos.' }), boton));
   }
 
-  function mostrar(productos, modificado) {
+  function mostrar(productos, datosEstado) {
     var lista = Tarjetas.hallazgos(productos, hoy);
+    var t = H.textoActualizacion(datosEstado, new Date());
     var fecha = H.fechaLarga(H.fechaMasReciente(productos));
-    var d = modificado ? new Date(modificado) : null;
-    var hora = d && isFinite(d) ? d.toLocaleTimeString('es-CO', { hour: 'numeric', minute: '2-digit', timeZone: 'America/Bogota' }) : '';
-    if (fecha) $('actualizacion').appendChild(h('p', { 'class': 'apoyo', texto: 'Precios actualizados el ' + fecha + (hora ? ' a las ' + hora : '') + '.' }));
+    $('actualizacion').textContent = '';
+    if (t) $('actualizacion').appendChild(h('p', { 'class': 'apoyo' }, h('b', { texto: t.titulo + '.' }), ' ' + t.detalle));
+    else if (fecha) $('actualizacion').appendChild(h('p', { 'class': 'apoyo', texto: 'Precios actualizados el ' + fecha + '.' }));
     $('estado').textContent = '';
     if (!lista.length) {
       $('estado').appendChild(h('div', { 'class': 'aviso aviso--info' }, h('p', { texto: 'Hoy no hay hallazgos: ningún grupo tiene precios al día en más de una tienda. Vuelve mañana, cuando se actualicen los precios.' })));
@@ -41,13 +42,17 @@
     var estado = $('estado');
     estado.textContent = '';
     estado.appendChild(h('p', { 'class': 'apoyo', role: 'status', texto: 'Buscando el mejor precio para tu peludito…' }));
-    var modificado = '';
+    var leer = function (url) { return fetch(url, { cache: 'no-cache' }).then(function (r) { return r.ok ? r.json() : null; }).catch(function () { return null; }); };
+    var categorias = leer('data/categorias.json'), datosEstado = leer('data/estado.json');
     fetch('data/precios.csv', { cache: 'no-cache' })
-      .then(function (r) { if (!r.ok) throw new Error(r.status); modificado = r.headers.get('Last-Modified') || ''; return r.text(); })
+      .then(function (r) { if (!r.ok) throw new Error(r.status); return r.text(); })
       .then(function (texto) {
-        var productos = H.leerProductos(texto);
-        if (!productos.length) throw new Error('sin datos');
-        mostrar(productos, modificado);
+        return categorias.then(function (cats) {
+          H.configurarCategorias(cats);
+          var productos = H.leerProductos(texto);
+          if (!productos.length) throw new Error('sin datos');
+          return datosEstado.then(function (e) { mostrar(productos, e); });
+        });
       })
       .catch(mostrarError);
   }

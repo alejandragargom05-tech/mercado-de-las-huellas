@@ -40,6 +40,10 @@
 .etiqueta { margin: 0 0 4px; }
 .chip { font-size: 1rem; }
 
+/* Aviso superior: lo escribe el equipo desde el panel (data/textos.json) */
+.aviso-superior { margin: 0; padding: 10px 16px; background: var(--azul); color: var(--sobre-azul); text-align: center; font-size: 1rem; }
+.actualizacion b { font-weight: 600; }
+
 /* Avisos: informan qué pasó, por qué y qué hacer */
 .aviso {
   display: grid; gap: 8px; justify-items: start; margin: 0 0 16px; padding: 14px 18px; border-radius: 16px;

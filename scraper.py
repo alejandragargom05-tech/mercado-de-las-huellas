@@ -2,10 +2,24 @@
 """Consulta catálogos públicos de tiendas de mascotas de Colombia: VTEX, Shopify, WooCommerce y, si no hay ninguno,
 sitemap + datos estructurados de producto (JSON-LD de schema.org). Sin navegadores ni simular personas.
 
-Solo usa la biblioteca estándar. Genera:
-  data/tiendas.csv          estado de cada tienda (aprobada, bloqueada por robots.txt, sin catálogo público)
-  data/scrapeado-hoy.csv    productos disponibles clasificados, con precio por unidad de medida
-  data/precios.csv          copia de la misma corrida: es el archivo que lee la web
+Solo usa la biblioteca estándar. Es la actualización automática de precios (la corre el flujo de GitHub dos veces al día).
+
+Uso:
+  python3 scraper.py                   actualiza precios: lee data/tiendas.csv y consulta solo las tiendas aprobadas
+  python3 scraper.py --revisar         vuelve a revisar robots.txt, términos de uso y catálogo de cada tienda y actualiza precios
+  python3 scraper.py --solo-revision   solo la revisión de tiendas (la corre el trabajo semanal); no consulta precios
+
+Genera y mantiene:
+  data/tiendas.csv          estado de cada tienda (aprobada, bloqueada por robots.txt, sin catálogo público, pausada...)
+  data/precios.csv          lo que lee la web: precio, tienda, fecha y hora de la consulta y si el precio está actualizado.
+                            Si una tienda o un producto falla se conserva el último precio válido con su fecha original,
+                            marcado «no actualizado». Nunca se rellena ni se estima un precio.
+  data/historico.csv        se le agregan filas en cada corrida (nunca se borra nada): cada precio nuevo o que cambió
+  data/estado.json          fecha y hora de la última corrida, tiendas consultadas y productos actualizados
+  data/scrapeado-hoy.csv    copia de precios.csv
+
+Mercado Libre Colombia (sitio MCO) se consulta con su API oficial; lee ML_CLIENT_ID y ML_CLIENT_SECRET del entorno
+(en GitHub, de los secretos del repositorio). Si no están, se salta y se avisa en el log.
 
 Respeta robots.txt (se revisa cada URL antes de pedirla) y espera 1,5 s entre consultas.
 """
@@ -19,7 +33,8 @@ import unicodedata
 import urllib.error
 import urllib.parse
 import urllib.request
-from datetime import date
+import os
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from urllib.parse import urljoin, urlsplit
 
@@ -28,6 +43,9 @@ TIENDAS_MD = RAIZ / "TIENDAS.md"
 SALIDA_TIENDAS = RAIZ / "data" / "tiendas.csv"
 SALIDA_PRODUCTOS = RAIZ / "data" / "scrapeado-hoy.csv"
 SALIDA_PRECIOS = RAIZ / "data" / "precios.csv"  # lo que lee la web; sale de la misma corrida, sin editar a mano
+HISTORICO = RAIZ / "data" / "historico.csv"
+ESTADO = RAIZ / "data" / "estado.json"
+RESUMEN_REVISION = RAIZ / "revision-resumen.txt"  # lo lee el flujo semanal para el mensaje del commit (no se publica)
 
 USER_AGENT = (
     "MercadoDeLasHuellasBot/1.0 (comparador de precios de mascotas en Colombia; "
@@ -50,6 +68,14 @@ TIENDAS_EXTRA = [
     ("La Res", "https://lares.com.co", "tienda"),
 ]
 TIPOS_TIENDA = ("cadena", "tienda", "emprendimiento")
+# Estados que pone scripts/leer_panel.py (acción «pausar» o «bloquear» de la hoja): el scraper no consulta esas tiendas.
+ESTADO_PAUSADA = "pausada por el panel"
+ESTADO_BLOQUEADA_PANEL = "bloqueada por el panel"
+ESTADOS_PANEL = (ESTADO_PAUSADA, ESTADO_BLOQUEADA_PANEL)
+DOMINIO_ML = "mercadolibre.com.co"
+ML_API = "https://api.mercadolibre.com"
+ML_SITIO = "MCO"
+ML_LIMITE = 50
 
 # Tiendas cuyos términos de uso prohíben leer el sitio con herramientas automáticas (revisión manual del 2026-10-09).
 # Las candidatas bloqueadas por scripts/descubrir_tiendas.py se suman a esta lista al cargar el CSV.
@@ -111,7 +137,11 @@ CLAVES_SHOPIFY_EXTRA = ["concentrado", "croqueta", "alimento", "gps", "airtag", 
                         "chaqueta", "disfraz", "tazon", "coca", "contenedor", "manta", "cojin", "sofa", "casa", "reja", "corral",
                         "cinturon", "morral", "eliminador", "colonia", "catnip", "pasto", "hierba", "arenera", "arenero"]
 
-HOY = date.today().isoformat()
+BOGOTA = timezone(timedelta(hours=-5))  # Colombia no tiene horario de verano
+AHORA = datetime.now(BOGOTA).replace(microsecond=0)
+HOY = AHORA.date().isoformat()
+FECHA_HORA = AHORA.isoformat()
+ERRORES_DE_RED = [0]  # cuenta respuestas fallidas (sin conexión, 403, 429, 5xx) para saber si una consulta quedó incompleta
 CANDIDATOS_RASTREO = set()  # nombres con collar/placa/GPS/AirTag que se descartaron (para revisar la regla)
 
 
@@ -133,21 +163,24 @@ def esperar():
     _ultima[0] = time.monotonic()
 
 
-def pedir(url, acepta="application/json, text/plain, */*"):
-    """GET con espera previa. Devuelve (estado_http, texto); estado 0 si falla la conexión."""
+def pedir(url, acepta="application/json, text/plain, */*", cabeceras=None, datos=None):
+    """GET (POST si trae datos) con espera previa. Devuelve (estado_http, texto); estado 0 si falla la conexión."""
     esperar()
     try:
-        req = urllib.request.Request(url, headers={"User-Agent": USER_AGENT, "Accept": acepta})
+        req = urllib.request.Request(url, data=datos, headers={"User-Agent": USER_AGENT, "Accept": acepta, **(cabeceras or {})})
         with urllib.request.urlopen(req, timeout=TIMEOUT) as r:
             return r.status, r.read().decode("utf-8", errors="replace")
     except urllib.error.HTTPError as e:
+        if e.code in (403, 429) or e.code >= 500:
+            ERRORES_DE_RED[0] += 1
         return e.code, ""
     except (urllib.error.URLError, TimeoutError, OSError, ValueError):
+        ERRORES_DE_RED[0] += 1
         return 0, ""
 
 
-def pedir_json(url):
-    estado, texto = pedir(url)
+def pedir_json(url, cabeceras=None):
+    estado, texto = pedir(url, cabeceras=cabeceras)
     try:
         return estado, json.loads(texto)
     except ValueError:
@@ -316,6 +349,12 @@ def terminos_prohiben(base):
     return ""
 
 
+def estados_del_panel():
+    """dominio -> (estado, nota) de las tiendas que el panel pausó o bloqueó."""
+    return {dominio(c["url"]): (c["estado"], c.get("motivo") or "") for c in cargar_candidatas()
+            if c.get("url") and c.get("estado") in ESTADOS_PANEL}
+
+
 def revisar_tienda(nombre, url, tipo="tienda"):
     fila = {"tienda": nombre, "tipo": tipo, "url": url, "plataforma": "", "estado": "", "motivo": "", "fecha_revision": HOY}
     if not url:
@@ -323,6 +362,14 @@ def revisar_tienda(nombre, url, tipo="tienda"):
         return fila, None
     base = "{0.scheme}://{0.netloc}".format(urlsplit(url))
     fila["url"] = base
+    panel = estados_del_panel().get(dominio(base))
+    if panel:
+        fila.update(estado=panel[0], motivo=panel[1] or "decisión tomada en el panel")
+        return fila, None
+    if dominio(base) == DOMINIO_ML:  # API oficial: no se leen sus páginas ni su /products.json
+        fila.update(plataforma="mercadolibre", estado="aprobada",
+                    motivo="API oficial de Mercado Libre (sitio MCO); necesita ML_CLIENT_ID y ML_CLIENT_SECRET")
+        return fila, None
     if dominio(base) in BLOQUEO_TERMINOS:
         fila.update(estado=ESTADO_TERMINOS, motivo=BLOQUEO_TERMINOS[dominio(base)])
         return fila, None
@@ -858,7 +905,7 @@ def armar_fila(tienda, nombre, marca, extra, url, precio, precio_lista, variante
         linea = linea_concentrado(nombre, marca_c)
     p_unidad = round(precio / cant, 2) if cant else None
     return {
-        "fecha": HOY, "tienda": tienda, "categoria": categoria, "especie": especie,
+        "fecha": HOY, "fecha_hora": FECHA_HORA, "estado_precio": "actualizado", "tienda": tienda, "categoria": categoria, "especie": especie,
         "producto": nombre.strip(), "marca": (marca or "").strip(), "linea": linea,
         "caracteristica": caracteristica(nombre, categoria, cant, unidad, sub),
         "cantidad": fmt(round(cant, 3)) if cant else "", "unidad": unidad if cant else "",
@@ -1169,6 +1216,49 @@ def consultar_jsonld(fila_tienda, robots, filas, terminos=None):
                 agregar(filas, fila)
 
 
+def token_ml(id_app, secreto):
+    datos = urllib.parse.urlencode({"grant_type": "client_credentials", "client_id": id_app, "client_secret": secreto}).encode()
+    estado, texto = pedir(ML_API + "/oauth/token", cabeceras={"Content-Type": "application/x-www-form-urlencoded"}, datos=datos)
+    try:
+        token = json.loads(texto).get("access_token")
+    except (ValueError, AttributeError):
+        token = None
+    if not token:
+        raise RuntimeError("Mercado Libre no entregó el token (HTTP %s): revisa ML_CLIENT_ID y ML_CLIENT_SECRET" % (estado or "sin conexión"))
+    return token
+
+
+def consultar_ml(fila_tienda, filas, terminos=None):
+    """Mercado Libre Colombia con su API oficial (sitio MCO). Solo productos nuevos, en pesos colombianos."""
+    id_app, secreto = os.environ.get("ML_CLIENT_ID", "").strip(), os.environ.get("ML_CLIENT_SECRET", "").strip()
+    if not id_app or not secreto:
+        raise FaltanSecretos("faltan los secretos ML_CLIENT_ID y ML_CLIENT_SECRET; Mercado Libre Colombia se salta")
+    cabeceras = {"Authorization": "Bearer " + token_ml(id_app, secreto)}
+    for termino in (terminos or TERMINOS):
+        url = "%s/sites/%s/search?q=%s&condition=new&limit=%d" % (ML_API, ML_SITIO, urllib.parse.quote(termino), ML_LIMITE)
+        estado, datos = pedir_json(url, cabeceras)
+        if estado in (401, 403):
+            raise RuntimeError("la API de Mercado Libre respondió %d en la búsqueda: la aplicación no tiene permiso" % estado)
+        for p in (datos or {}).get("results") or [] if isinstance(datos, dict) else []:
+            if p.get("currency_id") not in (None, "COP") or p.get("condition") not in (None, "new"):
+                continue
+            try:
+                precio, lista = float(p.get("price") or 0), float(p.get("original_price") or 0)
+            except (TypeError, ValueError):
+                continue
+            if precio <= 0 or not p.get("permalink"):
+                continue
+            marca = next((a.get("value_name") for a in p.get("attributes") or [] if a.get("id") == "BRAND"), "") or ""
+            imagen = re.sub(r"^http://", "https://", p.get("thumbnail") or "")  # mlstatic también sirve por https
+            fila = armar_fila(fila_tienda["tienda"], p.get("title") or "", marca, "", p["permalink"], precio, lista, imagen=imagen)
+            if fila:
+                agregar(filas, fila)
+
+
+class FaltanSecretos(Exception):
+    pass
+
+
 def consultar(fila_tienda, robots, filas, terminos=None):
     {"vtex": consultar_vtex, "shopify": consultar_shopify, "woocommerce": consultar_woo,
      "jsonld": consultar_jsonld}[fila_tienda["plataforma"]](fila_tienda, robots, filas, terminos)
@@ -1196,7 +1286,8 @@ def imprimir_tabla(columnas, filas, anchos=None):
 
 COL_TIENDAS = ["tienda", "tipo", "url", "plataforma", "estado", "motivo", "fecha_revision"]
 COL_PRODUCTOS = ["fecha", "tienda", "categoria", "especie", "producto", "marca", "linea", "caracteristica",
-                 "cantidad", "unidad", "precio", "precio_lista", "precio_unidad", "url", "imagen", "subcategoria", "tipo_tienda"]
+                 "cantidad", "unidad", "precio", "precio_lista", "precio_unidad", "url", "imagen", "subcategoria", "tipo_tienda",
+                 "fecha_hora", "estado_precio"]
 
 
 def unificar_marcas(filas):
@@ -1226,23 +1317,149 @@ def tiendas_nombres(revisadas):
     return {norm(f["tienda"]) for f, _ in revisadas}
 
 
-def main():
-    revisadas = []
-    for nombre, url, tipo in cargar_tiendas():
-        print("Revisando %s ..." % nombre, flush=True)
-        fila, robots = revisar_tienda(nombre, url, tipo)
-        revisadas.append((fila, robots))
+COL_HISTORICO = ["fecha_hora", "tienda", "categoria", "subcategoria", "especie", "producto", "cantidad", "unidad",
+                 "precio", "precio_lista", "precio_unidad", "url"]
+
+
+def clave_de(f):
+    return (f["tienda"], f["url"], f["producto"], f["cantidad"])
+
+
+def leer_csv(ruta):
+    if not ruta.exists():
+        return []
+    with ruta.open(newline="", encoding="utf-8") as f:
+        return list(csv.DictReader(f))
+
+
+def tiendas_para_actualizar(revisar):
+    """Lista de (fila_tienda, robots) con todas las tiendas y su estado. Sin --revisar se lee data/tiendas.csv
+    (más las candidatas aprobadas que aún no están ahí); con --revisar, o si no existe, se revisa cada tienda de cero."""
+    previas = leer_csv(SALIDA_TIENDAS)
+    if revisar or not previas:
+        out = []
+        for nombre, url, tipo in cargar_tiendas():
+            print("Revisando %s ..." % nombre, flush=True)
+            fila, robots = revisar_tienda(nombre, url, tipo)
+            if revisar and fila["estado"] == "aprobada" and url and fila["plataforma"] != "mercadolibre":
+                motivo = terminos_prohiben(fila["url"])  # los términos de uso también se vuelven a leer
+                if motivo:
+                    fila.update(estado=ESTADO_TERMINOS, motivo=motivo)
+            out.append((fila, robots))
+        return out
+    panel = estados_del_panel()
+    conocidas = {dominio(f["url"]) for f in previas if f["url"]}
+    out = []
+    for f in previas:
+        d = dominio(f["url"]) if f["url"] else ""
+        if d in panel:
+            f.update(estado=panel[d][0], motivo=panel[d][1] or "decisión tomada en el panel", plataforma="")
+        elif d == DOMINIO_ML:
+            f, _ = revisar_tienda(f["tienda"], f["url"], f["tipo"])  # sin red: decide la API oficial
+        elif f["estado"] in ESTADOS_PANEL:  # el panel la reactivó: se prueba de nuevo
+            print("Reactivada desde el panel: %s" % f["tienda"], flush=True)
+            f, _ = revisar_tienda(f["tienda"], f["url"], f["tipo"])
+        out.append((f, None))
+    for c in leer_csv(CANDIDATAS):  # tiendas que descubrir_tiendas.py aprobó desde la última corrida
+        if c.get("estado") == "aprobada" and c.get("url") and dominio(c["url"]) not in conocidas:
+            print("Tienda nueva aprobada: %s" % c["tienda"], flush=True)
+            fila, _ = revisar_tienda(c["tienda"], c["url"], c.get("tipo") or "tienda")
+            conocidas.add(dominio(c["url"]))
+            out.append((fila, None))
+    return out
+
+
+_ROBOTS = {}
+
+
+def consultar_tienda(fila_tienda, robots, filas, terminos=None):
+    if fila_tienda["plataforma"] == "mercadolibre":
+        return consultar_ml(fila_tienda, filas, terminos)
+    base = fila_tienda["url"]
+    if robots is None:
+        if base not in _ROBOTS:
+            _ROBOTS[base] = leer_robots(base)
+        robots, error = _ROBOTS[base]
+        if error:
+            raise RuntimeError(error)
+    consultar(fila_tienda, robots, filas, terminos)
+
+
+def guardar_historico(filas, previas):
+    """Agrega al histórico (sin borrar nada) los precios nuevos o que cambiaron desde la corrida anterior.
+    Un precio que se repite igual no se vuelve a anotar; sin histórico previo se anota todo."""
+    antes = {clave_de(f): (f["precio"], f["precio_lista"]) for f in previas}
+    nuevo = not HISTORICO.exists()
+    cambios = [f for f in filas if f["estado_precio"] == "actualizado" and
+               (nuevo or antes.get(clave_de(f)) != (f["precio"], f["precio_lista"]))]
+    HISTORICO.parent.mkdir(exist_ok=True)
+    with HISTORICO.open("a", newline="", encoding="utf-8") as fh:
+        w = csv.DictWriter(fh, fieldnames=COL_HISTORICO, extrasaction="ignore")
+        if nuevo:
+            w.writeheader()
+        w.writerows(cambios)
+    return len(cambios)
+
+
+def resumen_revision(antes, ahora):
+    """Texto para el mensaje del commit semanal: cuántas tiendas hay por estado y qué cambió."""
+    cuenta = {}
+    for f in ahora:
+        cuenta[f["estado"]] = cuenta.get(f["estado"], 0) + 1
+    a = {f["tienda"]: f["estado"] for f in antes}
+    cambios = ["%s: %s -> %s" % (f["tienda"], a[f["tienda"]], f["estado"]) for f in ahora
+               if f["tienda"] in a and a[f["tienda"]] != f["estado"]]
+    nuevas = [f["tienda"] for f in ahora if f["tienda"] not in a]
+    titulo = "Revisión semanal de tiendas %s: %d tiendas (%s)" % (
+        HOY, len(ahora), ", ".join("%d %s" % (n, e) for e, n in sorted(cuenta.items())))
+    cuerpo = (["Cambios de estado: " + "; ".join(cambios)] if cambios else ["Sin cambios de estado."]) + \
+             (["Tiendas nuevas: " + ", ".join(nuevas)] if nuevas else [])
+    return titulo + "\n\n" + "\n".join(cuerpo) + "\n"
+
+
+def main(argv=None):
+    argv = sys.argv[1:] if argv is None else argv
+    solo_revision = "--solo-revision" in argv
+    revisadas = tiendas_para_actualizar(revisar=solo_revision or "--revisar" in argv)
+    antes_tiendas = leer_csv(SALIDA_TIENDAS)
     escribir_csv(SALIDA_TIENDAS, COL_TIENDAS, [f for f, _ in revisadas])
     print("\nTIENDAS (guardado en %s)\n" % SALIDA_TIENDAS.relative_to(RAIZ))
     imprimir_tabla(COL_TIENDAS, [f for f, _ in revisadas], {"motivo": 55, "url": 38})
+    if solo_revision:
+        RESUMEN_REVISION.write_text(resumen_revision(antes_tiendas, [f for f, _ in revisadas]), encoding="utf-8")
+        print("\n" + RESUMEN_REVISION.read_text(encoding="utf-8"))
+        return 0
+
+    previas = leer_csv(SALIDA_PRECIOS)
+    previas_por_tienda = {}
+    for f in previas:
+        previas_por_tienda.setdefault(f["tienda"], {})[clave_de(f)] = f
 
     filas = {}
-    for fila_tienda, robots in revisadas:
-        if fila_tienda["estado"] != "aprobada":
-            continue
+    consultadas, con_problemas, saltadas, incompletas = [], {}, {}, set()
+    aprobadas = [(f, r) for f, r in revisadas if f["estado"] == "aprobada"]
+
+    def consultar_seguro(fila_tienda, robots, terminos=None):
+        errores = ERRORES_DE_RED[0]
+        try:
+            consultar_tienda(fila_tienda, robots, filas, terminos)
+        except FaltanSecretos as e:
+            saltadas[fila_tienda["tienda"]] = str(e)
+            print("  AVISO: %s" % e, flush=True)
+            return False
+        except Exception as e:  # una tienda que falla no detiene a las demás
+            con_problemas[fila_tienda["tienda"]] = "%s: %s" % (type(e).__name__, e)
+            print("  FALLÓ: %s" % con_problemas[fila_tienda["tienda"]], flush=True)
+            return False
+        if ERRORES_DE_RED[0] > errores:
+            incompletas.add(fila_tienda["tienda"])
+            print("  AVISO: hubo respuestas fallidas; el catálogo pudo quedar incompleto", flush=True)
+        return True
+
+    for fila_tienda, robots in aprobadas:
         print("\nConsultando %s (%s) ..." % (fila_tienda["tienda"], fila_tienda["plataforma"]), flush=True)
         antes = len(filas)
-        consultar(fila_tienda, robots, filas)
+        consultar_seguro(fila_tienda, robots)
         print("  %d filas nuevas" % (len(filas) - antes), flush=True)
     # Segunda pasada: marcas de concentrado con más productos en las tiendas aprobadas que no estaban en la lista.
     conocidas = {norm(m) for m in MARCAS_CONCENTRADO}
@@ -1258,29 +1475,61 @@ def main():
         print("\nMarcas de concentrado descubiertas: %s" % ", ".join("%s (%d)" % (m, cuenta[m]["n"]) for m in nuevas), flush=True)
         for m in nuevas:
             MARCAS_DESCUBIERTAS[m] = (re.escape(norm(m)), None)
-        for fila_tienda, robots in revisadas:
-            if fila_tienda["estado"] != "aprobada":
-                continue
-            consultar(fila_tienda, robots, filas, terminos=nuevas)
-    tipos = {f["tienda"]: f["tipo"] for f, _ in revisadas}
+        for fila_tienda, robots in aprobadas:
+            if fila_tienda["tienda"] not in con_problemas and fila_tienda["tienda"] not in saltadas \
+                    and fila_tienda["plataforma"] != "mercadolibre":
+                consultar_seguro(fila_tienda, robots, terminos=nuevas)
+
+    # Unir con lo anterior: lo que se consultó bien reemplaza; lo que falló conserva su último precio válido.
+    nuevas_por_tienda = {}
     for f in filas.values():
-        f["tipo_tienda"] = tipos.get(f["tienda"], "tienda")
-    unificar_marcas(filas.values())
-    resultado = sorted(filas.values(), key=lambda f: (f["categoria"], f["subcategoria"], f["especie"], f["tienda"], f["producto"]))
+        nuevas_por_tienda.setdefault(f["tienda"], []).append(f)
+    tipos = {f["tienda"]: f["tipo"] for f, _ in revisadas}
+    plataformas = {f["tienda"]: f["plataforma"] for f, _ in revisadas}
+    resultado, sin_actualizar = [], 0
+    for fila_tienda, _ in aprobadas:
+        t = fila_tienda["tienda"]
+        frescas = nuevas_por_tienda.get(t, [])
+        viejas = previas_por_tienda.get(t, {})
+        # Se considera fallida si lanzó error o si no trajo nada habiendo precios anteriores (robots cerrado, sitio caído...).
+        fallo = t in con_problemas or t in saltadas or (not frescas and viejas)
+        if not fallo:
+            consultadas.append(t)
+        resultado += frescas
+        if fallo or t in incompletas or plataformas.get(t) == "jsonld":
+            vistas = {clave_de(f) for f in frescas}
+            for k, f in viejas.items():
+                if k not in vistas:
+                    f = dict(f, estado_precio="no actualizado")  # conserva precio y fecha originales
+                    resultado.append(f)
+                    sin_actualizar += 1
+    for f in resultado:
+        f["tipo_tienda"] = tipos.get(f["tienda"], f.get("tipo_tienda") or "tienda")
+        f.setdefault("fecha_hora", "")
+    unificar_marcas(resultado)
+    resultado.sort(key=lambda f: (f["categoria"], f["subcategoria"], f["especie"], f["tienda"], f["producto"]))
+    actualizados = sum(1 for f in resultado if f["estado_precio"] == "actualizado" and f["fecha_hora"] == FECHA_HORA)
+
+    anotados = guardar_historico(resultado, previas)
     escribir_csv(SALIDA_PRODUCTOS, COL_PRODUCTOS, resultado)
     escribir_csv(SALIDA_PRECIOS, COL_PRODUCTOS, resultado)
-    print("\n%d filas guardadas en %s" % (len(resultado), SALIDA_PRODUCTOS.relative_to(RAIZ)))
+    estado = {
+        "actualizado": FECHA_HORA, "tiendas_consultadas": len(consultadas), "tiendas_aprobadas": len(aprobadas),
+        "productos_actualizados": actualizados, "productos_sin_actualizar": sin_actualizar,
+        "tiendas_con_problemas": sorted(con_problemas), "tiendas_saltadas": sorted(saltadas),
+    }
+    ESTADO.write_text(json.dumps(estado, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    print("\n%d filas guardadas en %s (%d actualizadas, %d conservadas como «no actualizado»; %d filas nuevas en el histórico)" % (
+        len(resultado), SALIDA_PRECIOS.relative_to(RAIZ), actualizados, sin_actualizar, anotados))
+    print("Tiendas consultadas: %d de %d aprobadas." % (len(consultadas), len(aprobadas)))
+    for t, m in sorted(con_problemas.items()):
+        print("  Con problemas: %s (%s)" % (t, m))
+    for t, m in sorted(saltadas.items()):
+        print("  Saltada: %s (%s)" % (t, m))
 
     print("\nCANDIDATOS DE RASTREO DESCARTADOS (%d)" % len(CANDIDATOS_RASTREO))
     for c in sorted(CANDIDATOS_RASTREO)[:40]:
         print("  " + c)
-
-    arena = [f for f in resultado if f["categoria"] == "arena" and f["subcategoria"] == "arena" and f["especie"] == "gato"]
-    arena.sort(key=lambda f: (f["precio_unidad"] == "", float(f["precio_unidad"] or 0)))
-    print("\nARENA PARA GATOS (%d filas, de menor a mayor precio por unidad)\n" % len(arena))
-    if arena:
-        imprimir_tabla(["tienda", "producto", "caracteristica", "cantidad", "unidad", "precio", "precio_unidad"], arena,
-                       {"producto": 60})
     return 0
 
 

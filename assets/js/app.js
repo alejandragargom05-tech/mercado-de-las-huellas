@@ -9,6 +9,7 @@
 
   var estado = { texto: '', especie: '', categoria: '', subcategoria: '', marca: '', local: false, limite: GRUPOS_POR_PAGINA, estricto: false };
   var productos = [];
+  var textoBanner = '';
   var hoy = new Date();
 
   var $ = function (id) { return document.getElementById(id); };
@@ -213,7 +214,7 @@
     var lista = Tarjetas.hallazgos(productos, hoy);
     el.bloqueResumen.hidden = lista.length === 0;
     el.resumen.textContent = '';
-    $('t-hallazgos').textContent = 'Las ' + lista.length + ' opciones más baratas de hoy, por kg y por unidad';
+    $('t-hallazgos').textContent = (textoBanner && /^[^<>]{1,120}$/.test(textoBanner) ? textoBanner : 'Las {n} opciones más baratas de hoy, por kg y por unidad').replace('{n}', lista.length);
     lista.slice(0, 3).forEach(function (g) {
       el.resumen.appendChild(h('span', { 'class': 'miniatura' }, Tarjetas.foto(g.barata.producto)));
     });
@@ -265,42 +266,59 @@
     dibujar();
   }
 
-  function horaDe(cabecera) {
-    var d = cabecera ? new Date(cabecera) : null;
-    return d && isFinite(d) ? d.toLocaleTimeString('es-CO', { hour: 'numeric', minute: '2-digit', timeZone: 'America/Bogota' }) : '';
-  }
-
-  function mostrarActualizacion(fechaCsv, modificado) {
-    var fecha = H.fechaLarga(fechaCsv), hora = horaDe(modificado);
-    var msg = fecha ? 'Precios actualizados el ' + fecha + (hora ? ' a las ' + hora : '') : '';
+  /* Encabezado «Precios actualizados hoy a las 6:03 a. m.»: sale de data/estado.json (fecha y hora reales de la última
+     corrida, tiendas consultadas y productos actualizados). Sin ese archivo se usa la fecha más reciente del CSV. */
+  function mostrarActualizacion(fechaCsv, datosEstado) {
+    var t = H.textoActualizacion(datosEstado, new Date());
+    var fecha = t ? t.fecha : fechaCsv, msg = t ? t.titulo : (H.fechaLarga(fechaCsv) ? 'Precios actualizados el ' + H.fechaLarga(fechaCsv) : '');
     el.actualizacion.textContent = '';
     el.pieFecha.textContent = msg ? msg + '.' : '';
     if (!msg) return;
-    var dias = H.edadEnDias(fechaCsv, hoy);
+    var dias = H.edadEnDias(fecha, hoy);
     if (dias !== null && dias > H.DIAS_ADVERTENCIA) {
       el.actualizacion.appendChild(avisoBloque('aviso--ambar', [msg + '.',
-        'Los precios se actualizan cada día, pero esta vez la actualización no llegó hace ' + dias + ' días. Pueden haber cambiado: confirma el precio en la tienda antes de comprar.']));
+        'Los precios se actualizan dos veces al día, pero esta vez la actualización no llegó hace ' + dias + ' días. Pueden haber cambiado: confirma el precio en la tienda antes de comprar.']));
     } else {
-      el.actualizacion.appendChild(h('p', { 'class': 'apoyo', texto: msg }));
+      var p = h('p', { 'class': 'apoyo actualizacion' }, h('b', { texto: msg + '.' }));
+      if (t) p.appendChild(document.createTextNode(' ' + t.detalle));
+      el.actualizacion.appendChild(p);
     }
+  }
+
+  function json(url) {
+    return fetch(url, { cache: 'no-cache' }).then(function (r) { return r.ok ? r.json() : null; }).catch(function () { return null; });
+  }
+
+  function dibujarPie() {
+    var ul = document.querySelector('#pie-explora + ul');
+    if (!ul) return;
+    ul.textContent = '';
+    H.CATEGORIAS.forEach(function (c) {
+      ul.appendChild(h('li', null, h('a', { href: './?categoria=' + c.id + '#filtros', 'data-categoria': c.id, texto: c.etiqueta })));
+    });
   }
 
   function cargar() {
     mostrarEstado('carga');
-    var sinonimos = fetch('data/sinonimos.json').then(function (r) { return r.ok ? r.json() : null; }).catch(function () { return null; });
-    var modificado = '';
+    // Todo lo del panel es opcional: si un archivo falta o no sirve, la web usa lo de siempre.
+    var sinonimos = json('data/sinonimos.json'), categorias = json('data/categorias.json'), datosEstado = json('data/estado.json');
     fetch('data/precios.csv', { cache: 'no-cache' })
-      .then(function (r) { if (!r.ok) throw new Error(r.status); modificado = r.headers.get('Last-Modified') || ''; return r.text(); })
+      .then(function (r) { if (!r.ok) throw new Error(r.status); return r.text(); })
       .then(function (texto) {
-        productos = H.leerProductos(texto);
-        if (!productos.length) throw new Error('sin datos');
-        return sinonimos;
+        return categorias.then(function (cats) {
+          H.configurarCategorias(cats); // antes de leer los productos: las categorías ocultas no entran
+          productos = H.leerProductos(texto);
+          if (!productos.length) throw new Error('sin datos');
+          return Promise.all([sinonimos, datosEstado, Comun.textos]);
+        });
       })
-      .then(function (datos) {
-        if (datos) H.configurarSinonimos(datos); // sin sinónimos la búsqueda sigue funcionando
+      .then(function (r) {
+        if (r[0]) H.configurarSinonimos(r[0]); // sin sinónimos la búsqueda sigue funcionando
         hoy = new Date();
-        mostrarActualizacion(H.fechaMasReciente(productos), modificado);
+        mostrarActualizacion(H.fechaMasReciente(productos), r[1]);
         try { aplicarFiltroDeURL(new URLSearchParams(location.search)); } catch (e) { /* sin filtros en la URL */ }
+        textoBanner = r[2] && r[2].texto_banner_hallazgos;
+        dibujarPie();
         dibujarChips();
         dibujarBanner();
         dibujar();

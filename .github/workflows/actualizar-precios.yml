@@ -1,0 +1,120 @@
+name: Actualizar precios
+
+# Precios: todos los días a las 6:00 a. m. y a las 6:00 p. m. de Colombia (UTC-5, sin horario de verano).
+# Revisión de tiendas: los domingos a las 4:00 a. m. de Colombia (corre antes que los precios de las 6:00 a. m.).
+on:
+  schedule:
+    - cron: "0 11 * * *"   # 6:00 a. m. Colombia
+    - cron: "0 23 * * *"   # 6:00 p. m. Colombia
+    - cron: "0 9 * * 0"    # domingo 4:00 a. m. Colombia: revisión semanal de tiendas
+  workflow_dispatch:
+    inputs:
+      semanal:
+        description: "Correr también la revisión semanal de tiendas"
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+  issues: write
+
+concurrency:
+  group: actualizar-precios
+  cancel-in-progress: false
+
+env:
+  GH_TOKEN: ${{ github.token }}
+  PYTHONUNBUFFERED: "1"
+
+jobs:
+  semanal:
+    name: Revisión semanal de tiendas
+    if: github.event.schedule == '0 9 * * 0' || inputs.semanal
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Leer el panel de Google Sheets
+        run: python3 scripts/leer_panel.py
+      - name: Probar tiendas nuevas y revisar las aprobadas (formulario, panel y candidatas)
+        run: python3 scripts/descubrir_tiendas.py
+      - name: Volver a revisar robots.txt, términos de uso y catálogo de cada tienda
+        run: python3 scraper.py --solo-revision
+      - name: "Commit de data/ (el mensaje cuenta lo que cambió)"
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/
+          if git diff --cached --quiet; then
+            echo "Sin cambios en las tiendas."
+          else
+            git commit -F revision-resumen.txt
+            git pull --rebase --autostash origin "${GITHUB_REF_NAME}"
+            git push origin "HEAD:${GITHUB_REF_NAME}"
+          fi
+      - name: Issue por errores del panel
+        if: always() && hashFiles('panel-errores.md') != ''
+        run: |
+          scripts/abrir_issue.sh "Panel de Google Sheets: filas con errores" panel-errores.md
+      - name: Issue si la revisión falló
+        if: failure()
+        run: |
+          printf 'La revisión semanal de tiendas falló.\n\nRegistro: %s/%s/actions/runs/%s\n' "$GITHUB_SERVER_URL" "$GITHUB_REPOSITORY" "$GITHUB_RUN_ID" > falla.md
+          scripts/abrir_issue.sh "La revisión semanal de tiendas falló" falla.md
+
+  precios:
+    name: Actualizar precios
+    needs: semanal
+    if: ${{ always() && (needs.semanal.result == 'success' || needs.semanal.result == 'skipped' || needs.semanal.result == 'failure') }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 340
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: "Mantenimiento si pasaron 50 días sin commits (GitHub apaga las tareas programadas de repositorios quietos)"
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          dias=$(( ( $(date +%s) - $(git log -1 --format=%ct) ) / 86400 ))
+          echo "Días desde el último commit: $dias"
+          if [ "$dias" -ge 50 ]; then
+            echo "Mantenimiento $(TZ=America/Bogota date +%F): la tarea automática sigue activa." > data/mantenimiento.txt
+            git add data/mantenimiento.txt
+            git commit -m "Mantenimiento $(TZ=America/Bogota date +%F)"
+          fi
+      - name: Leer el panel de Google Sheets (antes del scraper)
+        run: python3 scripts/leer_panel.py
+      - name: Probar tiendas nuevas del panel y del formulario
+        continue-on-error: true
+        run: python3 scripts/descubrir_tiendas.py --solo-nuevas
+      - name: Consultar precios
+        env:
+          ML_CLIENT_ID: ${{ secrets.ML_CLIENT_ID }}
+          ML_CLIENT_SECRET: ${{ secrets.ML_CLIENT_SECRET }}
+        run: |
+          [ -n "$ML_CLIENT_ID" ] && [ -n "$ML_CLIENT_SECRET" ] || echo "AVISO: faltan los secretos ML_CLIENT_ID y ML_CLIENT_SECRET; Mercado Libre Colombia se salta."
+          python3 scraper.py
+      - name: Commit de data/ si hubo cambios
+        run: |
+          git add data/
+          if git diff --cached --quiet; then
+            echo "Sin cambios."
+          else
+            git commit -m "Precios actualizados $(TZ=America/Bogota date +%F)"
+          fi
+          git pull --rebase --autostash origin "${GITHUB_REF_NAME}"
+          git push origin "HEAD:${GITHUB_REF_NAME}"
+      - name: Issue por errores del panel
+        if: always() && hashFiles('panel-errores.md') != ''
+        run: |
+          scripts/abrir_issue.sh "Panel de Google Sheets: filas con errores" panel-errores.md
+      - name: Issue si la actualización falló
+        if: failure()
+        run: |
+          printf 'La actualización automática de precios falló y los precios publicados quedaron como estaban.\n\nRegistro: %s/%s/actions/runs/%s\n' "$GITHUB_SERVER_URL" "$GITHUB_REPOSITORY" "$GITHUB_RUN_ID" > falla.md
+          scripts/abrir_issue.sh "La actualización de precios falló" falla.md

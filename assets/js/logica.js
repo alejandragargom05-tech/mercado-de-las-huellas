@@ -35,6 +35,26 @@ var Huellas = (function () {
   function categoria(id) {
     return CATEGORIAS.filter(function (c) { return c.id === id; })[0];
   }
+
+  /* data/categorias.json (viene del panel): orden de los chips y categorías visibles. Si el archivo no es válido
+     no cambia nada. Las categorías ocultas salen de la lista y sus productos no se muestran. El orden por precio
+     dentro de cada comparación no depende de esto. */
+  function configurarCategorias(datos) {
+    var lista = datos && datos.categorias;
+    if (!Array.isArray(lista)) return false;
+    var orden = {}, ocultas = {}, ok = lista.every(function (c) {
+      var valida = c && categoriaPorSlug[c.id] && typeof c.orden === 'number' && typeof c.visible === 'boolean' && !(c.id in orden);
+      if (valida) { orden[c.id] = c.orden; if (!c.visible) ocultas[c.id] = true; }
+      return valida;
+    });
+    if (!ok) return false;
+    var nuevas = CATEGORIAS.filter(function (c) { return !ocultas[c.id]; });
+    if (!nuevas.length) return false;
+    nuevas.sort(function (a, b) { return (orden[a.id] || 99) - (orden[b.id] || 99); });
+    CATEGORIAS.splice(0, CATEGORIAS.length);
+    nuevas.forEach(function (c) { CATEGORIAS.push(c); });
+    return true;
+  }
   function especie(id) {
     return ESPECIES.filter(function (e) { return e.id === id; })[0];
   }
@@ -82,7 +102,7 @@ var Huellas = (function () {
     tabla.forEach(function (celdas) {
       var r = {};
       cab.forEach(function (k, i) { r[k.trim()] = (celdas[i] || '').trim(); });
-      var cat = categoriaPorSlug[r.categoria];
+      var cat = categoria(r.categoria);
       var precio = numero(r.precio);
       if (!cat || !precio || precio <= 0 || !especie(r.especie)) return;
       var cantidad = numero(r.cantidad);
@@ -93,7 +113,7 @@ var Huellas = (function () {
       var carac = normalizar(r.caracteristica) === 'sin especificar' ? '' : r.caracteristica;
       var nombreN = normalizar(r.producto);
       out.push({
-        fecha: r.fecha, tienda: r.tienda, emprendimiento: r.tipo_tienda === 'emprendimiento', categoria: cat.id, especie: r.especie,
+        fecha: r.fecha, fechaHora: r.fecha_hora || '', sinActualizar: r.estado_precio === 'no actualizado', tienda: r.tienda, emprendimiento: r.tipo_tienda === 'emprendimiento', categoria: cat.id, especie: r.especie,
         producto: r.producto, marca: r.marca, linea: r.linea || '', caracteristica: carac, subcategoria: r.subcategoria || '',
         cantidad: cantidad, unidad: unidad, precio: precio, precioUnidad: pu, url: r.url,
         imagen: /^https?:\/\//i.test(r.imagen || '') ? r.imagen : '',
@@ -463,8 +483,31 @@ var Huellas = (function () {
     return productos.reduce(function (m, p) { return p.fecha > m ? p.fecha : m; }, '');
   }
 
+  function numeroCO(n) { return Number(n).toLocaleString('es-CO'); }
+  function plural(n, uno, varios) { return numeroCO(n) + ' ' + (n === 1 ? uno : varios); }
+  function horaDe(iso) {
+    var d = iso ? new Date(iso) : null;
+    return d && isFinite(d) ? d.toLocaleTimeString('es-CO', { hour: 'numeric', minute: '2-digit', timeZone: 'America/Bogota' }) : '';
+  }
+  function diaDe(iso) { // AAAA-MM-DD en hora de Colombia
+    var d = iso ? new Date(iso) : null;
+    return d && isFinite(d) ? d.toLocaleDateString('en-CA', { timeZone: 'America/Bogota' }) : '';
+  }
+
+  /* data/estado.json (lo escribe scraper.py) -> {titulo, detalle, fecha} con la fecha y hora reales de la última corrida,
+     las tiendas consultadas y los productos actualizados. null si el archivo no sirve. */
+  function textoActualizacion(estado, ahora) {
+    if (!estado || !horaDe(estado.actualizado) || typeof estado.tiendas_consultadas !== 'number' || typeof estado.productos_actualizados !== 'number') return null;
+    var dia = diaDe(estado.actualizado), hoyCO = diaDe(ahora.toISOString());
+    var cuando = dia === hoyCO ? 'hoy' : 'el ' + fechaLarga(dia);
+    var detalle = 'Consultamos ' + plural(estado.tiendas_consultadas, 'tienda', 'tiendas') + ' y actualizamos ' + plural(estado.productos_actualizados, 'producto', 'productos') + '.';
+    var problemas = (estado.tiendas_con_problemas || []).length;
+    if (problemas) detalle += ' ' + plural(problemas, 'tienda no respondió', 'tiendas no respondieron') + ': sus precios siguen con la fecha en que los tomamos y dicen «No actualizado».';
+    return { titulo: 'Precios actualizados ' + cuando + ' a las ' + horaDe(estado.actualizado), detalle: detalle, fecha: dia };
+  }
+
   return {
-    CATEGORIAS: CATEGORIAS, ESPECIES: ESPECIES, UNIDADES: UNIDADES,
+    CATEGORIAS: CATEGORIAS, configurarCategorias: configurarCategorias, textoActualizacion: textoActualizacion, horaDe: horaDe, ESPECIES: ESPECIES, UNIDADES: UNIDADES,
     DIAS_ADVERTENCIA: DIAS_ADVERTENCIA, DIAS_MAXIMO: DIAS_MAXIMO,
     categoria: categoria, especie: especie, normalizar: normalizar, marcasConcentrado: marcasConcentrado, subcategorias: subcategorias, pideMicrochip: pideMicrochip,
     configurarSinonimos: configurarSinonimos, buscar: buscar,

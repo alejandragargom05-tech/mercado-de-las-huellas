@@ -75,12 +75,15 @@ var Tarjetas = (function () {
     if (o.advertencia) ins.appendChild(h('span', { 'class': 'insignia insignia--vieja',
       texto: o.edad === null ? 'Precio de fecha desconocida' : 'Precio de hace ' + o.edad + ' días' }));
 
+    if (p.sinActualizar && !o.advertencia) ins.appendChild(h('span', { 'class': 'insignia insignia--vieja', texto: 'No actualizado' }));
+
     var porU = p.precioUnidad !== null
       ? h('p', { 'class': 'precio-unidad cifra' }, H.formatoPesos(p.precioUnidad) + ' ', h('span', { texto: porUnidad(p) }))
       : h('p', { 'class': 'precio-unidad sin-unidad', texto: 'Sin precio por unidad' });
 
     var cantidad = H.textoCantidad(p) + (p.caracteristica ? ' · ' + p.caracteristica : '');
-    var fecha = (H.fechaLarga(p.fecha) || 'Fecha desconocida') + (o.edad === null ? '' : ' (' + H.textoEdad(o.edad) + ')');
+    var hora = H.horaDe(p.fechaHora);
+    var fecha = (H.fechaLarga(p.fecha) || 'Fecha desconocida') + (hora ? ', ' + hora : '') + (o.edad === null ? '' : ' (' + H.textoEdad(o.edad) + ')');
     var dl = h('dl', null,
       p.marca ? filaDato('Marca', p.marca) : null,
       filaDato('Cantidad', cantidad),
@@ -90,6 +93,7 @@ var Tarjetas = (function () {
     if (o.edad === null) notas.push(h('p', { 'class': 'nota nota--ambar', texto: 'No sabemos cuándo se tomó este precio, así que puede haber cambiado. Confírmalo en la tienda antes de comprar.' }));
     else if (o.vencida) notas.push(h('p', { 'class': 'nota nota--ambar', texto: 'Este precio tiene ' + o.edad + ' días: puede haber cambiado y por eso no cuenta para la más barata. Confírmalo en la tienda.' }));
     else if (o.advertencia) notas.push(h('p', { 'class': 'nota nota--ambar', texto: 'Este precio se tomó hace ' + o.edad + ' días y puede haber cambiado. Confírmalo en la tienda antes de comprar.' }));
+    if (p.sinActualizar && o.edad !== null && !o.vencida && !o.advertencia) notas.push(h('p', { 'class': 'nota nota--ambar', texto: 'No pudimos actualizar este precio en la última revisión de la tienda. Es el último que tomamos, con su fecha original: confírmalo en la tienda antes de comprar.' }));
     if (p.precioUnidad === null) notas.push(h('p', { 'class': 'nota apoyo', texto: 'No podemos calcular el precio por unidad porque la tienda no informa la cantidad. Revisa el tamaño en la tienda para comparar.' }));
 
     var url = urlSegura(p.url);
