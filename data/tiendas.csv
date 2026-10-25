@@ -1,55 +1,55 @@
 tienda,tipo,url,plataforma,estado,motivo,fecha_revision
-Mercado Libre Colombia,cadena,https://www.mercadolibre.com.co,mercadolibre,aprobada,API oficial de Mercado Libre (sitio MCO); necesita ML_CLIENT_ID y ML_CLIENT_SECRET,2026-10-24
-Laika,cadena,https://www.laika.com.co,,sin catálogo público,"ni VTEX, Shopify ni WooCommerce responden JSON, y el sitemap no lista páginas de producto",2026-10-18
-Puppis,cadena,https://www.puppis.com.co,vtex,aprobada,VTEX responde JSON y robots.txt lo permite,2026-10-18
-Agrocampo,cadena,https://www.agrocampo.com.co,,bloqueada por robots.txt,robots.txt prohíbe /api/catalog_system/,2026-10-18
-Éxito,cadena,https://www.exito.com,,sin catálogo público,"ni VTEX, Shopify ni WooCommerce responden JSON, y el sitemap no lista páginas de producto",2026-10-18
-Falabella Colombia,cadena,https://www.falabella.com.co,,sin catálogo público,"ni VTEX, Shopify ni WooCommerce responden JSON, y las páginas de producto no traen datos estructurados con precio",2026-10-18
-Homecenter Colombia,cadena,https://www.homecenter.com.co,,bloqueada por robots.txt,robots.txt prohíbe /api/catalog_system/,2026-10-18
-Miscota Colombia,cadena,https://co.miscota.com,,sin catálogo público,"ni VTEX, Shopify ni WooCommerce responden JSON, y las páginas de producto no traen datos estructurados con precio",2026-10-18
-Ceba,tienda,https://www.ceba.com.co,shopify,aprobada,Shopify responde JSON y robots.txt lo permite,2026-10-18
-Animals Veterinaria,tienda,https://www.animalsveterinaria.com,vtex,aprobada,VTEX responde JSON y robots.txt lo permite,2026-10-18
-Tierragro,tienda,https://www.tierragro.com,,bloqueada por robots.txt,robots.txt prohíbe /products.json y /wp-json/wc/store/v1/products,2026-10-18
-Provipets,tienda,https://www.provipets.co,,bloqueada por robots.txt,robots.txt prohíbe /api/catalog_system/,2026-10-18
-Petcol,tienda,https://petcol.co,shopify,aprobada,Shopify responde JSON y robots.txt lo permite,2026-10-18
-Chloki,tienda,https://www.chloki.com,,sin catálogo público,"ni VTEX, Shopify ni WooCommerce responden JSON, y las páginas de producto no traen datos estructurados con precio",2026-10-18
-Animal Factor,tienda,https://www.animal-factor.com,,sin catálogo público,"ni VTEX, Shopify ni WooCommerce responden JSON, y el sitemap no lista páginas de producto",2026-10-18
-Bichos,tienda,https://www.mascotasbichos.com,,sin catálogo público,"ni VTEX, Shopify ni WooCommerce responden JSON, y el sitemap no lista páginas de producto",2026-10-18
-Ciudad de Mascotas,tienda,https://www.ciudaddemascotas.com,,sin catálogo público,no se pudo leer robots.txt (sin conexión),2026-10-18
-Consentidos,tienda,https://consentidos.co,,sin catálogo público,"ni VTEX, Shopify ni WooCommerce responden JSON, y el sitemap no lista páginas de producto",2026-10-18
-Ocico,tienda,https://ocico.co,,sin catálogo público,"ni VTEX, Shopify ni WooCommerce responden JSON, y el sitemap no lista páginas de producto",2026-10-18
-Frank's Shop,tienda,https://www.frankshop.com.co,,bloqueada por robots.txt,robots.txt prohíbe /api/catalog_system/ y /products.json y /wp-json/wc/store/v1/products,2026-10-18
-Didopet,tienda,https://didopet.com,,bloqueada por robots.txt,robots.txt prohíbe /api/catalog_system/,2026-10-18
-De Pelos,tienda,https://depelos.co,,sin catálogo público,"ni VTEX, Shopify ni WooCommerce responden JSON, y las páginas de producto no traen datos estructurados con precio",2026-10-18
-Supermascotas,tienda,https://supermascotas.com.co,shopify,aprobada,Shopify responde JSON y robots.txt lo permite,2026-10-18
-Dog Station,tienda,https://dogstation.co,woocommerce,aprobada,WooCommerce responde JSON y robots.txt lo permite,2026-10-18
-Wawaw,emprendimiento,https://wawaw.co,shopify,aprobada,Shopify responde JSON y robots.txt lo permite,2026-10-18
-ChikoPipo,emprendimiento,https://tiendachikopipo.com,shopify,aprobada,Shopify responde JSON y robots.txt lo permite,2026-10-18
-Happy Pets Colombia,emprendimiento,https://happypetsco.com,woocommerce,aprobada,WooCommerce responde JSON y robots.txt lo permite,2026-10-18
-Guamba Pets,emprendimiento,https://guamba.com,shopify,aprobada,Shopify responde JSON y robots.txt lo permite,2026-10-18
-Doctor Pet,tienda,https://doctorpet.com.co,woocommerce,aprobada,WooCommerce responde JSON y robots.txt lo permite,2026-10-18
-AM Mascotas,tienda,https://ammascotas.com,shopify,aprobada,Shopify responde JSON y robots.txt lo permite,2026-10-18
-Xipa,tienda,https://www.xipamascotas.com,,sin catálogo público,no se pudo leer robots.txt (sin conexión),2026-10-18
-Jarapets,tienda,,,sin catálogo público,TIENDAS.md no trae sitio web verificado,2026-10-18
-Omega Importaciones,tienda,https://www.omegaimportaciones.com,jsonld,aprobada,sitemap con datos estructurados de producto (JSON-LD) y robots.txt lo permite,2026-10-18
-Animal Home,tienda,https://animalhome.co,,sin catálogo público,"ni VTEX, Shopify ni WooCommerce responden JSON, y el sitemap no lista páginas de producto",2026-10-18
-Muplast,tienda,https://muplast.com,,sin catálogo público,"ni VTEX, Shopify ni WooCommerce responden JSON, y las páginas de producto no traen datos estructurados con precio",2026-10-18
-Gioatope,tienda,https://gioatope.com,woocommerce,aprobada,WooCommerce responde JSON y robots.txt lo permite,2026-10-18
-Mascolandia,tienda,https://www.mascolandia.com.co,woocommerce,aprobada,WooCommerce responde JSON y robots.txt lo permite,2026-10-18
-Abyapet,tienda,https://abyapet.com,woocommerce,aprobada,WooCommerce responde JSON y robots.txt lo permite,2026-10-18
-KeikoPets,tienda,https://www.keikopets.com,,bloqueada por robots.txt,robots.txt prohíbe /api/catalog_system/ y /wp-json/wc/store/v1/products,2026-10-18
-La Casa del Granjero,tienda,https://lacasadelgranjero.com,shopify,aprobada,Shopify responde JSON y robots.txt lo permite,2026-10-18
-La Res,tienda,https://lares.com.co,,bloqueada por términos de uso,"los términos de uso prohíben usar herramientas automatizadas («bots», «spiders») para acceder o copiar el contenido",2026-10-18
-Welpe,emprendimiento,https://welpeshop.com,,sin catálogo público,"los precios están en EUR, no en pesos colombianos",2026-10-18
-WUFTREK,emprendimiento,https://wuftrek.com,shopify,aprobada,Shopify responde JSON y robots.txt lo permite,2026-10-18
-Animal Store Mascotas,emprendimiento,https://animalstoremascotas.com,shopify,aprobada,Shopify responde JSON y robots.txt lo permite,2026-10-18
-Avisalpets,emprendimiento,https://avisalpets.com.co,,bloqueada por términos de uso,"los términos de uso prohíben la lectura automática: «no intentará interferir de ninguna manera con el funcionamiento del sitio web, que no transmitir ningún virus, que no utilizará ninguna araña»",2026-10-18
-Pelusas Pet,emprendimiento,https://pelusas-pet.com,,sin catálogo público,"ni VTEX, Shopify ni WooCommerce responden JSON, y las páginas de producto no traen datos estructurados con precio",2026-10-18
-MariaCe Posada Pets,emprendimiento,https://mariaceposada.com,shopify,aprobada,Shopify responde JSON y robots.txt lo permite,2026-10-18
-Cuore Pets,tienda,https://cuorepets.com,shopify,aprobada,Shopify responde JSON y robots.txt lo permite,2026-10-18
-Pet Outlet,tienda,https://petoutlet.com.co,woocommerce,aprobada,WooCommerce responde JSON y robots.txt lo permite,2026-10-18
-Mascotas Pet Shop,tienda,https://mascotaspetshop.com.co,woocommerce,aprobada,WooCommerce responde JSON y robots.txt lo permite,2026-10-18
-Petopet,tienda,https://petopet.com.co,,bloqueada por términos de uso,"los términos de uso prohíben la lectura automática: «phish, pharm, pretexto, araña»",2026-10-18
-Petentrega,tienda,https://www.petentrega.com.co,,sin catálogo público,"ni VTEX, Shopify ni WooCommerce responden JSON, y el sitemap no lista páginas de producto",2026-10-18
-Eco Vet,tienda,https://www.ecovet.com.co,woocommerce,aprobada,WooCommerce responde JSON y robots.txt lo permite,2026-10-18
-Primepet,tienda,https://www.primepet.com.co,jsonld,aprobada,sitemap con datos estructurados de producto (JSON-LD) y robots.txt lo permite,2026-10-18
+Mercado Libre Colombia,cadena,https://www.mercadolibre.com.co,mercadolibre,aprobada,API oficial de Mercado Libre (sitio MCO); necesita ML_CLIENT_ID y ML_CLIENT_SECRET,2026-10-25
+Laika,cadena,https://www.laika.com.co,,sin catálogo público,"ni VTEX, Shopify ni WooCommerce responden JSON, y el sitemap no lista páginas de producto",2026-10-25
+Puppis,cadena,https://www.puppis.com.co,vtex,aprobada,VTEX responde JSON y robots.txt lo permite,2026-10-25
+Agrocampo,cadena,https://www.agrocampo.com.co,,bloqueada por robots.txt,robots.txt prohíbe /api/catalog_system/,2026-10-25
+Éxito,cadena,https://www.exito.com,,sin catálogo público,"ni VTEX, Shopify ni WooCommerce responden JSON, y el sitemap no lista páginas de producto",2026-10-25
+Falabella Colombia,cadena,https://www.falabella.com.co,,sin catálogo público,"ni VTEX, Shopify ni WooCommerce responden JSON, y las páginas de producto no traen datos estructurados con precio",2026-10-25
+Homecenter Colombia,cadena,https://www.homecenter.com.co,,bloqueada por robots.txt,robots.txt prohíbe /api/catalog_system/,2026-10-25
+Miscota Colombia,cadena,https://co.miscota.com,,sin catálogo público,"ni VTEX, Shopify ni WooCommerce responden JSON, y las páginas de producto no traen datos estructurados con precio",2026-10-25
+Ceba,tienda,https://www.ceba.com.co,shopify,aprobada,Shopify responde JSON y robots.txt lo permite,2026-10-25
+Animals Veterinaria,tienda,https://www.animalsveterinaria.com,vtex,aprobada,VTEX responde JSON y robots.txt lo permite,2026-10-25
+Tierragro,tienda,https://www.tierragro.com,,bloqueada por robots.txt,robots.txt prohíbe /products.json y /wp-json/wc/store/v1/products,2026-10-25
+Provipets,tienda,https://www.provipets.co,,bloqueada por robots.txt,robots.txt prohíbe /api/catalog_system/,2026-10-25
+Petcol,tienda,https://petcol.co,shopify,aprobada,Shopify responde JSON y robots.txt lo permite,2026-10-25
+Chloki,tienda,https://www.chloki.com,,sin catálogo público,"ni VTEX, Shopify ni WooCommerce responden JSON, y las páginas de producto no traen datos estructurados con precio",2026-10-25
+Animal Factor,tienda,https://www.animal-factor.com,,sin catálogo público,no se pudo leer robots.txt (sin conexión),2026-10-25
+Bichos,tienda,https://www.mascotasbichos.com,,sin catálogo público,"ni VTEX, Shopify ni WooCommerce responden JSON, y el sitemap no lista páginas de producto",2026-10-25
+Ciudad de Mascotas,tienda,https://www.ciudaddemascotas.com,,sin catálogo público,no se pudo leer robots.txt (sin conexión),2026-10-25
+Consentidos,tienda,https://consentidos.co,,sin catálogo público,"ni VTEX, Shopify ni WooCommerce responden JSON, y el sitemap no lista páginas de producto",2026-10-25
+Ocico,tienda,https://ocico.co,,sin catálogo público,"ni VTEX, Shopify ni WooCommerce responden JSON, y el sitemap no lista páginas de producto",2026-10-25
+Frank's Shop,tienda,https://www.frankshop.com.co,,bloqueada por robots.txt,robots.txt prohíbe /api/catalog_system/ y /products.json y /wp-json/wc/store/v1/products,2026-10-25
+Didopet,tienda,https://didopet.com,,bloqueada por robots.txt,robots.txt prohíbe /api/catalog_system/,2026-10-25
+De Pelos,tienda,https://depelos.co,,sin catálogo público,"ni VTEX, Shopify ni WooCommerce responden JSON, y las páginas de producto no traen datos estructurados con precio",2026-10-25
+Supermascotas,tienda,https://supermascotas.com.co,shopify,aprobada,Shopify responde JSON y robots.txt lo permite,2026-10-25
+Dog Station,tienda,https://dogstation.co,woocommerce,aprobada,WooCommerce responde JSON y robots.txt lo permite,2026-10-25
+Wawaw,emprendimiento,https://wawaw.co,shopify,aprobada,Shopify responde JSON y robots.txt lo permite,2026-10-25
+ChikoPipo,emprendimiento,https://tiendachikopipo.com,shopify,aprobada,Shopify responde JSON y robots.txt lo permite,2026-10-25
+Happy Pets Colombia,emprendimiento,https://happypetsco.com,woocommerce,aprobada,WooCommerce responde JSON y robots.txt lo permite,2026-10-25
+Guamba Pets,emprendimiento,https://guamba.com,shopify,aprobada,Shopify responde JSON y robots.txt lo permite,2026-10-25
+Doctor Pet,tienda,https://doctorpet.com.co,woocommerce,aprobada,WooCommerce responde JSON y robots.txt lo permite,2026-10-25
+AM Mascotas,tienda,https://ammascotas.com,shopify,aprobada,Shopify responde JSON y robots.txt lo permite,2026-10-25
+Xipa,tienda,https://www.xipamascotas.com,,sin catálogo público,no se pudo leer robots.txt (sin conexión),2026-10-25
+Jarapets,tienda,,,sin catálogo público,TIENDAS.md no trae sitio web verificado,2026-10-25
+Omega Importaciones,tienda,https://www.omegaimportaciones.com,jsonld,aprobada,sitemap con datos estructurados de producto (JSON-LD) y robots.txt lo permite,2026-10-25
+Animal Home,tienda,https://animalhome.co,,sin catálogo público,"ni VTEX, Shopify ni WooCommerce responden JSON, y el sitemap no lista páginas de producto",2026-10-25
+Muplast,tienda,https://muplast.com,,sin catálogo público,"ni VTEX, Shopify ni WooCommerce responden JSON, y las páginas de producto no traen datos estructurados con precio",2026-10-25
+Gioatope,tienda,https://gioatope.com,woocommerce,aprobada,WooCommerce responde JSON y robots.txt lo permite,2026-10-25
+Mascolandia,tienda,https://www.mascolandia.com.co,woocommerce,aprobada,WooCommerce responde JSON y robots.txt lo permite,2026-10-25
+Abyapet,tienda,https://abyapet.com,woocommerce,aprobada,WooCommerce responde JSON y robots.txt lo permite,2026-10-25
+KeikoPets,tienda,https://www.keikopets.com,,bloqueada por robots.txt,robots.txt prohíbe /api/catalog_system/ y /wp-json/wc/store/v1/products,2026-10-25
+La Casa del Granjero,tienda,https://lacasadelgranjero.com,shopify,aprobada,Shopify responde JSON y robots.txt lo permite,2026-10-25
+La Res,tienda,https://lares.com.co,,bloqueada por términos de uso,"los términos de uso prohíben usar herramientas automatizadas («bots», «spiders») para acceder o copiar el contenido",2026-10-25
+Welpe,emprendimiento,https://welpeshop.com,,sin catálogo público,"los precios están en EUR, no en pesos colombianos",2026-10-25
+WUFTREK,emprendimiento,https://wuftrek.com,shopify,aprobada,Shopify responde JSON y robots.txt lo permite,2026-10-25
+Animal Store Mascotas,emprendimiento,https://animalstoremascotas.com,shopify,aprobada,Shopify responde JSON y robots.txt lo permite,2026-10-25
+Avisalpets,emprendimiento,https://avisalpets.com.co,,bloqueada por términos de uso,"los términos de uso prohíben la lectura automática: «no intentará interferir de ninguna manera con el funcionamiento del sitio web, que no transmitir ningún virus, que no utilizará ninguna araña»",2026-10-25
+Pelusas Pet,emprendimiento,https://pelusas-pet.com,,sin catálogo público,"ni VTEX, Shopify ni WooCommerce responden JSON, y las páginas de producto no traen datos estructurados con precio",2026-10-25
+MariaCe Posada Pets,emprendimiento,https://mariaceposada.com,shopify,aprobada,Shopify responde JSON y robots.txt lo permite,2026-10-25
+Cuore Pets,tienda,https://cuorepets.com,shopify,aprobada,Shopify responde JSON y robots.txt lo permite,2026-10-25
+Pet Outlet,tienda,https://petoutlet.com.co,woocommerce,aprobada,WooCommerce responde JSON y robots.txt lo permite,2026-10-25
+Mascotas Pet Shop,tienda,https://mascotaspetshop.com.co,woocommerce,aprobada,WooCommerce responde JSON y robots.txt lo permite,2026-10-25
+Petopet,tienda,https://petopet.com.co,,bloqueada por términos de uso,"los términos de uso prohíben la lectura automática: «phish, pharm, pretexto, araña»",2026-10-25
+Petentrega,tienda,https://www.petentrega.com.co,,sin catálogo público,"ni VTEX, Shopify ni WooCommerce responden JSON, y el sitemap no lista páginas de producto",2026-10-25
+Eco Vet,tienda,https://www.ecovet.com.co,woocommerce,aprobada,WooCommerce responde JSON y robots.txt lo permite,2026-10-25
+Primepet,tienda,https://www.primepet.com.co,jsonld,aprobada,sitemap con datos estructurados de producto (JSON-LD) y robots.txt lo permite,2026-10-25
