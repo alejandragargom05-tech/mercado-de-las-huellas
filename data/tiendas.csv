@@ -1,5 +1,5 @@
 tienda,tipo,url,plataforma,estado,motivo,fecha_revision
-Mercado Libre Colombia,cadena,https://www.mercadolibre.com.co,mercadolibre,aprobada,API oficial de Mercado Libre (sitio MCO); necesita ML_CLIENT_ID y ML_CLIENT_SECRET,2026-10-28
+Mercado Libre Colombia,cadena,https://www.mercadolibre.com.co,mercadolibre,aprobada,API oficial de Mercado Libre (sitio MCO); necesita ML_CLIENT_ID y ML_CLIENT_SECRET,2026-10-29
 Laika,cadena,https://www.laika.com.co,,sin catálogo público,"ni VTEX, Shopify ni WooCommerce responden JSON, y el sitemap no lista páginas de producto",2026-10-25
 Puppis,cadena,https://www.puppis.com.co,vtex,aprobada,VTEX responde JSON y robots.txt lo permite,2026-10-25
 Agrocampo,cadena,https://www.agrocampo.com.co,,bloqueada por robots.txt,robots.txt prohíbe /api/catalog_system/,2026-10-25
