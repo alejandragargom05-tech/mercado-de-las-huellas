@@ -1,12 +1,10 @@
 {
-  "actualizado": "2026-11-18T14:11:21-05:00",
-  "tiendas_consultadas": 24,
+  "actualizado": "2026-11-18T22:59:34-05:00",
+  "tiendas_consultadas": 25,
   "tiendas_aprobadas": 26,
-  "productos_actualizados": 9080,
-  "productos_sin_actualizar": 652,
-  "tiendas_con_problemas": [
-    "Gioatope"
-  ],
+  "productos_actualizados": 9278,
+  "productos_sin_actualizar": 440,
+  "tiendas_con_problemas": [],
   "tiendas_saltadas": [
     "Mercado Libre Colombia"
   ]
