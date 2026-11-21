@@ -1,10 +1,15 @@
 {
-  "actualizado": "2026-11-20T22:49:31-05:00",
-  "tiendas_consultadas": 25,
+  "actualizado": "2026-11-21T12:49:38-05:00",
+  "tiendas_consultadas": 21,
   "tiendas_aprobadas": 26,
-  "productos_actualizados": 9287,
-  "productos_sin_actualizar": 453,
-  "tiendas_con_problemas": [],
+  "productos_actualizados": 8988,
+  "productos_sin_actualizar": 734,
+  "tiendas_con_problemas": [
+    "Dog Station",
+    "Happy Pets Colombia",
+    "Mascotas Pet Shop",
+    "Pet Outlet"
+  ],
   "tiendas_saltadas": [
     "Mercado Libre Colombia"
   ]
