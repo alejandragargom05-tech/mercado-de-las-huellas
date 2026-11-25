@@ -1,10 +1,12 @@
 {
-  "actualizado": "2026-11-25T00:15:41-05:00",
-  "tiendas_consultadas": 25,
+  "actualizado": "2026-11-25T15:18:22-05:00",
+  "tiendas_consultadas": 24,
   "tiendas_aprobadas": 26,
-  "productos_actualizados": 9293,
-  "productos_sin_actualizar": 442,
-  "tiendas_con_problemas": [],
+  "productos_actualizados": 8143,
+  "productos_sin_actualizar": 1562,
+  "tiendas_con_problemas": [
+    "Puppis"
+  ],
   "tiendas_saltadas": [
     "Mercado Libre Colombia"
   ]
